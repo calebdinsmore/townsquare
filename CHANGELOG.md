@@ -2,6 +2,7 @@
 
 ## Upcoming version
 
+- Unique night order bubble for each player with the same role
 - Adding some special votes
 - Automatic Djinn and Bootlegger
 - Updating night order
