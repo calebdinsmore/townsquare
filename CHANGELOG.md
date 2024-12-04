@@ -2,6 +2,7 @@
 
 ## Upcoming version
 
+- Renaming the "edition" folder and reorganizing its files
 - Clearer and more efficient print for the votes hidden by Organ Grinder
 - Using official generic icons as default custom icons
 - Adding the reminder tokens "Townsfolk", "Outsider", "Minion" and "Demon"
