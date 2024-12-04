@@ -34,6 +34,7 @@
     <NightOrderModal />
     <VoteHistoryModal />
     <GameStateModal />
+    <SpecialVoteModal />
     <Gradients />
     <span id="version">v{{ version }}</span>
   </div>
@@ -41,7 +42,7 @@
 
 <script>
 import { mapState } from "vuex";
-import { version } from "../package.json";
+import app from "../package.json";
 import TownSquare from "./components/TownSquare";
 import TownInfo from "./components/TownInfo";
 import Menu from "./components/Menu";
@@ -55,6 +56,7 @@ import NightOrderModal from "./components/modals/NightOrderModal";
 import FabledModal from "@/components/modals/FabledModal";
 import VoteHistoryModal from "@/components/modals/VoteHistoryModal";
 import GameStateModal from "@/components/modals/GameStateModal";
+import SpecialVoteModal from "@/components/modals/SpecialVoteModal";
 
 export default {
   components: {
@@ -71,6 +73,7 @@ export default {
     EditionModal,
     RolesModal,
     Gradients,
+    SpecialVoteModal,
   },
   computed: {
     ...mapState(["grimoire", "session", "edition"]),
@@ -87,7 +90,7 @@ export default {
   },
   data() {
     return {
-      version,
+      version: app.version,
     };
   },
   methods: {
