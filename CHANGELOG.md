@@ -4,6 +4,7 @@
 - Adding some special votes
 - Automatic Djinn and Bootlegger
 - Updating night order
+- Updating jinxes
 
 ### Version 3.20.1
 - Inconsistancies in french translations for "Power" & "Character"
