@@ -3,6 +3,7 @@
 ## Upcoming version
 
 - Using official generic icons as default custom icons
+- Adding the reminder tokens "Townsfolk", "Outsider", "Minion" and "Demon"
 - Unique night order bubble for each player with the same role
 - Adding some special votes
 - Automatic Djinn and Bootlegger
