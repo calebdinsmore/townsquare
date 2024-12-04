@@ -1,7 +1,7 @@
 # Release Notes
 
 ## Upcoming version
-
+- Adding some special votes
 - Automatic Djinn and Bootlegger
 
 ### Version 3.20.1
