@@ -142,7 +142,10 @@
 
       <!-- On block icon -->
       <div class="marked">
-        <font-awesome-icon icon="skull" />
+        <font-awesome-icon
+          icon="skull"
+          v-if="!(this.session.isSpectator && grimoire.isOrganVoteMode)"
+        />
       </div>
       <div
         class="name"
