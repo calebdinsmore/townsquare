@@ -1,6 +1,6 @@
 {
   "name": "townsquare",
-  "version": "3.20.1",
+  "version": "3.21.0",
   "description": "Blood on the Clocktower Town Square",
   "author": "Pingumaskt",
   "scripts": {
@@ -17,8 +17,6 @@
     "@fortawesome/vue-fontawesome": "^0.1.10",
     "@vue/cli-service": "^5.0.8",
     "prom-client": "^13.0.0",
-    "sass": "^1.30.0",
-    "sass-loader": "^8.0.2",
     "vue": "^2.6.12",
     "vue-template-compiler": "^2.7.15",
     "vuex": "^3.6.0",
@@ -30,7 +28,9 @@
     "eslint": "^8.53.0",
     "eslint-plugin-prettier": "^5.0.1",
     "eslint-plugin-vue": "^9.18.1",
-    "prettier": "^3.0.3"
+    "prettier": "^3.0.3",
+    "sass": "^1.82.0",
+    "sass-loader": "^16.0.4"
   },
   "keywords": [
     "botc",
