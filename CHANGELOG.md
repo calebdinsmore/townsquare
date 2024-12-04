@@ -2,7 +2,7 @@
 
 ## Upcoming version
 
-
+- Automatic Djinn and Bootlegger
 
 ### Version 3.20.1
 - Inconsistancies in french translations for "Power" & "Character"
