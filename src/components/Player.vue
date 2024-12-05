@@ -419,7 +419,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import "../vars.scss";
+@use "../vars.scss" as *;
 
 .fold-enter-active,
 .fold-leave-active {
