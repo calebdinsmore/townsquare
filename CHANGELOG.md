@@ -2,7 +2,7 @@
 
 ## Upcoming version
 
-- Adding missing characters
+- Updating some characters who were officially edited
 
 - MAINT update dependencies
 
