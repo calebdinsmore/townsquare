@@ -145,7 +145,8 @@ export default {
 </script>
 
 <style lang="scss">
-@import "vars";
+@use "vars" as *;
+@use "media" as *;
 
 @font-face {
   font-family: "Papyrus";
@@ -180,8 +181,6 @@ body {
   margin: 0;
   overflow: hidden;
 }
-
-@import "media";
 
 * {
   box-sizing: border-box;

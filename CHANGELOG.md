@@ -4,6 +4,30 @@
 
 
 
+### Version 3.22.0
+
+- Official abilities rebalances :
+  - Lil' Monsta
+  - Balloonist
+  - Harpy
+  - Plague Doctor
+  - Organ Grinder
+  - Lycantrope
+  - Boomdandy
+  - Alchemist
+  - Al-Hadikhia
+  - Riot
+- New characters :
+  - Ogre
+  - Alsaahir
+  - Zealot
+  - Lord of Typhon
+  - Boffin
+  - Gnome
+  - Xaan
+- Several minor rephrasing of abilities
+- MAINT update dependencies
+
 ### Version 3.21.0
 
 - Renaming the "edition" folder and reorganizing its files
