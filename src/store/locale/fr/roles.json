@@ -637,7 +637,8 @@
     "otherNightReminder": "Permettez à l'Aliéné de réaliser les actions du Démon qu'il croit être. Placez le(s) marqueur(s) d'attaque. Si l'Aliéné a indiqué des joueurs, réveillez le Démon. Dévoilez au Démon les marqueurs de l'Aliéné puis retirez-les.",
     "reminders": [],
     "remindersGlobal": [
-      "Aliéné"
+      "Aliéné",
+      "Désigné"
     ],
     "setup": true,
     "ability": "Vous croyez être un Démon, mais vous ne l'êtes pas. Le Démon sait qui vous êtes et qui vous désignez chaque nuit."
