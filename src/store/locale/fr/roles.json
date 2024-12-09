@@ -116,7 +116,7 @@
       "Protégé"
     ],
     "setup": false,
-    "ability": "Chaque nuit*, choisissez un joueur (autre que vous-même) : il est à l'abri du Démon cette nuit."
+    "ability": "Chaque nuit*, désignez un joueur (autre que vous-même) : il est à l'abri du Démon cette nuit."
   },
   {
     "id": "ravenkeeper",
@@ -764,7 +764,7 @@
       "3 Attaques"
     ],
     "setup": false,
-    "ability": "Chaque nuit*, vous pouvez désigner un joueur : il meurt. Si votre dernier choix ne portait sur personne, choisissez 3 joueurs cette nuit."
+    "ability": "Chaque nuit*, vous pouvez désigner un joueur : il meurt. Si votre dernier choix ne portait sur personne, désignez 3 joueurs cette nuit."
   },
   {
     "id": "apprentice",

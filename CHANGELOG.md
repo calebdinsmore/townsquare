@@ -4,6 +4,7 @@
 
 - Adding tokens to some characters
 - Updating the icon for "Demon info & bluffs"
+- Minor ability rephrasing in the French version (mainly in Trouble Brewing)
 
 ### Version 3.23.0
 
