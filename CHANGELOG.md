@@ -2,7 +2,7 @@
 
 ## Upcoming version
 
-
+- Minor corrections in the French version (mainly in Trouble Brewing)
 
 ### Version 3.22.0
 
