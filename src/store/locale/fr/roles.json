@@ -144,7 +144,7 @@
       "Épuisé"
     ],
     "setup": false,
-    "ability": "La première fois que vous êtes accusé, si la personne qui vous accuse est un Villageois, elle est exécutée immédiatement."
+    "ability": "La première fois que vous êtes accusé, si l'accusateur est un Villageois, il est exécuté immédiatement."
   },
   {
     "id": "slayer",
