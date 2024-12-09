@@ -383,7 +383,7 @@
     "otherNightReminder": "",
     "reminders": [],
     "setup": false,
-    "ability": "Vous avez besoin d'un jeton de vote pour pouvoir voter. Les joueurs morts peuvent vous offrir leurs jetons de vote. S'ils le font, vous apprenez leur alignement. Vous êtes toujours sobre et en bonne santé."
+    "ability": "Vous avez besoin d'un jeton pour voter. Si un mort vous donne le sien, vous apprenez son alignement. Vous êtes sobre et sain."
   },
   {
     "id": "grandmother",
