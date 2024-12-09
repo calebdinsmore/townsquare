@@ -357,7 +357,7 @@
     "otherNightReminder": "",
     "reminders": [],
     "setup": false,
-    "ability": "Chaque jour, après que les votes de la première accusation aient été comptabilisés. Vous pouvez désigner l'un des joueurs qui a voté : il meurt."
+    "ability": "Chaque jour, après que les votes de la première accusation aient été comptés, vous pouvez désigner l'un des joueurs qui a voté : il meurt."
   },
   {
     "id": "scapegoat",
