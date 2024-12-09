@@ -2,7 +2,7 @@
 
 ## Upcoming version
 
-
+- Updating the icon for "Demon info & bluffs"
 
 ### Version 3.22.0
 
