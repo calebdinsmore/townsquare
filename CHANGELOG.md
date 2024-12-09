@@ -2,7 +2,7 @@
 
 ## Upcoming version
 
-
+- Adding tokens to some characters
 
 ### Version 3.22.0
 
