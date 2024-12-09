@@ -3,6 +3,7 @@
 ## Upcoming version
 
 - Adding tokens to some characters
+- Updating the icon for "Demon info & bluffs"
 
 ### Version 3.23.0
 

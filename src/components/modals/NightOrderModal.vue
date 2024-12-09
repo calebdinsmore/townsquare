@@ -193,7 +193,7 @@ export default {
               this.locale.modal.nightOrder.minionInfoDescription,
           },
           {
-            id: "evil",
+            id: "demon",
             name: this.locale.modal.nightOrder.demonInfo,
             firstNight: 18,
             team: "demon",
