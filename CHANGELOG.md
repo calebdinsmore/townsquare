@@ -2,7 +2,7 @@
 
 ## Upcoming version
 
-
+- Adding the Banshee
 
 ### Version 3.23.0
 
