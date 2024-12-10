@@ -24,7 +24,7 @@
       >
         <Token :role="role" />
         <font-awesome-icon icon="exclamation-triangle" v-if="role.setup" />
-        <div class="buttons" v-if="allowMultiple">
+        <div class="buttons" v-if="allowMultiple || role.multiple">
           <font-awesome-icon
             icon="minus-circle"
             @click.stop="role.selected--"
