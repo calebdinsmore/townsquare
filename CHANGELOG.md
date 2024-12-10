@@ -3,6 +3,9 @@
 ## Upcoming version
 
 
+### Version 3.23.2
+
+- BUGFIX Broken reminder images
 
 ### Version 3.23.1
 

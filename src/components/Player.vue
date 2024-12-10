@@ -21,7 +21,7 @@
         <em>{{ nightOrder.get(player).first }}.</em>
         <span v-if="player.role.firstNightReminder">{{
           player.role.firstNightReminder
-        }}</span>
+          }}</span>
       </div>
       <div class="night-order other" v-if="
         nightOrder.get(player).other &&
@@ -30,7 +30,7 @@
         <em>{{ nightOrder.get(player).other }}.</em>
         <span v-if="player.role.otherNightReminder">{{
           player.role.otherNightReminder
-        }}</span>
+          }}</span>
       </div>
 
       <Token :role="player.role" @set-role="$emit('trigger', ['openRoleModal'])" />
@@ -268,7 +268,7 @@ export default {
     },
     rolePath(role) {
       return new URL(
-        `../assets/icons/${role.imageAlt || role.id}.png`,
+        `../assets/icons/${role}.png`,
         import.meta.url,
       ).href;
     },

@@ -1,27 +1,15 @@
 <template>
-  <Modal
-    v-if="modals.reminder && availableReminders.length && players[playerIndex]"
-    @close="toggleModal('reminder')"
-  >
+  <Modal v-if="modals.reminder && availableReminders.length && players[playerIndex]" @close="toggleModal('reminder')">
     <h3>{{ this.locale.modal.reminder.title }}</h3>
     <ul class="reminders">
-      <li
-        v-for="reminder in availableReminders"
-        class="reminder"
-        :class="[reminder.role]"
-        :key="reminder.role + ' ' + reminder.name"
-        @click="addReminder(reminder)"
-      >
-        <span
-          class="icon"
-          :style="{
-            backgroundImage: `url(${
-              reminder.image && grimoire.isImageOptIn
-                ? reminder.image
-                : rolePath(reminder.role)
+      <li v-for="reminder in availableReminders" class="reminder" :class="[reminder.role]"
+        :key="reminder.role + ' ' + reminder.name" @click="addReminder(reminder)">
+        <span class="icon" :style="{
+          backgroundImage: `url(${reminder.image && grimoire.isImageOptIn
+            ? reminder.image
+            : rolePath(reminder.role)
             })`,
-          }"
-        ></span>
+        }"></span>
         <span class="text">{{ reminder.name }}</span>
       </li>
     </ul>
@@ -39,12 +27,12 @@ import { mapMutations, mapState } from "vuex";
  */
 const mapReminder =
   ({ id, image, imageAlt }) =>
-  (name) => ({
-    role: id,
-    image,
-    imageAlt,
-    name,
-  });
+    (name) => ({
+      role: id,
+      image,
+      imageAlt,
+      name,
+    });
 
 export default {
   components: { Modal },
@@ -135,7 +123,7 @@ export default {
     },
     rolePath(role) {
       return new URL(
-        `../assets/icons/${role.imageAlt || role.id}.png`,
+        `../../assets/icons/${role}.png`,
         import.meta.url,
       ).href;
     },
