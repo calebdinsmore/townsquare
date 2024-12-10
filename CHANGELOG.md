@@ -2,7 +2,7 @@
 
 ## Upcoming version
 
-
+- Adding a system of roles in multiple copies
 
 ### Version 3.23.0
 
