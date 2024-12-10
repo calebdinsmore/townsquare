@@ -1648,7 +1648,8 @@
       "Ivre"
     ],
     "setup": true,
-    "ability": "Chaque nuit, désignez un joueur : vous apprenez son alignement. [+0 à +2 Idiots du village, l’un d’eux étant ivre]"
+    "multiple": true,
+    "ability": "Chaque nuit, désignez un joueur : vous apprenez son alignement. [+0 à +2 Idiots du Village, l’un d’eux étant ivre]"
   },
   {
     "id": "knight",
@@ -2119,6 +2120,7 @@
       "Condamné"
     ],
     "setup": true,
+    "multiple": true,
     "ability": "Chaque nuit*, il se peut qu'un joueur meure. Les exécutions ratent sans vote de bon. Vous apparaissez aussi comme Sbire. [Majorité de Légion]"
   },
   {

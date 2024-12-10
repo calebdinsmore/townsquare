@@ -16,8 +16,8 @@
         @click="role.selected = role.selected ? 0 : 1">
         <Token :role="role" />
         <font-awesome-icon icon="exclamation-triangle" class="fa fa-exclamation-triangle" v-if="role.setup" />
-        <div class="buttons" v-if="allowMultiple">
-          <font-awesome-icon icon="minus-circle" class="fa fa-minus-circle" @click.stop="role.selected--" />
+        <div class="buttons" v-if="allowMultiple || role.multiple">
+          <font-awesome-icon icon="minus-circle" @click.stop="role.selected--" />
           <span>{{ role.selected > 1 ? "x" + role.selected : "" }}</span>
           <font-awesome-icon icon="plus-circle" class="fa fa-plus-circle" @click.stop="role.selected++" />
         </div>
@@ -175,6 +175,7 @@ export default {
 
 ul.tokens {
   padding-left: 5vmin;
+  margin-top: 5px;
 
   li {
     border-radius: 50%;
@@ -312,14 +313,11 @@ ul.tokens {
     display: block;
     text-align: center;
     cursor: pointer;
+    margin-top: 20px;
 
     &.checked,
     &:hover {
       color: red;
-    }
-
-    &.checked {
-      margin-top: 10px;
     }
 
     svg {
