@@ -10,7 +10,7 @@
         nominator
           ? nominator.name
           : session.nomination[0][0].toUpperCase() +
-            session.nomination[0].slice(1)
+          session.nomination[0].slice(1)
       }}</em>
       {{
         typeof session.nomination[1] == "object"
@@ -21,27 +21,21 @@
       }}
       <em v-if="typeof session.nomination[1] !== 'object'">{{
         nominee ? nominee.name : session.nomination[1]
-      }}</em
-      >{{ locale.vote.exclam }}
+      }}</em>{{ locale.vote.exclam }}
       <br />
-      <em
-        class="blue"
-        v-if="
-          !grimoire.isOrganVoteMode ||
-          (nominee && nominee.role.team == 'traveler') ||
-          !session.isSpectator
-        "
-      >
+      <em class="blue" v-if="
+        !grimoire.isOrganVoteMode ||
+        (nominee && nominee.role.team == 'traveler') ||
+        !session.isSpectator
+      ">
         {{ voters.length }} {{ locale.vote.votes }}
       </em>
       <em class="blue" v-else> ? {{ locale.vote.votes }} </em>
       {{ locale.vote.inFavor }}
-      <em
-        v-if="
-          (nominee && nominee.role.team !== 'traveler') ||
-          typeof session.nomination[1] == 'string'
-        "
-      >
+      <em v-if="
+        (nominee && nominee.role.team !== 'traveler') ||
+        typeof session.nomination[1] == 'string'
+      ">
         ({{ locale.vote.majorityIs }} {{ Math.ceil(alive / 2) }})
       </em>
       <em v-else-if="nominee">
@@ -50,45 +44,28 @@
 
       <template v-if="!session.isSpectator">
         <br />
-        <em
-          class="orange"
-          v-if="
-            grimoire.isOrganVoteMode &&
-            ((nominee && nominee.role.team !== 'traveler') ||
-              typeof session.nomination[1] == 'string')
-          "
-        >
+        <em class="orange" v-if="
+          grimoire.isOrganVoteMode &&
+          ((nominee && nominee.role.team !== 'traveler') ||
+            typeof session.nomination[1] == 'string')
+        ">
           {{ locale.vote.secretBallot }}
         </em>
         <div v-if="!session.isVoteInProgress && session.lockedVote < 1">
           {{ locale.vote.timePerPlayer }}
-          <font-awesome-icon
-            @mousedown.prevent="setVotingSpeed(-500)"
-            icon="minus-circle"
-          />
+          <font-awesome-icon @mousedown.prevent="setVotingSpeed(-500)" icon="minus-circle" class="fa fa-minus-circle" />
           {{ session.votingSpeed / 1000 }}s
-          <font-awesome-icon
-            @mousedown.prevent="setVotingSpeed(500)"
-            icon="plus-circle"
-          />
+          <font-awesome-icon @mousedown.prevent="setVotingSpeed(500)" icon="plus-circle" class="fa fa-plus-circle" />
         </div>
         <div class="button-group">
-          <div
-            class="button townsfolk"
-            v-if="!session.isVoteInProgress"
-            @click="countdown"
-          >
+          <div class="button townsfolk" v-if="!session.isVoteInProgress" @click="countdown">
             {{ locale.vote.countdown }}
           </div>
           <div class="button" v-if="!session.isVoteInProgress" @click="start">
             {{ session.lockedVote ? locale.vote.restart : locale.vote.start }}
           </div>
           <template v-else>
-            <div
-              class="button townsfolk"
-              :class="{ disabled: !session.lockedVote }"
-              @click="pause"
-            >
+            <div class="button townsfolk" :class="{ disabled: !session.lockedVote }" @click="pause">
               {{ voteTimer ? locale.vote.pause : locale.vote.resume }}
             </div>
             <div class="button" @click="stop">{{ locale.vote.reset }}</div>
@@ -97,20 +74,13 @@
             {{ locale.vote.close }}
           </div>
         </div>
-        <div
-          class="button-group mark"
-          v-if="
-            typeof session.nomination[1] !== 'object' &&
-            (!nominee || nominee.role.team !== 'traveler')
-          "
-        >
-          <div
-            class="button"
-            :class="{
-              disabled: session.nomination[1] === session.markedPlayer,
-            }"
-            @click="setMarked"
-          >
+        <div class="button-group mark" v-if="
+          typeof session.nomination[1] !== 'object' &&
+          (!nominee || nominee.role.team !== 'traveler')
+        ">
+          <div class="button" :class="{
+            disabled: session.nomination[1] === session.markedPlayer,
+          }" @click="setMarked">
             {{ locale.vote.setMarked }}
           </div>
           <div class="button" @click="removeMarked">
@@ -123,18 +93,10 @@
           {{ session.votingSpeed / 1000 }} {{ locale.vote.secondsBetweenVotes }}
         </div>
         <div class="button-group">
-          <div
-            class="button townsfolk"
-            @click="vote(false)"
-            :class="{ disabled: !currentVote }"
-          >
+          <div class="button townsfolk" @click="vote(false)" :class="{ disabled: !currentVote }">
             {{ locale.vote.handDown }}
           </div>
-          <div
-            class="button demon"
-            @click="vote(true)"
-            :class="{ disabled: currentVote }"
-          >
+          <div class="button demon" @click="vote(true)" :class="{ disabled: currentVote }">
             {{ locale.vote.handUp }}
           </div>
         </div>
@@ -142,26 +104,16 @@
       <div v-else-if="!player">
         {{ locale.vote.seatToVote }}
       </div>
-      <Countdown
-        v-if="grimoire.timer.duration"
-        :timerName="grimoire.timer.name"
-        :timerDuration="grimoire.timer.duration"
-      />
+      <Countdown v-if="grimoire.timer.duration" :timerName="grimoire.timer.name"
+        :timerDuration="grimoire.timer.duration" />
     </div>
     <transition name="blur">
-      <div
-        class="countdown"
-        v-if="session.isVoteInProgress && !session.lockedVote"
-      >
+      <div class="countdown" v-if="session.isVoteInProgress && !session.lockedVote">
         <span>3</span>
         <span>2</span>
         <span>1</span>
         <span>{{ locale.vote.doVote }}</span>
-        <audio
-          :autoplay="!grimoire.isMuted"
-          src="../assets/sounds/countdown.mp3"
-          :muted="grimoire.isMuted"
-        ></audio>
+        <audio :autoplay="!grimoire.isMuted" src="../assets/sounds/countdown.mp3" :muted="grimoire.isMuted"></audio>
       </div>
     </transition>
   </div>
@@ -379,9 +331,11 @@ export default {
     color: $demon;
     font-style: normal;
     font-weight: bold;
+
     &.blue {
       color: $townsfolk;
     }
+
     &.orange {
       color: $minion;
     }
@@ -389,6 +343,7 @@ export default {
 
   svg {
     cursor: pointer;
+
     &:hover path {
       fill: url(#demon);
       stroke-width: 30px;
@@ -402,6 +357,7 @@ export default {
     opacity: 0;
     transform: rotate(-180deg);
   }
+
   100% {
     opacity: 1;
     transform: rotate(0deg);
@@ -413,6 +369,7 @@ export default {
     opacity: 0;
     transform: rotate(180deg);
   }
+
   100% {
     opacity: 1;
     transform: rotate(0deg);
@@ -425,12 +382,14 @@ export default {
   height: 150%;
   width: 25%;
   pointer-events: none;
+
   span {
     position: absolute;
     width: 100%;
     height: 100%;
     transition: transform 2.9s ease-in-out;
   }
+
   span:before {
     content: " ";
     width: 100%;
@@ -442,10 +401,12 @@ export default {
     position: absolute;
     filter: drop-shadow(0px 0px 3px #000);
   }
+
   .nominator:before {
     background-image: url("../assets/clock-small.png");
     animation: arrow-ccw 1s ease-out;
   }
+
   .nominee:before {
     background-image: url("../assets/clock-big.png");
     animation: arrow-cw 1s ease-out;
@@ -458,17 +419,21 @@ export default {
     opacity: 0;
     filter: blur(20px);
   }
+
   10% {
     opacity: 1;
   }
+
   50% {
     transform: scale(1);
     filter: blur(0);
   }
+
   90% {
     color: $townsfolk;
     opacity: 1;
   }
+
   100% {
     opacity: 0;
   }
@@ -480,17 +445,21 @@ export default {
     opacity: 0;
     filter: blur(20px);
   }
+
   10% {
     opacity: 1;
   }
+
   50% {
     transform: scale(1);
     filter: blur(0);
   }
+
   90% {
     color: $demon;
     opacity: 1;
   }
+
   100% {
     opacity: 0;
   }
@@ -502,26 +471,32 @@ export default {
   align-items: center;
   justify-content: center;
   pointer-events: none;
+
   audio {
     height: 0;
     width: 0;
     visibility: hidden;
   }
+
   span {
     position: absolute;
     font-size: 8em;
     font-weight: bold;
     opacity: 0;
   }
+
   span:nth-child(1) {
     animation: countdown 1100ms normal forwards;
   }
+
   span:nth-child(2) {
     animation: countdown 1100ms normal forwards 1000ms;
   }
+
   span:nth-child(3) {
     animation: countdown 1100ms normal forwards 2000ms;
   }
+
   span:nth-child(4) {
     animation: countdown-go 1100ms normal forwards 3000ms;
   }

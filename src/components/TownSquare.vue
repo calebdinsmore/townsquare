@@ -1,109 +1,60 @@
 <template>
-  <div
-    id="townsquare"
-    class="square"
-    :class="{
-      public: grimoire.isPublic,
-      spectator: session.isSpectator,
-      vote: session.nomination,
-    }"
-  >
+  <div id="townsquare" class="square" :class="{
+    public: grimoire.isPublic,
+    spectator: session.isSpectator,
+    vote: session.nomination,
+  }">
     <ul class="circle" :class="['size-' + players.length]">
-      <Player
-        v-for="(player, index) in players"
-        :key="index"
-        :player="player"
-        @trigger="handleTrigger(index, $event)"
+      <Player v-for="(player, index) in players" :key="index" :player="player" @trigger="handleTrigger(index, $event)"
         :class="{
           from: Math.max(swap, move, nominate) === index,
           swap: swap > -1,
           move: move > -1,
           nominate: nominate > -1,
-        }"
-      ></Player>
+        }"></Player>
     </ul>
 
-    <div
-      class="bluffs"
-      v-if="players.length"
-      ref="bluffs"
-      :class="{ closed: !isBluffsOpen }"
-    >
+    <div class="bluffs" v-if="players.length" ref="bluffs" :class="{ closed: !isBluffsOpen }">
       <h3>
         <span v-if="session.isSpectator">{{ locale.townsquare.others }}</span>
         <span v-else>{{ locale.townsquare.bluffs }}</span>
-        <font-awesome-icon icon="times-circle" @click.stop="toggleBluffs" />
-        <font-awesome-icon icon="plus-circle" @click.stop="toggleBluffs" />
+        <font-awesome-icon icon="times-circle" class="fa fa-times-circle" @click.stop="toggleBluffs" />
+        <font-awesome-icon icon="plus-circle" class="fa fa-plus-circle" @click.stop="toggleBluffs" />
       </h3>
       <ul>
-        <li
-          v-for="index in bluffSize"
-          :key="index"
-          @click="openRoleModal(index * -1)"
-        >
+        <li v-for="index in bluffSize" :key="index" @click="openRoleModal(index * -1)">
           <Token :role="bluffs[index - 1]"></Token>
         </li>
       </ul>
     </div>
 
-    <div
-      class="storytelling"
-      v-if="!session.isSpectator"
-      ref="storytelling"
-      :class="{ closed: !isTimeControlsOpen }"
-    >
+    <div class="storytelling" v-if="!session.isSpectator" ref="storytelling" :class="{ closed: !isTimeControlsOpen }">
       <h3>
         <span>{{ locale.townsquare.storytellerTools }}</span>
-        <font-awesome-icon
-          icon="times-circle"
-          @click.stop="toggleTimeControls"
-        />
-        <font-awesome-icon
-          icon="plus-circle"
-          @click.stop="toggleTimeControls"
-        />
+        <font-awesome-icon icon="times-circle" class="fa fa-times-circle" @click.stop="toggleTimeControls" />
+        <font-awesome-icon icon="plus-circle" class="fa fa-plus-circle" @click.stop="toggleTimeControls" />
       </h3>
       <div class="button-group">
         <div @click="setTimer()" class="button">🕑 {{ timerDuration }} min</div>
         <div @click="renameTimer()" class="button">🗏 {{ timerName }}</div>
-        <div
-          class="button demon"
-          @click="stopTimer()"
-          :class="{ disabled: !timerOn }"
-        >
+        <div class="button demon" @click="stopTimer()" :class="{ disabled: !timerOn }">
           ■
         </div>
-        <div
-          class="button townfolk"
-          @click="startTimer()"
-          :class="{ disabled: timerOn }"
-        >
+        <div class="button townfolk" @click="startTimer()" :class="{ disabled: timerOn }">
           ⏵
         </div>
       </div>
       <div class="button-group" v-if="session.nomination">
-        <div
-          @click="setAccusationTimer()"
-          class="button"
-          v-if="typeof session.nomination[1] !== 'object'"
-        >
+        <div @click="setAccusationTimer()" class="button" v-if="typeof session.nomination[1] !== 'object'">
           {{ locale.townsquare.timer.accusation.button }}
         </div>
         <div @click="setSpecialVoteTimer()" class="button" v-else>
           {{ session.nomination[1][2] }}
         </div>
-        <div
-          @click="setDefenseTimer()"
-          class="button"
-          v-if="typeof session.nomination[1] !== 'object'"
-        >
+        <div @click="setDefenseTimer()" class="button" v-if="typeof session.nomination[1] !== 'object'">
           {{ locale.townsquare.timer.defense.button }}
         </div>
-        <div
-          @click="setDebateTimer()"
-          class="button"
-          v-if="typeof session.nomination[1] !== 'object'"
-        >
+        <div @click="setDebateTimer()" class="button" v-if="typeof session.nomination[1] !== 'object'">
           {{ locale.townsquare.timer.debate.button }}
         </div>
         <div @click="setSpecialDebateTimer()" class="button" v-else>
@@ -122,18 +73,10 @@
         </div>
       </div>
       <div class="button-group">
-        <div
-          @click="toggleNight()"
-          class="button"
-          :class="{ disabled: grimoire.isNight }"
-        >
+        <div @click="toggleNight()" class="button" :class="{ disabled: grimoire.isNight }">
           ☀
         </div>
-        <div
-          @click="toggleNight()"
-          class="button"
-          :class="{ disabled: !grimoire.isNight }"
-        >
+        <div @click="toggleNight()" class="button" :class="{ disabled: !grimoire.isNight }">
           ☽
         </div>
       </div>
@@ -147,34 +90,24 @@
     <div class="fabled" :class="{ closed: !isFabledOpen }" v-if="fabled.length">
       <h3>
         <span>{{ locale.townsquare.fabled }}</span>
-        <font-awesome-icon icon="times-circle" @click.stop="toggleFabled" />
-        <font-awesome-icon icon="plus-circle" @click.stop="toggleFabled" />
+        <font-awesome-icon icon="times-circle" class="fa fa-times-circle" @click.stop="toggleFabled" />
+        <font-awesome-icon icon="plus-circle" class="fa fa-plus-circle" @click.stop="toggleFabled" />
       </h3>
       <ul>
-        <li
-          v-for="(role, index) in fabled"
-          :key="index"
-          @click="removeFabled(index)"
-        >
-          <div
-            class="night-order first"
-            v-if="
-              nightOrder.get(role).first &&
-              (grimoire.isNightOrder || !session.isSpectator)
-            "
-          >
+        <li v-for="(role, index) in fabled" :key="index" @click="removeFabled(index)">
+          <div class="night-order first" v-if="
+            nightOrder.get(role).first &&
+            (grimoire.isNightOrder || !session.isSpectator)
+          ">
             <em>{{ nightOrder.get(role).first }}.</em>
             <span v-if="role.firstNightReminder">{{
               role.firstNightReminder
             }}</span>
           </div>
-          <div
-            class="night-order other"
-            v-if="
-              nightOrder.get(role).other &&
-              (grimoire.isNightOrder || !session.isSpectator)
-            "
-          >
+          <div class="night-order other" v-if="
+            nightOrder.get(role).other &&
+            (grimoire.isNightOrder || !session.isSpectator)
+          ">
             <em>{{ nightOrder.get(role).other }}.</em>
             <span v-if="role.otherNightReminder">{{
               role.otherNightReminder
@@ -412,7 +345,7 @@ export default {
           typeof this.session.nomination[0] == "number"
             ? this.players[this.session.nomination[0]].name
             : this.session.nomination[0][0].toUpperCase() +
-                this.session.nomination[0].slice(1),
+            this.session.nomination[0].slice(1),
         )
         .replace(
           "$accusee",
@@ -431,7 +364,7 @@ export default {
           typeof this.session.nomination[1] == "number"
             ? this.players[this.session.nomination[1]].name
             : this.session.nomination[1][0].toUpperCase() +
-                this.session.nomination[1].slice(1),
+            this.session.nomination[1].slice(1),
         )
         .replace(
           "$accusator",
@@ -514,7 +447,7 @@ export default {
   list-style: none;
   margin: 0;
 
-  > li {
+  >li {
     position: absolute;
     left: 50%;
     height: 50vmin;
@@ -526,12 +459,13 @@ export default {
       z-index: 25 !important;
     }
 
-    > .player {
+    >.player {
       margin-left: -50%;
       width: 100%;
       pointer-events: all;
     }
-    > .reminder {
+
+    >.reminder {
       margin-left: -25%;
       width: 50%;
       pointer-events: all;
@@ -547,14 +481,17 @@ export default {
   @for $i from 1 through $item-count {
     &:nth-child(#{$i}) {
       transform: rotate($rot * 1deg);
-      @if $i - 1 <= math.div($item-count, 2) {
+
+      @if $i - 1 <=math.div($item-count, 2) {
         // first half of players
         z-index: $item-count - $i + 1;
+
         // open menu on the left
-        .player > .menu {
+        .player>.menu {
           left: auto;
           right: 110%;
           margin-right: 15px;
+
           &:before {
             border-left-color: black;
             border-right-color: transparent;
@@ -562,18 +499,22 @@ export default {
             left: 100%;
           }
         }
+
         .fold-enter-active,
         .fold-leave-active {
           transform-origin: right center;
         }
+
         .fold-enter,
         .fold-leave-to {
           transform: perspective(200px) rotateY(-90deg);
         }
+
         // show ability tooltip on the left
         .ability {
           right: 120%;
           left: auto;
+
           &:before {
             border-right-color: transparent;
             border-left-color: black;
@@ -581,9 +522,11 @@ export default {
             left: 100%;
           }
         }
+
         .pronouns {
           left: 110%;
           right: auto;
+
           &:before {
             border-left-color: transparent;
             border-right-color: black;
@@ -591,12 +534,14 @@ export default {
             right: 100%;
           }
         }
-      } @else {
+      }
+
+      @else {
         // second half of players
         z-index: $i - 1;
       }
 
-      > * {
+      >* {
         transform: rotate($rot * -1deg);
       }
 
@@ -613,44 +558,52 @@ export default {
       // move reminders closer to the sides of the circle
       $q: math.div($item-count, 4);
       $x: $i - 1;
-      @if $x < $q or ($x >= math.div($item-count, 2) and $x < $q * 3) {
+
+      @if $x < $q or ($x >=math.div($item-count, 2) and $x < $q * 3) {
         .player {
           margin-bottom: -10% + 20% * (1 - math.div($x % $q, $q));
         }
-      } @else {
+      }
+
+      @else {
         .player {
           margin-bottom: -10% + 20% * math.div($x % $q, $q);
         }
       }
     }
+
     $rot: $rot + $angle;
   }
 }
 
 @for $i from 1 through 20 {
-  .circle.size-#{$i} > li {
+  .circle.size-#{$i}>li {
     @include on-circle($item-count: $i);
   }
 }
 
 /***** Demon bluffs / Fabled *******/
-#townsquare > .bluffs,
-#townsquare > .fabled,
-#townsquare > .storytelling {
+#townsquare>.bluffs,
+#townsquare>.fabled,
+#townsquare>.storytelling {
   position: absolute;
   left: 10px;
+
   &.bluffs {
     bottom: 10px;
   }
+
   &.fabled {
     top: 10px;
   }
+
   &.storytelling {
     bottom: 10px;
     left: auto;
     right: 10px;
     width: min-content;
   }
+
   background: rgba(0, 0, 0, 0.5);
   border-radius: 10px;
   border: 3px solid black;
@@ -661,37 +614,44 @@ export default {
   transition: all 250ms ease-in-out;
   z-index: 50;
 
-  > svg {
+  >svg {
     position: absolute;
     top: 10px;
     right: 10px;
     cursor: pointer;
+
     &:hover {
       color: red;
     }
   }
+
   h3 {
     margin: 5px 1vh 0;
     display: flex;
     align-items: center;
     align-content: center;
     justify-content: center;
+
     span {
       flex-grow: 1;
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
     }
+
     svg {
       cursor: pointer;
       flex-grow: 0;
+
       &.fa-times-circle {
         margin-left: 1vh;
       }
+
       &.fa-plus-circle {
         margin-left: 1vh;
         display: none;
       }
+
       &:hover path {
         fill: url(#demon);
         stroke-width: 30px;
@@ -699,10 +659,12 @@ export default {
       }
     }
   }
+
   ul {
     display: flex;
     align-items: center;
     justify-content: center;
+
     li {
       width: 14vmin;
       height: 14vmin;
@@ -711,8 +673,10 @@ export default {
       transition: all 250ms;
     }
   }
+
   .button-group {
     transition: all 250ms;
+
     input {
       background: none;
       border: none;
@@ -720,24 +684,30 @@ export default {
       font-size: 1.1em;
     }
   }
+
   &.closed {
     svg.fa-times-circle {
       display: none;
     }
+
     svg.fa-plus-circle {
       display: block;
     }
+
     ul li {
       scale: 0;
       width: 0;
       height: 0;
+
       .night-order {
         opacity: 0;
       }
+
       .token {
         border-width: 0;
       }
     }
+
     .button-group,
     .button-group * {
       width: 0px;
@@ -747,7 +717,7 @@ export default {
   }
 }
 
-#townsquare.public > .bluffs {
+#townsquare.public>.bluffs {
   opacity: 0;
   transform: scale(0.1);
 }
@@ -783,7 +753,7 @@ export default {
     pointer-events: none;
   }
 
-  &:hover ~ .token .ability {
+  &:hover~.token .ability {
     opacity: 0;
   }
 
@@ -826,14 +796,14 @@ export default {
 
   &.first span {
     right: 120%;
-    background: linear-gradient(
-      to right,
-      $townsfolk 0%,
-      rgba(0, 0, 0, 0.5) 20%
-    );
+    background: linear-gradient(to right,
+        $townsfolk 0%,
+        rgba(0, 0, 0, 0.5) 20%);
+
     &:before {
       content: v-bind(firstMessage);
     }
+
     &:after {
       border-left-color: $townsfolk;
       margin-left: 3px;
@@ -844,9 +814,11 @@ export default {
   &.other span {
     left: 120%;
     background: linear-gradient(to right, $demon 0%, rgba(0, 0, 0, 0.5) 20%);
+
     &:before {
       content: v-bind(otherMessage);
     }
+
     &:after {
       right: 100%;
       margin-right: 3px;
@@ -882,7 +854,7 @@ export default {
     background: linear-gradient(180deg, rgba(0, 0, 0, 1) 0%, $demon 100%);
   }
 
-  em:hover + span {
+  em:hover+span {
     opacity: 1;
   }
 
@@ -891,6 +863,7 @@ export default {
     span {
       right: auto;
       left: 40px;
+
       &:after {
         left: auto;
         right: 100%;

@@ -4,7 +4,7 @@
     <div>
       {{ locale.intro.header }}
       <span class="button" @click="toggleMenu">
-        <font-awesome-icon icon="cog" /> {{ locale.intro.menu }}
+        <font-awesome-icon icon="cog" class="fa fa-cog" /> {{ locale.intro.menu }}
       </span>
       {{ locale.intro.body }}
       <div class="footer">
@@ -13,11 +13,7 @@
         {{ locale.intro.footerEnd }}
       </div>
     </div>
-    <a
-      class="redirect"
-      v-if="language === 'zh-CN'"
-      href="https://clocktower.gstonegames.com"
-    >
+    <a class="redirect" v-if="language === 'zh-CN'" href="https://clocktower.gstonegames.com">
       <img src="../assets/gstone.png" class="gstone" alt="" />
       你想使用中文版魔典吗？
     </a>
@@ -55,9 +51,11 @@ export default {
   z-index: 3;
   display: flex;
   justify-content: center;
+
   a {
     color: white;
   }
+
   a.redirect {
     display: block;
     text-decoration: none;
@@ -72,6 +70,7 @@ export default {
     &:hover {
       color: red;
     }
+
     img {
       width: 120px;
       display: block;
@@ -90,6 +89,7 @@ export default {
     box-shadow: 0 0 10px black;
     border: 3px solid black;
   }
+
   .footer {
     font-size: 60%;
     opacity: 0.75;

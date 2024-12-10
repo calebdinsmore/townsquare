@@ -1,159 +1,91 @@
 <template>
   <li :style="zoom">
-    <div
-      ref="player"
-      class="player"
-      :class="[
-        {
-          dead: player.isDead,
-          marked: session.markedPlayer === index,
-          'no-vote': player.isVoteless,
-          you: session.sessionId && player.id && player.id === session.playerId,
-          'vote-yes': session.votes[index],
-          'vote-lock': voteLocked,
-        },
-        player.role.team,
-      ]"
-    >
+    <div ref="player" class="player" :class="[
+      {
+        dead: player.isDead,
+        marked: session.markedPlayer === index,
+        'no-vote': player.isVoteless,
+        you: session.sessionId && player.id && player.id === session.playerId,
+        'vote-yes': session.votes[index],
+        'vote-lock': voteLocked,
+      },
+      player.role.team,
+    ]">
       <div class="shroud" @click="toggleStatus()"></div>
       <div class="life" @click="toggleStatus()"></div>
 
-      <div
-        class="night-order first"
-        v-if="
-          nightOrder.get(player).first &&
-          (grimoire.isNightOrder || !session.isSpectator)
-        "
-      >
+      <div class="night-order first" v-if="
+        nightOrder.get(player).first &&
+        (grimoire.isNightOrder || !session.isSpectator)
+      ">
         <em>{{ nightOrder.get(player).first }}.</em>
         <span v-if="player.role.firstNightReminder">{{
           player.role.firstNightReminder
         }}</span>
       </div>
-      <div
-        class="night-order other"
-        v-if="
-          nightOrder.get(player).other &&
-          (grimoire.isNightOrder || !session.isSpectator)
-        "
-      >
+      <div class="night-order other" v-if="
+        nightOrder.get(player).other &&
+        (grimoire.isNightOrder || !session.isSpectator)
+      ">
         <em>{{ nightOrder.get(player).other }}.</em>
         <span v-if="player.role.otherNightReminder">{{
           player.role.otherNightReminder
         }}</span>
       </div>
 
-      <Token
-        :role="player.role"
-        @set-role="$emit('trigger', ['openRoleModal'])"
-      />
+      <Token :role="player.role" @set-role="$emit('trigger', ['openRoleModal'])" />
 
       <!-- Overlay icons -->
       <div class="overlay">
-        <font-awesome-icon
-          v-if="
-            !grimoire.isOrganVoteMode ||
-            typeof session.nomination[1] == 'object' ||
-            !session.isSpectator ||
-            player.id == session.playerId
-          "
-          icon="hand-paper"
-          class="vote"
-          :title="locale.player.handUp"
-          @click="vote()"
-        />
-        <font-awesome-icon
-          v-if="
-            grimoire.isOrganVoteMode &&
-            typeof session.nomination[1] !== 'object' &&
-            session.isSpectator &&
-            player.id !== session.playerId
-          "
-          icon="question"
-          class="vote"
-          :title="locale.player.handUp"
-          @click="vote()"
-        />
-        <font-awesome-icon
-          v-if="
-            !grimoire.isOrganVoteMode ||
-            !session.isSpectator ||
-            player.id == session.playerId
-          "
-          icon="times"
-          class="vote"
-          :title="locale.player.handDown"
-          @click="vote()"
-        />
-        <font-awesome-icon
-          v-if="
-            grimoire.isOrganVoteMode &&
-            typeof session.nomination[1] !== 'object' &&
-            session.isSpectator &&
-            player.id !== session.playerId
-          "
-          icon="question"
-          class="vote"
-          :title="locale.player.handDown"
-          @click="vote()"
-        />
-        <font-awesome-icon
-          icon="times-circle"
-          class="cancel"
-          :title="locale.player.cancel"
-          @click="cancel()"
-        />
-        <font-awesome-icon
-          icon="exchange-alt"
-          class="swap"
-          @click="swapPlayer(player)"
-          :title="locale.player.swap"
-        />
-        <font-awesome-icon
-          icon="redo-alt"
-          class="move"
-          @click="movePlayer(player)"
-          :title="locale.player.move"
-        />
-        <font-awesome-icon
-          icon="hand-point-right"
-          class="nominate"
-          @click="nominatePlayer(player)"
-          :title="locale.player.nominate"
-        />
+        <font-awesome-icon v-if="
+          !grimoire.isOrganVoteMode ||
+          typeof session.nomination[1] == 'object' ||
+          !session.isSpectator ||
+          player.id == session.playerId
+        " icon="hand-paper" class="fa fa-hand-paper vote" :title="locale.player.handUp" @click="vote()" />
+        <font-awesome-icon v-if="
+          grimoire.isOrganVoteMode &&
+          typeof session.nomination[1] !== 'object' &&
+          session.isSpectator &&
+          player.id !== session.playerId
+        " icon="question" class="fa fa-question vote" :title="locale.player.handUp" @click="vote()" />
+        <font-awesome-icon v-if="
+          !grimoire.isOrganVoteMode ||
+          !session.isSpectator ||
+          player.id == session.playerId
+        " icon="times" class="fa fa-times vote" :title="locale.player.handDown" @click="vote()" />
+        <font-awesome-icon v-if="
+          grimoire.isOrganVoteMode &&
+          typeof session.nomination[1] !== 'object' &&
+          session.isSpectator &&
+          player.id !== session.playerId
+        " icon="question" class="fa fa-question vote" :title="locale.player.handDown" @click="vote()" />
+        <font-awesome-icon icon="times-circle" class="fa fa-times-circle cancel" :title="locale.player.cancel"
+          @click="cancel()" />
+        <font-awesome-icon icon="exchange-alt" class="fa fa-exchange-alt swap" @click="swapPlayer(player)"
+          :title="locale.player.swap" />
+        <font-awesome-icon icon="redo-alt" class="fa fa-redo-alt move" @click="movePlayer(player)"
+          :title="locale.player.move" />
+        <font-awesome-icon icon="hand-point-right" class="fa fa-hand-point-right nominate"
+          @click="nominatePlayer(player)" :title="locale.player.nominate" />
       </div>
 
       <!-- Claimed seat icon -->
-      <font-awesome-icon
-        icon="chair"
-        v-if="player.id && session.sessionId"
-        class="seat"
-        :class="{ highlight: session.isRolesDistributed }"
-      />
+      <font-awesome-icon icon="chair" class="fa fa-chair seat" v-if="player.id && session.sessionId"
+        :class="{ highlight: session.isRolesDistributed }" />
 
       <!-- Ghost vote icon -->
-      <font-awesome-icon
-        icon="vote-yea"
-        class="has-vote"
-        v-if="player.isDead && !player.isVoteless"
-        @click="updatePlayer('isVoteless', true)"
-        :title="locale.player.ghostVote"
-      />
+      <font-awesome-icon icon="vote-yea" class="fa fa-vote-yea has-vote" v-if="player.isDead && !player.isVoteless"
+        @click="updatePlayer('isVoteless', true)" :title="locale.player.ghostVote" />
 
       <!-- On block icon -->
       <div class="marked">
-        <font-awesome-icon
-          icon="skull"
-          v-if="!(this.session.isSpectator && grimoire.isOrganVoteMode)"
-        />
+        <font-awesome-icon icon="skull" class="fa fa-skull"
+          v-if="!(this.session.isSpectator && grimoire.isOrganVoteMode)" />
       </div>
-      <div
-        class="name"
-        @click="isMenuOpen = !isMenuOpen"
-        :class="{ active: isMenuOpen }"
-      >
+      <div class="name" @click="isMenuOpen = !isMenuOpen" :class="{ active: isMenuOpen }">
         <span>{{ player.name }}</span>
-        <font-awesome-icon icon="venus-mars" v-if="player.pronouns" />
+        <font-awesome-icon icon="venus-mars" class="fa fa-venus-mars" v-if="player.pronouns" />
         <div class="pronouns" v-if="player.pronouns">
           <span>{{ player.pronouns }}</span>
         </div>
@@ -161,61 +93,52 @@
 
       <transition name="fold">
         <ul class="menu" v-if="isMenuOpen">
-          <li
-            @click="changePronouns"
-            v-if="
-              !session.isSpectator ||
-              (session.isSpectator && player.id === session.playerId)
-            "
-          >
-            <font-awesome-icon icon="venus-mars" />{{
+          <li @click="changePronouns" v-if="
+            !session.isSpectator ||
+            (session.isSpectator && player.id === session.playerId)
+          ">
+            <font-awesome-icon icon="venus-mars" class="fa fa-venus-mars" />{{
               locale.player.changePronouns
             }}
           </li>
           <template v-if="!session.isSpectator">
             <li @click="changeName">
-              <font-awesome-icon icon="user-edit" />{{
+              <font-awesome-icon icon="user-edit" class="fa fa-user-edit" />{{
                 locale.player.changeName
               }}
             </li>
             <li @click="movePlayer()" :class="{ disabled: session.lockedVote }">
-              <font-awesome-icon icon="redo-alt" />
+              <font-awesome-icon icon="redo-alt" class="fa fa-redo-alt" />
               {{ locale.player.movePlayer }}
             </li>
             <li @click="swapPlayer()" :class="{ disabled: session.lockedVote }">
-              <font-awesome-icon icon="exchange-alt" />
+              <font-awesome-icon icon="exchange-alt" class="fa fa-exchange-alt" />
               {{ locale.player.swapPlayers }}
             </li>
             <li @click="removePlayer" :class="{ disabled: session.lockedVote }">
-              <font-awesome-icon icon="times-circle" />
+              <font-awesome-icon icon="times-circle" class="fa fa-times-circle" />
               {{ locale.player.removePlayer }}
             </li>
-            <li
-              @click="updatePlayer('id', '', true)"
-              v-if="player.id && session.sessionId"
-            >
-              <font-awesome-icon icon="chair" />
+            <li @click="updatePlayer('id', '', true)" v-if="player.id && session.sessionId">
+              <font-awesome-icon icon="chair" class="fa fa-chair" />
               {{ locale.player.emptySeat }}
             </li>
             <template v-if="!session.nomination">
               <li @click="nominatePlayer()">
-                <font-awesome-icon icon="hand-point-right" />
+                <font-awesome-icon icon="hand-point-right" class="fa fa-hand-point-right" />
                 {{ locale.player.nomination }}
               </li>
             </template>
             <template v-if="!session.nomination">
               <li @click="specialVote()">
-                <font-awesome-icon icon="vote-yea" />
+                <font-awesome-icon icon="vote-yea" class="fa fa-vote-yea" />
                 {{ locale.player.specialVote }}
               </li>
             </template>
           </template>
-          <li
-            @click="claimSeat"
-            v-if="session.isSpectator"
-            :class="{ disabled: player.id && player.id !== session.playerId }"
-          >
-            <font-awesome-icon icon="chair" />
+          <li @click="claimSeat" v-if="session.isSpectator"
+            :class="{ disabled: player.id && player.id !== session.playerId }">
+            <font-awesome-icon icon="chair" class="fa fa-chair" />
             <template v-if="!player.id">
               {{ locale.player.claimSeat }}
             </template>
@@ -229,23 +152,14 @@
     </div>
 
     <template v-if="player.reminders">
-      <div
-        class="reminder"
-        :key="reminder.role + ' ' + reminder.name"
-        v-for="reminder in player.reminders"
-        :class="[reminder.role]"
-        @click="removeReminder(reminder)"
-      >
-        <span
-          class="icon"
-          :style="{
-            backgroundImage: `url(${
-              reminder.image && grimoire.isImageOptIn
-                ? reminder.image
-                : rolePath(reminder.role)
+      <div class="reminder" :key="reminder.role + ' ' + reminder.name" v-for="reminder in player.reminders"
+        :class="[reminder.role]" @click="removeReminder(reminder)">
+        <span class="icon" :style="{
+          backgroundImage: `url(${reminder.image && grimoire.isImageOptIn
+            ? reminder.image
+            : rolePath(reminder.role)
             })`,
-          }"
-        ></span>
+        }"></span>
         <span class="text">{{ reminder.name }}</span>
       </div>
     </template>
@@ -429,6 +343,7 @@ export default {
   transform-origin: left center;
   transform: perspective(200px);
 }
+
 .fold-enter,
 .fold-leave-to {
   transform: perspective(200px) rotateY(90deg);
@@ -499,6 +414,7 @@ export default {
 /****** Life token *******/
 .player {
   z-index: 2;
+
   .life {
     border-radius: 50%;
     width: 100%;
@@ -593,17 +509,20 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
+
   &:after {
     content: " ";
     display: block;
     padding-top: 100%;
   }
 }
+
 .player .overlay svg {
   position: absolute;
   filter: drop-shadow(0 0 3px black);
   z-index: 2;
   cursor: pointer;
+
   &.swap,
   &.move,
   &.nominate,
@@ -615,18 +534,22 @@ export default {
     pointer-events: none;
     transition: all 250ms;
     transform: scale(0.2);
+
     * {
       stroke-width: 10px;
       stroke: white;
       fill: url(#default);
     }
+
     &:hover *,
     &.fa-hand-paper * {
       fill: url(#demon);
     }
+
     &.fa-times * {
       fill: url(#townsfolk);
     }
+
     &.fa-question * {
       fill: url(#minion);
     }
@@ -647,10 +570,7 @@ export default {
 #townsquare.vote .player.vote-lock:not(.vote-yes) .overlay svg.vote.fa-times,
 #townsquare.vote .player.you.vote-yes .overlay svg.vote.fa-question,
 #townsquare.vote .player.vote-lock.vote-yes .overlay svg.vote.fa-question,
-#townsquare.vote
-  .player.vote-lock:not(.vote-yes)
-  .overlay
-  svg.vote.fa-question {
+#townsquare.vote .player.vote-lock:not(.vote-yes) .overlay svg.vote.fa-question {
   opacity: 1;
   transform: scale(1);
 }
@@ -700,9 +620,11 @@ li.move:not(.from) .player .overlay svg.move {
       box-shadow: 0 0 rgba($color, 1);
       border-color: $color;
     }
+
     50% {
       border-color: black;
     }
+
     100% {
       box-shadow: 0 0 20px 16px transparent;
       border-color: $color;
@@ -736,22 +658,26 @@ li.move:not(.from) .player .overlay svg.move {
   justify-content: center;
   transition: opacity 250ms;
   opacity: 0;
+
   &:before {
     content: " ";
     padding-top: 100%;
     display: block;
   }
+
   svg {
     height: 60%;
     width: 60%;
     position: absolute;
     stroke: white;
     stroke-width: 15px;
+
     path {
       fill: white;
     }
   }
 }
+
 .player.marked .marked {
   opacity: 0.5;
 }
@@ -765,6 +691,7 @@ li.move:not(.from) .player .overlay svg.move {
   filter: drop-shadow(0 0 3px black);
   cursor: default;
   z-index: 2;
+
   &.highlight {
     animation-iteration-count: 1;
     animation: redToWhite 1s normal forwards;
@@ -776,6 +703,7 @@ li.move:not(.from) .player .overlay svg.move {
   from {
     color: $demon;
   }
+
   to {
     color: white;
   }
@@ -786,7 +714,7 @@ li.move:not(.from) .player .overlay svg.move {
 }
 
 /***** Player name *****/
-.player > .name {
+.player>.name {
   right: 10%;
   display: flex;
   justify-content: center;
@@ -856,12 +784,12 @@ li.move:not(.from) .player .overlay svg.move {
   }
 }
 
-.player.dead > .name {
+.player.dead>.name {
   opacity: 0.5;
 }
 
 /***** Player menu *****/
-.player > .menu {
+.player>.menu {
   position: absolute;
   left: 110%;
   bottom: -5px;
@@ -895,6 +823,7 @@ li.move:not(.from) .player .overlay svg.move {
   li.disabled {
     cursor: not-allowed;
     opacity: 0.5;
+
     &:hover {
       color: white;
     }
@@ -910,7 +839,8 @@ li.move:not(.from) .player .overlay svg.move {
 #townsquare.public .circle .ability {
   display: none;
 }
-.circle .player .shroud:hover ~ .token .ability,
+
+.circle .player .shroud:hover~.token .ability,
 .circle .player .token:hover .ability {
   opacity: 1;
 }
@@ -984,9 +914,11 @@ li.move:not(.from) .player .overlay svg.move {
   &.add {
     opacity: 0;
     top: 30px;
+
     &:after {
       display: none;
     }
+
     .icon {
       top: 5%;
     }
@@ -996,6 +928,7 @@ li.move:not(.from) .player .overlay svg.move {
     .icon {
       display: none;
     }
+
     .text {
       font-size: 70%;
       word-break: break-word;
@@ -1012,6 +945,7 @@ li.move:not(.from) .player .overlay svg.move {
   &:hover:before {
     opacity: 0;
   }
+
   &:hover:after {
     opacity: 1;
   }
@@ -1033,6 +967,7 @@ li.move:not(.from) .player .overlay svg.move {
   opacity: 1;
   top: 0;
 }
+
 .circle li:hover .reminder.add:before {
   opacity: 1;
 }

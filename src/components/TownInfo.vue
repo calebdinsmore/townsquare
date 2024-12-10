@@ -1,14 +1,9 @@
 <template>
   <ul class="info">
-    <li
-      class="edition"
-      :class="['edition-' + edition.id]"
-      :style="{
-        backgroundImage: `url(${
-          edition.logo && grimoire.isImageOptIn ? edition.logo : logoPath
+    <li class="edition" :class="['edition-' + edition.id]" :style="{
+      backgroundImage: `url(${edition.logo && grimoire.isImageOptIn ? edition.logo : logoPath
         })`,
-      }"
-    ></li>
+    }"></li>
     <li v-if="players.length - teams.traveler < 5">
       {{ locale.towninfo.addPlayers }}
     </li>
@@ -18,52 +13,40 @@
         {{ edition.author ? " ©" + edition.author : "" }}
       </span>
       <span>
-        {{ players.length }} <font-awesome-icon class="players" icon="users" />
+        {{ players.length }} <font-awesome-icon icon="users" class="players fa-users" />
       </span>
       <span>
         {{ teams.alive }}
-        <font-awesome-icon class="alive" icon="heartbeat" />
+        <font-awesome-icon icon="heartbeat" class="alive fa-heartbeat" />
       </span>
       <span v-if="teams.traveler > 0">
         {{ teams.aliveNT }}
-        <font-awesome-icon class="alive" icon="house-user" />
+        <font-awesome-icon icon="house-user" class="alive fa-house-user" />
       </span>
       <span>
-        {{ teams.votes }} <font-awesome-icon class="votes" icon="vote-yea" />
+        {{ teams.votes }} <font-awesome-icon icon="vote-yea" class="votes fa-vote-yea" />
       </span>
     </li>
     <li v-if="players.length - teams.traveler >= 5">
       <span>
         {{ teams.townsfolk }}
-        <font-awesome-icon class="townsfolk" icon="user-friends" />
+        <font-awesome-icon icon="user-friends" class="townfolk fa-user-friends" />
       </span>
       <span>
         {{ teams.outsider }}
-        <font-awesome-icon
-          class="outsider"
-          :icon="teams.outsider > 1 ? 'user-friends' : 'user'"
-        />
+        <font-awesome-icon class="outsider" :icon="teams.outsider > 1 ? 'user-friends' : 'user'" />
       </span>
       <span>
         {{ teams.minion }}
-        <font-awesome-icon
-          class="minion"
-          :icon="teams.minion > 1 ? 'user-friends' : 'user'"
-        />
+        <font-awesome-icon class="minion" :icon="teams.minion > 1 ? 'user-friends' : 'user'" />
       </span>
       <span>
         {{ teams.demon }}
-        <font-awesome-icon
-          class="demon"
-          :icon="teams.demon > 1 ? 'user-friends' : 'user'"
-        />
+        <font-awesome-icon class="demon" :icon="teams.demon > 1 ? 'user-friends' : 'user'" />
       </span>
       <span v-if="teams.traveler">
         {{ teams.traveler }}
-        <font-awesome-icon
-          class="traveler"
-          :icon="teams.traveler > 1 ? 'user-friends' : 'user'"
-        />
+        <font-awesome-icon class="traveler" :icon="teams.traveler > 1 ? 'user-friends' : 'user'" />
       </span>
     </li>
     <li v-if="grimoire.isNight">
@@ -71,30 +54,20 @@
       {{ locale.towninfo.nightPhase }}
     </li>
     <li v-if="grimoire.isRinging">
-      <audio
-        :autoplay="!grimoire.isMuted"
-        src="../assets/sounds/countdown.mp3"
-        :muted="grimoire.isMuted"
-      ></audio>
+      <audio :autoplay="!grimoire.isMuted" src="../assets/sounds/countdown.mp3" :muted="grimoire.isMuted"></audio>
       <font-awesome-icon :icon="['fas', 'music']" />
       <font-awesome-icon :icon="['fas', 'bell']" />
       <font-awesome-icon :icon="['fas', 'music']" />
     </li>
     <li>
-      <Countdown
-        v-if="grimoire.timer.duration"
-        :timerName="grimoire.timer.name"
-        :timerDuration="grimoire.timer.duration"
-      />
+      <Countdown v-if="grimoire.timer.duration" :timerName="grimoire.timer.name"
+        :timerDuration="grimoire.timer.duration" />
     </li>
-    <li
-      class="marked"
-      v-if="
-        typeof session.markedPlayer == 'string' &&
-        !(this.session.isSpectator && grimoire.isOrganVoteMode)
-      "
-    >
-      <font-awesome-icon icon="skull" />
+    <li class="marked" v-if="
+      typeof session.markedPlayer == 'string' &&
+      !(this.session.isSpectator && grimoire.isOrganVoteMode)
+    ">
+      <font-awesome-icon icon="skull" class="fa fa-skull" />
     </li>
   </ul>
 </template>
@@ -185,24 +158,31 @@ export default {
     .players {
       color: #00f700;
     }
+
     .alive {
       color: #ff4a50;
     }
+
     .votes {
       color: #fff;
     }
+
     .townsfolk {
       color: $townsfolk;
     }
+
     .outsider {
       color: $outsider;
     }
+
     .minion {
       color: $minion;
     }
+
     .demon {
       color: $demon;
     }
+
     .traveler {
       color: $traveler;
     }
@@ -224,11 +204,13 @@ export default {
 .marked {
   opacity: 0.5;
   position: absolute;
+
   svg {
     height: 80px;
     width: 80px;
     stroke: white;
     stroke-width: 15px;
+
     path {
       fill: white;
     }

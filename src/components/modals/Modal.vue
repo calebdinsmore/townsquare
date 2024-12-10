@@ -1,25 +1,12 @@
 <template>
   <transition name="modal-fade">
     <div class="modal-backdrop" @click="close">
-      <div
-        class="modal"
-        :class="{ maximized: isMaximized }"
-        role="dialog"
-        aria-labelledby="modalTitle"
-        aria-describedby="modalDescription"
-        @click.stop=""
-      >
+      <div class="modal" :class="{ maximized: isMaximized }" role="dialog" aria-labelledby="modalTitle"
+        aria-describedby="modalDescription" @click.stop="">
         <div class="top-right-buttons">
-          <font-awesome-icon
-            @click="isMaximized = !isMaximized"
-            class="top-right-button"
-            :icon="['fas', isMaximized ? 'window-minimize' : 'window-maximize']"
-          />
-          <font-awesome-icon
-            @click="close"
-            class="top-right-button"
-            icon="times-circle"
-          />
+          <font-awesome-icon @click="isMaximized = !isMaximized" class="top-right-button"
+            :icon="['fas', isMaximized ? 'window-minimize' : 'window-maximize']" />
+          <font-awesome-icon @click="close" icon="times-circle" class="top-right-button fa-times-circle" />
         </div>
         <div class="slot">
           <slot></slot>
@@ -94,21 +81,23 @@ export default {
     line-height: 100%;
   }
 
-  > .top-right-buttons {
+  >.top-right-buttons {
     position: absolute;
     z-index: 100;
     top: 15px;
     right: 20px;
-    > .top-right-button {
+
+    >.top-right-button {
       cursor: pointer;
       width: 28px;
+
       &:hover {
         color: red;
       }
     }
   }
 
-  > .slot {
+  >.slot {
     max-height: 100%;
     position: initial;
   }
@@ -125,6 +114,7 @@ export default {
   display: flex;
   align-content: center;
   justify-content: center;
+
   .roles &,
   .characters & {
     max-width: 100%;

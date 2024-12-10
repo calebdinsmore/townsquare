@@ -4,6 +4,10 @@
 
 
 
+### Version 3.23.1
+
+- BUGFIX : styles incorectly applied to fontawesome icones after library upgrade
+
 ### Version 3.23.0
 
 - Upgraded from node 18 to node 22

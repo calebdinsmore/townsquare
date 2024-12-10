@@ -1,32 +1,22 @@
 <template>
-  <Modal
-    class="vote-history"
-    v-if="modals.voteHistory && (session.voteHistory || !session.isSpectator)"
-    @close="toggleModal('voteHistory')"
-  >
-    <font-awesome-icon
-      @click="clearVoteHistory"
-      icon="trash-alt"
-      class="clear"
-      title="Clear vote history"
-      v-if="session.isSpectator"
-    />
+  <Modal class="vote-history" v-if="modals.voteHistory && (session.voteHistory || !session.isSpectator)"
+    @close="toggleModal('voteHistory')">
+    <font-awesome-icon @click="clearVoteHistory" icon="trash-alt" class="fa fa-trash-alt clear"
+      title="Clear vote history" v-if="session.isSpectator" />
 
     <h3>{{ locale.modal.voteHistory.title }}</h3>
 
     <template v-if="!session.isSpectator">
       <div class="options">
         <div class="option" @click="setRecordVoteHistory">
-          <font-awesome-icon
-            :icon="[
-              'fas',
-              session.isVoteHistoryAllowed ? 'check-square' : 'square',
-            ]"
-          />
+          <font-awesome-icon :icon="[
+            'fas',
+            session.isVoteHistoryAllowed ? 'check-square' : 'square',
+          ]" />
           {{ locale.modal.voteHistory.accessibility }}
         </div>
         <div class="option" @click="clearVoteHistory">
-          <font-awesome-icon icon="trash-alt" />
+          <font-awesome-icon icon="trash-alt" class="fa fa-trash-alt" />
           {{ locale.modal.voteHistory.clear }}
         </div>
       </div>
@@ -41,7 +31,7 @@
           <td>{{ locale.modal.voteHistory.votes }}</td>
           <td>{{ locale.modal.voteHistory.majority }}</td>
           <td>
-            <font-awesome-icon icon="user-friends" />
+            <font-awesome-icon icon="user-friends" class="fa fa-user-friends" />
             {{ locale.modal.voteHistory.voters }}
           </td>
         </tr>
@@ -58,20 +48,18 @@
           <td>{{ vote.type }}</td>
           <td>
             {{ vote.votes == null ? "?" : vote.votes.length }}
-            <font-awesome-icon icon="hand-paper" />
+            <font-awesome-icon icon="hand-paper" class="fa fa-hand-paper" />
           </td>
           <td v-if="vote.nominee">
             {{ vote.majority }}
-            <font-awesome-icon
-              :icon="[
-                'fas',
-                vote.votes == null
-                  ? 'minus-square'
-                  : vote.votes.length >= vote.majority
-                    ? 'check-square'
-                    : 'square',
-              ]"
-            />
+            <font-awesome-icon :icon="[
+              'fas',
+              vote.votes == null
+                ? 'minus-square'
+                : vote.votes.length >= vote.majority
+                  ? 'check-square'
+                  : 'square',
+            ]" />
           </td>
           <td v-else></td>
           <td>

@@ -1,22 +1,14 @@
 <template>
-  <Modal
-    class="game-state"
-    v-if="modals.gameState"
-    @close="toggleModal('gameState')"
-  >
+  <Modal class="game-state" v-if="modals.gameState" @close="toggleModal('gameState')">
     <h3>{{ locale.modal.gameState.title }}</h3>
-    <textarea
-      :value="gamestate"
-      @input.stop="input = $event.target.value"
-      @click="$event.target.select()"
-      @keyup.stop=""
-    ></textarea>
+    <textarea :value="gamestate" @input.stop="input = $event.target.value" @click="$event.target.select()"
+      @keyup.stop=""></textarea>
     <div class="button-group">
       <div class="button townsfolk" @click="copy">
-        <font-awesome-icon icon="copy" /> {{ locale.modal.gameState.copy }}
+        <font-awesome-icon icon="copy" class="fa fa-copy" /> {{ locale.modal.gameState.copy }}
       </div>
       <div class="button demon" @click="load" v-if="!session.isSpectator">
-        <font-awesome-icon icon="cog" /> {{ locale.modal.gameState.load }}
+        <font-awesome-icon icon="cog" class="fa fa-cog" /> {{ locale.modal.gameState.load }}
       </div>
     </div>
   </Modal>

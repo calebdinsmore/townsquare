@@ -1,44 +1,28 @@
 <template>
   <div id="controls">
-    <span
-      class="nomlog-summary"
-      v-show="session.voteHistory.length && session.sessionId"
-      @click="toggleModal('voteHistory')"
-      :title="`${session.voteHistory.length} recent ${
-        session.voteHistory.length == 1 ? 'nomination' : 'nominations'
-      }`"
-    >
-      <font-awesome-icon icon="book-dead" />
+    <span class="nomlog-summary" v-show="session.voteHistory.length && session.sessionId"
+      @click="toggleModal('voteHistory')" :title="`${session.voteHistory.length} recent ${session.voteHistory.length == 1 ? 'nomination' : 'nominations'
+        }`">
+      <font-awesome-icon icon="book-dead" class="fa fa-book-dead" />
       {{ session.voteHistory.length }}
     </span>
-    <span
-      class="session"
-      :class="{
-        spectator: session.isSpectator,
-        reconnecting: session.isReconnecting,
-      }"
-      v-if="session.sessionId"
-      @click="leaveSession"
-      :title="`${session.playerCount} other players in this session${
-        session.ping ? ' (' + session.ping + 'ms latency)' : ''
-      }`"
-    >
-      <font-awesome-icon icon="broadcast-tower" />
+    <span class="session" :class="{
+      spectator: session.isSpectator,
+      reconnecting: session.isReconnecting,
+    }" v-if="session.sessionId" @click="leaveSession" :title="`${session.playerCount} other players in this session${session.ping ? ' (' + session.ping + 'ms latency)' : ''
+      }`">
+      <font-awesome-icon icon="broadcast-tower" class="fa fa-broadcast-tower" />
       {{ session.playerCount }}
     </span>
     <div class="menu" :class="{ open: grimoire.isMenuOpen }">
-      <font-awesome-icon icon="cog" @click="toggleMenu" />
+      <font-awesome-icon icon="cog" class="fa fa-cog" @click="toggleMenu" />
       <ul>
         <li class="tabs" :class="tab">
-          <font-awesome-icon icon="book-open" @click="tab = 'grimoire'" />
-          <font-awesome-icon icon="broadcast-tower" @click="tab = 'session'" />
-          <font-awesome-icon
-            icon="users"
-            v-if="!session.isSpectator"
-            @click="tab = 'players'"
-          />
-          <font-awesome-icon icon="theater-masks" @click="tab = 'characters'" />
-          <font-awesome-icon icon="question" @click="tab = 'help'" />
+          <font-awesome-icon icon="book-open" class="fa fa-book-open" @click="tab = 'grimoire'" />
+          <font-awesome-icon icon="broadcast-tower" class="fa fa-broadcast-tower" @click="tab = 'session'" />
+          <font-awesome-icon icon="users" class="fa fa-users" v-if="!session.isSpectator" @click="tab = 'players'" />
+          <font-awesome-icon icon="theater-masks" class="fa fa-theater-masks" @click="tab = 'characters'" />
+          <font-awesome-icon icon="question" class="fa fa-question" @click="tab = 'help'" />
         </li>
 
         <template v-if="tab === 'grimoire'">
@@ -69,76 +53,54 @@
           <li @click="toggleOrganVoteMode" v-if="!session.isSpectator">
             {{ locale.menu.grimoire.organGrinder }}
             <em>
-              <font-awesome-icon
-                :icon="[
-                  'fas',
-                  grimoire.isOrganVoteMode ? 'check-square' : 'square',
-                ]"
-              />
+              <font-awesome-icon :icon="[
+                'fas',
+                grimoire.isOrganVoteMode ? 'check-square' : 'square',
+              ]" />
             </em>
           </li>
           <li @click="toggleNightOrder" v-if="session.isSpectator">
             {{ locale.menu.grimoire.order }}
             <em>
-              <font-awesome-icon
-                :icon="[
-                  'fas',
-                  grimoire.isNightOrder ? 'check-square' : 'square',
-                ]"
-              />
+              <font-awesome-icon :icon="[
+                'fas',
+                grimoire.isNightOrder ? 'check-square' : 'square',
+              ]" />
             </em>
           </li>
           <li v-if="players.length">
             {{ locale.menu.grimoire.zoom }}
             <em>
-              <font-awesome-icon
-                @click="setZoom(grimoire.zoom - 1)"
-                icon="search-minus"
-              />
+              <font-awesome-icon @click="setZoom(grimoire.zoom - 1)" icon="search-minus" class="fa fa-search-minus" />
               {{ Math.round(100 + grimoire.zoom * 10) }}%
-              <font-awesome-icon
-                @click="setZoom(grimoire.zoom + 1)"
-                icon="search-plus"
-              />
+              <font-awesome-icon @click="setZoom(grimoire.zoom + 1)" icon="search-plus" class="fa fa-search-plus" />
             </em>
           </li>
           <li @click="setBackground">
             {{ locale.menu.grimoire.background }}
-            <em><font-awesome-icon icon="image" /></em>
+            <em><font-awesome-icon icon="image" class="fa fa-image" /></em>
           </li>
           <li v-if="!edition.isOfficial" @click="imageOptIn">
             <small>{{ locale.menu.grimoire.customImages }}</small>
-            <em
-              ><font-awesome-icon
-                :icon="[
-                  'fas',
-                  grimoire.isImageOptIn ? 'check-square' : 'square',
-                ]"
-            /></em>
+            <em><font-awesome-icon :icon="[
+              'fas',
+              grimoire.isImageOptIn ? 'check-square' : 'square',
+            ]" /></em>
           </li>
           <li @click="streamerMode">
             <small>{{ locale.menu.grimoire.streamerMode }}</small>
-            <em
-              ><font-awesome-icon
-                :icon="[
-                  'fas',
-                  grimoire.isStreamerMode ? 'check-square' : 'square',
-                ]"
-            /></em>
+            <em><font-awesome-icon :icon="[
+              'fas',
+              grimoire.isStreamerMode ? 'check-square' : 'square',
+            ]" /></em>
           </li>
           <li @click="toggleStatic">
             {{ locale.menu.grimoire.animations }}
-            <em
-              ><font-awesome-icon
-                :icon="['fas', grimoire.isStatic ? 'check-square' : 'square']"
-            /></em>
+            <em><font-awesome-icon :icon="['fas', grimoire.isStatic ? 'check-square' : 'square']" /></em>
           </li>
           <li @click="toggleMuted">
             {{ locale.menu.grimoire.mute }}
-            <em
-              ><font-awesome-icon
-                :icon="['fas', grimoire.isMuted ? 'volume-mute' : 'volume-up']"
-            /></em>
+            <em><font-awesome-icon :icon="['fas', grimoire.isMuted ? 'volume-mute' : 'volume-up']" /></em>
           </li>
         </template>
 
@@ -174,16 +136,13 @@
             </li>
             <li @click="copySessionUrl">
               {{ locale.menu.session.link }}
-              <em><font-awesome-icon icon="copy" /></em>
+              <em><font-awesome-icon icon="copy" class="fa fa-copy" /></em>
             </li>
             <li v-if="!session.isSpectator" @click="distributeRoles">
               {{ locale.menu.session.sendRoles }}
-              <em><font-awesome-icon icon="theater-masks" /></em>
+              <em><font-awesome-icon icon="theater-masks" class="fa fa-theater-masks" /></em>
             </li>
-            <li
-              v-if="session.voteHistory.length || !session.isSpectator"
-              @click="toggleModal('voteHistory')"
-            >
+            <li v-if="session.voteHistory.length || !session.isSpectator" @click="toggleModal('voteHistory')">
               {{ locale.menu.session.voteHistory }}<em>[V]</em>
             </li>
             <li @click="leaveSession">
@@ -201,11 +160,11 @@
           </li>
           <li @click="randomizeSeatings" v-if="players.length > 2">
             {{ locale.menu.players.randomize }}
-            <em><font-awesome-icon icon="dice" /></em>
+            <em><font-awesome-icon icon="dice" class="fa fa-dice" /></em>
           </li>
           <li @click="clearPlayers" v-if="players.length">
             {{ locale.menu.players.removeAll }}
-            <em><font-awesome-icon icon="trash-alt" /></em>
+            <em><font-awesome-icon icon="trash-alt" class="fa fa-trash-alt" /></em>
           </li>
         </template>
 
@@ -216,20 +175,17 @@
             {{ locale.menu.characters.selectEdition }}
             <em>[E]</em>
           </li>
-          <li
-            @click="toggleModal('roles')"
-            v-if="!session.isSpectator && players.length > 4"
-          >
+          <li @click="toggleModal('roles')" v-if="!session.isSpectator && players.length > 4">
             {{ locale.menu.characters.assign }}
             <em>[C]</em>
           </li>
           <li v-if="!session.isSpectator" @click="toggleModal('fabled')">
             {{ locale.menu.characters.addFabled }}
-            <em><font-awesome-icon icon="dragon" /></em>
+            <em><font-awesome-icon icon="dragon" class="fa fa-dragon" /></em>
           </li>
           <li @click="clearRoles" v-if="players.length">
             {{ locale.menu.characters.removeAll }}
-            <em><font-awesome-icon icon="trash-alt" /></em>
+            <em><font-awesome-icon icon="trash-alt" class="fa fa-trash-alt" /></em>
           </li>
         </template>
 
@@ -246,7 +202,7 @@
           </li>
           <li @click="toggleModal('gameState')">
             {{ locale.menu.help.gameState }}
-            <em><font-awesome-icon icon="file-code" /></em>
+            <em><font-awesome-icon icon="file-code" class="fa fa-file-code" /></em>
           </li>
           <li>
             <a href="https://discord.gg/gD3AB8qCrw" target="_blank">
@@ -419,6 +375,7 @@ export default {
   from {
     color: green;
   }
+
   to {
     color: white;
   }
@@ -435,13 +392,14 @@ export default {
 
   svg {
     filter: drop-shadow(0 0 5px rgba(0, 0, 0, 1));
+
     &.success {
       animation: greenToWhite 1s normal forwards;
       animation-iteration-count: 1;
     }
   }
 
-  > span {
+  >span {
     display: inline-block;
     cursor: pointer;
     z-index: 5;
@@ -455,9 +413,11 @@ export default {
 
   span.session {
     color: $demon;
+
     &.spectator {
       color: $townsfolk;
     }
+
     &.reconnecting {
       animation: blink 1s infinite;
     }
@@ -469,6 +429,10 @@ export default {
     opacity: 0.5;
     color: gray;
   }
+}
+
+.fa svg {
+  height: 1rem;
 }
 
 .menu {
@@ -485,21 +449,20 @@ export default {
     transform: rotate(0deg);
   }
 
-  > svg {
+  >svg {
     cursor: pointer;
     background: rgba(0, 0, 0, 0.5);
     border: 3px solid black;
-    width: 40px;
-    height: 50px;
     margin-bottom: -8px;
     border-bottom: 0;
     border-radius: 10px 10px 0 0;
-    padding: 5px 5px 15px;
+    padding: 5px 5px 18px;
   }
 
   a {
     color: white;
     text-decoration: none;
+
     &:hover {
       color: red;
     }
@@ -529,32 +492,33 @@ export default {
       &.tabs {
         display: flex;
         padding: 0;
+
         svg {
           flex-grow: 1;
           flex-shrink: 0;
-          height: 35px;
           border-bottom: 3px solid black;
           border-right: 3px solid black;
           padding: 5px 0;
           cursor: pointer;
           transition: color 250ms;
+
           &:hover {
             color: red;
           }
+
           &:last-child {
             border-right: 0;
           }
         }
+
         &.grimoire .fa-book-open,
         &.players .fa-users,
         &.characters .fa-theater-masks,
         &.session .fa-broadcast-tower,
         &.help .fa-question {
-          background: linear-gradient(
-            to bottom,
-            $townsfolk 0%,
-            rgba(0, 0, 0, 0.5) 100%
-          );
+          background: linear-gradient(to bottom,
+              $townsfolk 0%,
+              rgba(0, 0, 0, 0.5) 100%);
         }
       }
 
@@ -577,13 +541,11 @@ export default {
       padding: 0 10px;
       text-align: center;
       justify-content: center;
-      background: linear-gradient(
-        to right,
-        $townsfolk 0%,
-        rgba(0, 0, 0, 0.5) 20%,
-        rgba(0, 0, 0, 0.5) 80%,
-        $demon 100%
-      );
+      background: linear-gradient(to right,
+          $townsfolk 0%,
+          rgba(0, 0, 0, 0.5) 20%,
+          rgba(0, 0, 0, 0.5) 80%,
+          $demon 100%);
     }
   }
 }

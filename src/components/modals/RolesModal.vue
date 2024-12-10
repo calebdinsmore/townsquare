@@ -1,9 +1,5 @@
 <template>
-  <Modal
-    class="roles"
-    v-if="modals.roles && nonTravelers >= 5"
-    @close="toggleModal('roles')"
-  >
+  <Modal class="roles" v-if="modals.roles && nonTravelers >= 5" @close="toggleModal('roles')">
     <h3>
       {{
         locale.modal.roles.titleStart +
@@ -16,36 +12,25 @@
         {{ teamRoles.reduce((a, { selected }) => a + selected, 0) }} /
         {{ game[nonTravelers - 5][team] }}
       </li>
-      <li
-        v-for="role in teamRoles"
-        :class="[role.team, role.selected ? 'selected' : '']"
-        :key="role.id"
-        @click="role.selected = role.selected ? 0 : 1"
-      >
+      <li v-for="role in teamRoles" :class="[role.team, role.selected ? 'selected' : '']" :key="role.id"
+        @click="role.selected = role.selected ? 0 : 1">
         <Token :role="role" />
-        <font-awesome-icon icon="exclamation-triangle" v-if="role.setup" />
+        <font-awesome-icon icon="exclamation-triangle" class="fa fa-exclamation-triangle" v-if="role.setup" />
         <div class="buttons" v-if="allowMultiple">
-          <font-awesome-icon
-            icon="minus-circle"
-            @click.stop="role.selected--"
-          />
+          <font-awesome-icon icon="minus-circle" class="fa fa-minus-circle" @click.stop="role.selected--" />
           <span>{{ role.selected > 1 ? "x" + role.selected : "" }}</span>
-          <font-awesome-icon icon="plus-circle" @click.stop="role.selected++" />
+          <font-awesome-icon icon="plus-circle" class="fa fa-plus-circle" @click.stop="role.selected++" />
         </div>
       </li>
     </ul>
     <ul class="tokens">
-      <li
-        v-for="role in fabledWithSetup"
-        :class="['fabled', 'selected']"
-        :key="role.id"
-      >
+      <li v-for="role in fabledWithSetup" :class="['fabled', 'selected']" :key="role.id">
         <Token :role="role" />
-        <font-awesome-icon icon="exclamation-triangle" />
+        <font-awesome-icon icon="exclamation-triangle" class="fa fa-exclamation-triangle" />
       </li>
     </ul>
     <div class="warning" v-if="hasSelectedSetupRoles || fabledWithSetup.length">
-      <font-awesome-icon icon="exclamation-triangle" />
+      <font-awesome-icon icon="exclamation-triangle" class="fa fa-exclamation-triangle" />
       <span>{{ locale.modal.roles.warning }}</span>
     </div>
     <label class="multiple" :class="{ checked: allowMultiple }">
@@ -54,14 +39,10 @@
       {{ locale.modal.roles.allowMultiple }}
     </label>
     <div class="button-group">
-      <div
-        class="button"
-        @click="assignRoles"
-        :class="{
-          disabled: selectedRoles > nonTravelers || !selectedRoles,
-        }"
-      >
-        <font-awesome-icon icon="people-arrows" />
+      <div class="button" @click="assignRoles" :class="{
+        disabled: selectedRoles > nonTravelers || !selectedRoles,
+      }">
+        <font-awesome-icon icon="people-arrows" class="fa fa-people-arrows" />
         {{
           locale.modal.roles.assignStart +
           selectedRoles +
@@ -69,7 +50,7 @@
         }}
       </div>
       <div class="button" @click="selectRandomRoles">
-        <font-awesome-icon icon="random" />
+        <font-awesome-icon icon="random" class="fa fa-random" />
         {{ locale.modal.roles.shuffle }}
       </div>
     </div>
@@ -194,55 +175,67 @@ export default {
 
 ul.tokens {
   padding-left: 5vmin;
+
   li {
     border-radius: 50%;
     width: 5vmax;
     margin: 5px;
     opacity: 0.5;
     transition: all 250ms;
+
     &.selected {
       opacity: 1;
+
       .buttons {
         display: flex;
       }
+
       .fa-exclamation-triangle {
         display: block;
       }
     }
+
     &.townsfolk {
       box-shadow:
         0 0 10px $townsfolk,
         0 0 10px #004cff;
     }
+
     &.outsider {
       box-shadow:
         0 0 10px $outsider,
         0 0 10px $outsider;
     }
+
     &.minion {
       box-shadow:
         0 0 10px $minion,
         0 0 10px $minion;
     }
+
     &.demon {
       box-shadow:
         0 0 10px $demon,
         0 0 10px $demon;
     }
+
     &.traveler {
       box-shadow:
         0 0 10px $traveler,
         0 0 10px $traveler;
     }
+
     &.fabled {
       box-shadow:
         0 0 10px $fabled,
         0 0 10px $fabled;
     }
+
     &:hover {
       transform: scale(1.2);
       z-index: 10;
     }
+
     .fa-exclamation-triangle {
       position: absolute;
       color: red;
@@ -252,6 +245,7 @@ ul.tokens {
       font-size: 150%;
       display: none;
     }
+
     .buttons {
       display: none;
       position: absolute;
@@ -261,12 +255,15 @@ ul.tokens {
       z-index: 30;
       font-weight: bold;
       filter: drop-shadow(0 0 5px rgba(0, 0, 0, 1));
+
       span {
         flex-grow: 1;
       }
+
       svg {
         opacity: 0.25;
         cursor: pointer;
+
         &:hover {
           opacity: 1;
           color: red;
@@ -274,6 +271,7 @@ ul.tokens {
       }
     }
   }
+
   .count {
     opacity: 1;
     position: absolute;
@@ -284,20 +282,25 @@ ul.tokens {
     display: flex;
     align-items: center;
     justify-content: center;
+
     &:after {
       content: " ";
       display: block;
       padding-top: 100%;
     }
+
     &.townsfolk {
       color: $townsfolk;
     }
+
     &.outsider {
       color: $outsider;
     }
+
     &.minion {
       color: $minion;
     }
+
     &.demon {
       color: $demon;
     }
@@ -309,16 +312,20 @@ ul.tokens {
     display: block;
     text-align: center;
     cursor: pointer;
+
     &.checked,
     &:hover {
       color: red;
     }
+
     &.checked {
       margin-top: 10px;
     }
+
     svg {
       margin-right: 5px;
     }
+
     input {
       display: none;
     }
@@ -330,10 +337,12 @@ ul.tokens {
     bottom: 20px;
     right: 20px;
     z-index: 10;
+
     svg {
       font-size: 150%;
       vertical-align: middle;
     }
+
     span {
       display: none;
       text-align: center;
@@ -346,6 +355,7 @@ ul.tokens {
       border-radius: 10px;
       border: 2px solid black;
     }
+
     &:hover span {
       display: block;
     }
