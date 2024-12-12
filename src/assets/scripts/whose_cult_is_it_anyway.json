@@ -11,16 +11,19 @@
     "id": "pixie"
   },
   {
-    "id": "balloonist"
-  },
-  {
     "id": "king"
   },
   {
-    "id": "fortuneteller"
+    "id": "villageidiot"
+  },
+  {
+    "id": "balloonist"
   },
   {
     "id": "cultleader"
+  },
+  {
+    "id": "fortuneteller"
   },
   {
     "id": "oracle"
@@ -33,9 +36,6 @@
   },
   {
     "id": "seamstress"
-  },
-  {
-    "id": "huntsman"
   },
   {
     "id": "choirboy"
@@ -53,7 +53,7 @@
     "id": "mutant"
   },
   {
-    "id": "damsel"
+    "id": "hatter"
   },
   {
     "id": "witch"
@@ -74,10 +74,10 @@
     "id": "nodashii"
   },
   {
-    "id": "fanggu"
+    "id": "vortox"
   },
   {
-    "id": "vortox"
+    "id": "fanggu"
   },
   {
     "id": "stormcatcher"
