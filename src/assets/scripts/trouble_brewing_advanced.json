@@ -19,7 +19,7 @@
         "id": "empath"
     },
     {
-        "id": "fortune_teller"
+        "id": "fortuneteller"
     },
     {
         "id": "undertaker"
@@ -52,6 +52,9 @@
         "id": "recluse"
     },
     {
+        "id": "drunk"
+    },
+    {
         "id": "lunatic"
     },
     {
@@ -64,7 +67,7 @@
         "id": "baron"
     },
     {
-        "id": "scarlet_woman"
+        "id": "scarletwoman"
     },
     {
         "id": "marionette"
@@ -73,6 +76,6 @@
         "id": "imp"
     },
     {
-        "id": "fang_gu"
+        "id": "fanggu"
     }
 ]
