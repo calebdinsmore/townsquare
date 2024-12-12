@@ -1,83 +1,84 @@
 [
   {
-    "id": "_meta",
-    "name": "Hide & Seek",
-    "author": "Narninian & Zaba",
-    "logo": "https://cdn.shopify.com/oxygen/57467011226/524442/h11pcta59/build/_assets/Damsel_Website-T6Y6WEQ7.png"
+    "id":"_meta",
+    "logo":"hide_seek",
+    "name":"Hide and Seek",
+    "author":"Narninian & Zaba",
+    "credits":"Script logo by Wedge McCloud."
   },
   {
-    "id": "noble"
+    "id":"noble"
   },
   {
-    "id": "librarian"
+    "id":"librarian"
   },
   {
-    "id": "pixie"
+    "id":"pixie"
   },
   {
-    "id": "preacher"
+    "id":"preacher"
   },
   {
-    "id": "towncrier"
+    "id":"town_crier"
   },
   {
-    "id": "oracle"
+    "id":"oracle"
   },
   {
-    "id": "undertaker"
+    "id":"undertaker"
   },
   {
-    "id": "dreamer"
+    "id":"dreamer"
   },
   {
-    "id": "seamstress"
+    "id":"seamstress"
   },
   {
-    "id": "artist"
+    "id":"artist"
   },
   {
-    "id": "huntsman"
+    "id":"huntsman"
   },
   {
-    "id": "ravenkeeper"
+    "id":"ravenkeeper"
   },
   {
-    "id": "virgin"
+    "id":"virgin"
   },
   {
-    "id": "damsel"
+    "id":"damsel"
   },
   {
-    "id": "drunk"
+    "id":"drunk"
   },
   {
-    "id": "mutant"
+    "id":"mutant"
   },
   {
-    "id": "goon"
+    "id":"goon"
   },
   {
-    "id": "godfather"
+    "id":"godfather"
   },
   {
-    "id": "mezepheles"
+    "id":"mezepheles"
   },
   {
-    "id": "poisoner"
+    "id":"poisoner"
   },
   {
-    "id": "cerenovus"
+    "id":"cerenovus"
   },
   {
-    "id": "lilmonsta"
+    "id":"pukka"
   },
   {
-    "id": "pukka"
+    "id":"vigormortis"
   },
   {
-    "id": "vigormortis"
+    "id":"imp"
   },
   {
-    "id": "imp"
+    "id":"Ojo"
   }
 ]
