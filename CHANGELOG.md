@@ -4,6 +4,7 @@
 
 - Adding a system of roles in multiple copies
 - Adding the Banshee
+- Updating the jinxes
 
 ### Version 3.23.2
 
