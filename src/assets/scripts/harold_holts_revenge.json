@@ -1,17 +1,18 @@
 [
     {
-        "id": "_meta",
-        "name": "Harold Holt's Revenge",
-        "author": "Theo",
-        "logo": "https://cdn.shopify.com/oxygen/57467011226/524442/h11pcta59/build/_assets/Leviathan_website-UUOT36KY.png"
-      },{
+      "id": "_meta",
+      "name": "Harold Holt's Revenge",
+      "author": "Theo",
+      "logo": "leviathan"
+    },
+	{
         "id": "librarian"
     },
     {
         "id": "investigator"
     },
     {
-        "id": "empath"
+        "id": "shugenja"
     },
     {
         "id": "balloonist"
@@ -20,10 +21,10 @@
         "id": "dreamer"
     },
     {
-        "id": "snake_charmer"
+        "id": "snakecharmer"
     },
     {
-        "id": "town_crier"
+        "id": "towncrier"
     },
     {
         "id": "slayer"
@@ -59,7 +60,7 @@
         "id": "cerenovus"
     },
     {
-        "id": "pit-hag"
+        "id": "pithag"
     },
     {
         "id": "baron"
