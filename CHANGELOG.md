@@ -4,6 +4,9 @@
 
 - Adding a system of roles in multiple copies
 - Adding the Banshee
+- Adding new scripts
+- Deleting some out-of-date scripts
+- Using local path instead of URLs for saved scripts
 
 ### Version 3.23.2
 
