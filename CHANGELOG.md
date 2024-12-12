@@ -4,6 +4,7 @@
 
 - Adding a system of roles in multiple copies
 - Adding the Banshee
+- Updating some scripts
 
 ### Version 3.23.2
 
