@@ -30,7 +30,7 @@
     <li v-if="players.length - teams.traveler >= 5">
       <span>
         {{ teams.townsfolk }}
-        <font-awesome-icon icon="user-friends" class="townfolk fa-user-friends" />
+        <font-awesome-icon icon="user-friends" class="townsfolk fa-user-friends" />
       </span>
       <span>
         {{ teams.outsider }}

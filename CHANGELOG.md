@@ -4,6 +4,7 @@
 
 - Adding a system of roles in multiple copies
 - Adding the Banshee
+- Correcting a colour bug with the icon for number of Townsfolk
 
 ### Version 3.23.2
 
