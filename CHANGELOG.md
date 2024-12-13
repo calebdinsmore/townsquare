@@ -7,6 +7,9 @@
 - Correcting a colour bug with the icon for number of Townsfolk
 - Updating the jinxes
 - Updating unofficial scripts and giving them local logos
+- Adding new scripts
+- Deleting some out-of-date scripts
+- Using local path instead of URLs for saved scripts
 
 ### Version 3.23.2
 

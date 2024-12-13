@@ -30,153 +30,184 @@
       "roles": [],
       "logo": "snv",
       "isOfficial": true
-    },
-    {
-      "id": "luf",
-      "name": "Laissez Un Faire",
-      "author": "The Pandemonium Institute",
-      "description": "",
-      "level": "Veteran",
-      "roles": ["balloonist", "savant", "amnesiac", "fisherman", "artist", "cannibal", "mutant", "lunatic", "widow", "goblin", "leviathan"],
-      "isOfficial": true
     }
   ],
   "popular" :
   [
     [
       "Boozling",
-      "https://raw.githubusercontent.com/Pingumask/townsquare/develop/src/assets/scripts/boozling.json"
+      "boozling.json"
     ],
     [
       "Catfishing",
-      "https://raw.githubusercontent.com/Pingumask/townsquare/develop/src/assets/scripts/catfishing.json"
+      "catfishing.json"
     ],
     [
-      "Chaos in the streets",
-      "https://raw.githubusercontent.com/Pingumask/townsquare/develop/src/assets/scripts/chaos_in_the_streets.json"
+      "Chef's Deluxe",
+      "chefs_deluxe.json"
+    ],
+    [
+      "Church of Spies",
+      "church_of_spies.json"
     ],
     [
       "Cultists of Atlantis",
-      "https://raw.githubusercontent.com/Pingumask/townsquare/develop/src/assets/scripts/cultists_of_atlantis.json"
+      "cultists_of_atlantis.json"
     ],
     [
       "Deadly Penance Day",
-      "https://raw.githubusercontent.com/Pingumask/townsquare/develop/src/assets/scripts/deadly_penance_day.json"
+      "deadly_penance_day.json"
+    ],
+    [
+      "Dusk in the House of the Damned",
+      "dusk_in_the_house_of_the_damned.json"
+    ],
+    [
+      "Extension Cord",
+      "extension_cord.json"
+    ],
+    [
+      "A Grimm Chorus",
+      "grimm_chorus.json"
     ],
     [
       "Harold Holt's Revenge",
-      "https://raw.githubusercontent.com/Pingumask/townsquare/develop/src/assets/scripts/harold_holts_revenge.json"
+      "harold_holts_revenge.json"
     ],
     [
       "Hide & Seek",
-      "https://raw.githubusercontent.com/Pingumask/townsquare/develop/src/assets/scripts/hide_and_seek.json"
-    ],
-    [
-      "Knowing me, Knowing you",
-      "https://raw.githubusercontent.com/Pingumask/townsquare/develop/src/assets/scripts/knowing_me_knowing_you.json"
-    ],
-    [
-      "Midnight Oasis",
-      "https://raw.githubusercontent.com/Pingumask/townsquare/develop/src/assets/scripts/midnight_oasis.json"
-    ],
-    [
-      "No roles barred",
-      "https://raw.githubusercontent.com/Pingumask/townsquare/develop/src/assets/scripts/no_roles_barred.json"
-    ],
-    [
-      "Pont Saint-Esprit",
-      "https://raw.githubusercontent.com/Pingumask/townsquare/develop/src/assets/scripts/pont_saint_esprit.json"
-    ],
-    [
-      "Poppyganda",
-      "https://raw.githubusercontent.com/Pingumask/townsquare/develop/src/assets/scripts/poppyganda.json"
-    ],
-    [
-      "Reptiles !",
-      "https://raw.githubusercontent.com/Pingumask/townsquare/develop/src/assets/scripts/reptiles.json"
-    ],
-    [
-      "Reptiles II : Lizard in the city",
-      "https://raw.githubusercontent.com/Pingumask/townsquare/develop/src/assets/scripts/reptiles2.json"
-    ],
-    [
-      "Reykjavik's Scheme",
-      "https://raw.githubusercontent.com/Pingumask/townsquare/develop/src/assets/scripts/reykjaviks_scheme.json"
-    ],
-    [
-      "Rochambeau",
-      "https://raw.githubusercontent.com/Pingumask/townsquare/develop/src/assets/scripts/rochambeau.json"
-    ],
-    [
-      "Simpletown Village",
-      "https://raw.githubusercontent.com/Pingumask/townsquare/develop/src/assets/scripts/simpletown_village.json"
-    ],
-    [
-      "Storyteller's Vengeance",
-      "https://raw.githubusercontent.com/Pingumask/townsquare/develop/src/assets/scripts/storytellers_vengeance.json"
+      "hide_and_seek.json"
     ],
     [
       "The Horrifying Spectacle of Public Executions",
-      "https://raw.githubusercontent.com/Pingumask/townsquare/develop/src/assets/scripts/the_horrifying_spectacle_of_public_executions.json"
+      "the_horrifying_spectacle_of_public_executions.json"
+    ],
+    [
+      "Knowing me, Knowing you",
+      "knowing_me_knowing_you.json"
+    ],
+    [
+      "Lunar Eclipse",
+      "lunar_eclipse.json"
+    ],
+    [
+      "Midnight Oasis",
+      "midnight_oasis.json"
+    ],
+    [
+      "No roles barred",
+      "no_roles_barred.json"
+    ],
+    [
+      "One in one out",
+      "one_in_one_out.json"
+    ],
+    [
+      "Poppyganda",
+      "poppyganda.json"
+    ],
+    [
+      "Reptiles !",
+      "reptiles.json"
+    ],
+    [
+      "Reptiles II : Lizard in the city",
+      "reptiles2.json"
+    ],
+    [
+      "Reykjavik's Scheme",
+      "reykjaviks_scheme.json"
+    ],
+    [
+      "Rochambeau",
+      "rochambeau.json"
+    ],
+    [
+      "Separation Of Church and State",
+      "separation_church_state.json"
+    ],
+    [
+      "Simpletown Village",
+      "simpletown_village.json"
+    ],
+    [
+      "Storyteller's Vengeance",
+      "storytellers_vengeance.json"
     ],
     [
       "Trouble Brewing Advanced",
-      "https://raw.githubusercontent.com/Pingumask/townsquare/develop/src/assets/scripts/trouble_brewing_advanced.json"
+      "trouble_brewing_advanced.json"
     ],
     [
       "Trouble with Violets",
-      "https://raw.githubusercontent.com/Pingumask/townsquare/develop/src/assets/scripts/trouble_with_violets.json"
+      "trouble_with_violets.json"
     ],
     [
       "Uncertain Death",
-      "https://raw.githubusercontent.com/Pingumask/townsquare/develop/src/assets/scripts/uncertain_death.json"
+      "uncertain_death.json"
     ],
     [
       "Visitors",
-      "https://raw.githubusercontent.com/Pingumask/townsquare/develop/src/assets/scripts/visitors.json"
+      "visitors.json"
     ],
     [
       "Whose Cult is it Anyway",
-      "https://raw.githubusercontent.com/Pingumask/townsquare/develop/src/assets/scripts/whose_cult_is_it_anyway.json"
+      "whose_cult_is_it_anyway.json"
     ]
   ],
   "teensyville":
   [
     [
       "Comrade Demon",
-      "https://raw.githubusercontent.com/Pingumask/townsquare/develop/src/assets/scripts/comrade_demon.json"
+      "comrade_demon.json"
     ],
     [
       "Frankenstein's Mayor",
-      "https://raw.githubusercontent.com/Pingumask/townsquare/develop/src/assets/scripts/frankensteins_mayor.json"
+      "frankensteins_mayor.json"
     ],
     [
-      "Late night drive by 1.6",
-      "https://raw.githubusercontent.com/Pingumask/townsquare/develop/src/assets/scripts/late_night_drive_by.json"
+      "Laissez un faire",
+      "laissez_un_faire.json"
+    ],
+    [
+      "Late night drive by",
+      "late_night_drive_by.json"
+    ],
+    [
+      "A Lleech of Distrust",
+      "a_lleech_of_distrust.json"
     ],
     [
       "Minion is Angel Protected & the Demon Has 2 Bluffs",
-      "https://raw.githubusercontent.com/Pingumask/townsquare/develop/src/assets/scripts/minion_is_angel_protected_and_the_demon_has_2_bluffs.json"
+      "minion_is_angel_protected_and_the_demon_has_2_bluffs.json"
     ],
     [
       "No greater joy",
-      "https://raw.githubusercontent.com/Pingumask/townsquare/develop/src/assets/scripts/no_greater_joy.json"
+      "no_greater_joy.json"
     ],
     [
       "On thin ice",
-      "https://raw.githubusercontent.com/Pingumask/townsquare/develop/src/assets/scripts/on_thin_ice.json"
+      "on_thin_ice.json"
+    ],
+    [
+      "Over the River",
+      "over_the_river.json"
     ],
     [
       "Race to the bottom",
-      "https://raw.githubusercontent.com/Pingumask/townsquare/develop/src/assets/scripts/race_to_the_bottom.json"
+      "race_to_the_bottom.json"
+    ],
+    [
+      "Spooky tea",
+      "spooky_tea.json"
     ],
     [
       "Spooky tea 2 : Very spooky",
-      "https://raw.githubusercontent.com/Pingumask/townsquare/develop/src/assets/scripts/spooky_tea2.json"
+      "spooky_tea2.json"
     ],
     [
       "Vigormortis High school",
-      "https://raw.githubusercontent.com/Pingumask/townsquare/develop/src/assets/scripts/vigormortis_high_school.json"
+      "vigormortis_high_school.json"
     ]
   ]
 }
