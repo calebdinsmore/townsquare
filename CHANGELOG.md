@@ -6,7 +6,7 @@
 - Adding the Banshee
 - Correcting a colour bug with the icon for number of Townsfolk
 - Updating the jinxes
-- Updating unofficial scripts
+- Updating unofficial scripts and giving them local logos
 
 ### Version 3.23.2
 
