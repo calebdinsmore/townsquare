@@ -4,6 +4,7 @@
 
 - Adding a system of roles in multiple copies
 - Adding the Banshee
+- Updating the print of scripts' logos (bug correction + taking account all saved scripts)
 
 ### Version 3.23.2
 
