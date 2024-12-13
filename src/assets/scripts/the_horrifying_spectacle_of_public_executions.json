@@ -1,6 +1,7 @@
 [
   {
     "id": "_meta",
+    "logo": "the-horrifying-spectacle",
     "name": "The Horrifying Spectacle of Public Executions",
     "author": "Navean"
   },
@@ -14,16 +15,16 @@
     "id": "chambermaid"
   },
   {
+    "id": "dreamer"
+  },
+  {
     "id": "cultleader"
   },
   {
-    "id": "flowergirl"
-  },
-  {
-    "id": "oracle"
-  },
-  {
     "id": "monk"
+  },
+  {
+    "id": "exorcist"
   },
   {
     "id": "savant"
@@ -47,7 +48,7 @@
     "id": "tinker"
   },
   {
-    "id": "drunk"
+    "id": "sweetheart"
   },
   {
     "id": "klutz"
@@ -62,7 +63,7 @@
     "id": "devilsadvocate"
   },
   {
-    "id": "mephit"
+    "id": "cerenovus"
   },
   {
     "id": "boomdandy"
