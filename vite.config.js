@@ -9,7 +9,7 @@ export default defineConfig({
       output: {
         entryFileNames: "[name].js",
         chunkFileNames: "[name].[hash].js",
-        assetFileNames: "[name].[hash].[extname]",
+        assetFileNames: "[name].[hash][extname]",
       },
     },
     target: "es2022",

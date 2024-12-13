@@ -2,6 +2,12 @@
 
 ## Upcoming version
 
+
+
+### Version 3.24.1
+
+- Fix: custom script moved to public folder
+
 ### Version 3.24.0
 
 - Adding a system of roles in multiple copies
