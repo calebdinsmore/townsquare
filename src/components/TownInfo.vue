@@ -87,7 +87,7 @@ export default {
   computed: {
     logoUrl() {
 	
-	  const { edition, grimoire } = this;
+      const { edition, grimoire } = this;
       
       if (edition.logo && !edition.logo.includes('.')) {
         return new URL('../assets/logos/' + edition.logo + '.png', import.meta.url).href;
