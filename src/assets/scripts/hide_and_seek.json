@@ -1,9 +1,10 @@
 [
   {
     "id": "_meta",
-    "name": "Hide & Seek",
+    "logo": "hide_seek",
+    "name": "Hide and Seek",
     "author": "Narninian & Zaba",
-    "logo": "https://cdn.shopify.com/oxygen/57467011226/524442/h11pcta59/build/_assets/Damsel_Website-T6Y6WEQ7.png"
+    "credits": "Script logo by Wedge McCloud."
   },
   {
     "id": "noble"
@@ -69,9 +70,6 @@
     "id": "cerenovus"
   },
   {
-    "id": "lilmonsta"
-  },
-  {
     "id": "pukka"
   },
   {
@@ -79,5 +77,8 @@
   },
   {
     "id": "imp"
+  },
+  {
+    "id": "Ojo"
   }
 ]

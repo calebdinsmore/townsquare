@@ -9,41 +9,20 @@
       }}
     </h3>
     <ul class="tokens" v-if="tab === 'editionRoles' || !otherTravelers.size">
-      <li
-        v-for="role in availableRoles"
-        :class="[role.team]"
-        :key="role.id"
-        @click="setRole(role)"
-      >
+      <li v-for="role in availableRoles" :class="[role.team]" :key="role.id" @click="setRole(role)">
         <Token :role="role" />
       </li>
     </ul>
     <ul class="tokens" v-if="tab === 'otherTravelers' && otherTravelers.size">
-      <li
-        v-for="role in otherTravelers.values()"
-        :class="[role.team]"
-        :key="role.id"
-        @click="setRole(role)"
-      >
+      <li v-for="role in otherTravelers.values()" :class="[role.team]" :key="role.id" @click="setRole(role)">
         <Token :role="role" />
       </li>
     </ul>
-    <div
-      class="button-group"
-      v-if="playerIndex >= 0 && otherTravelers.size && !session.isSpectator"
-    >
-      <span
-        class="button"
-        :class="{ townsfolk: tab === 'editionRoles' }"
-        @click="tab = 'editionRoles'"
-        >{{ locale.modal.role.editionRoles }}</span
-      >
-      <span
-        class="button"
-        :class="{ townsfolk: tab === 'otherTravelers' }"
-        @click="tab = 'otherTravelers'"
-        >{{ locale.modal.role.otherTravelers }}</span
-      >
+    <div class="button-group" v-if="playerIndex >= 0 && otherTravelers.size && !session.isSpectator">
+      <span class="button" :class="{ townsfolk: tab === 'editionRoles' }" @click="tab = 'editionRoles'">{{
+        locale.modal.role.editionRoles }}</span>
+      <span class="button" :class="{ townsfolk: tab === 'otherTravelers' }" @click="tab = 'otherTravelers'">{{
+        locale.modal.role.otherTravelers }}</span>
     </div>
   </Modal>
 </template>
@@ -126,26 +105,31 @@ ul.tokens li {
       0 0 10px $townsfolk,
       0 0 10px #004cff;
   }
+
   &.outsider {
     box-shadow:
       0 0 10px $outsider,
       0 0 10px $outsider;
   }
+
   &.minion {
     box-shadow:
       0 0 10px $minion,
       0 0 10px $minion;
   }
+
   &.demon {
     box-shadow:
       0 0 10px $demon,
       0 0 10px $demon;
   }
+
   &.traveler {
     box-shadow:
       0 0 10px $traveler,
       0 0 10px $traveler;
   }
+
   &:hover {
     transform: scale(1.2);
     z-index: 10;

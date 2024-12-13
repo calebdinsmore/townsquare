@@ -5,52 +5,52 @@
     "author": "Nadine"
   },
   {
-    "id": "washerwoman"
-  },
-  {
-    "id": "librarian"
-  },
-  {
-    "id": "bountyhunter"
-  },
-  {
     "id": "amnesiac"
-  },
-  {
-    "id": "fortuneteller"
-  },
-  {
-    "id": "dreamer"
-  },
-  {
-    "id": "snakecharmer"
-  },
-  {
-    "id": "oracle"
-  },
-  {
-    "id": "undertaker"
-  },
-  {
-    "id": "ravenkeeper"
   },
   {
     "id": "artist"
   },
   {
+    "id": "bountyhunter"
+  },
+  {
+    "id": "dreamer"
+  },
+  {
     "id": "fisherman"
   },
   {
+    "id": "fortuneteller"
+  },
+  {
+    "id": "librarian"
+  },
+  {
+    "id": "oracle"
+  },
+  {
+    "id": "ravenkeeper"
+  },
+  {
     "id": "seamstress"
+  },
+  {
+    "id": "snakecharmer"
+  },
+  {
+    "id": "undertaker"
+  },
+  {
+    "id": "washerwoman"
+  },
+  {
+    "id": "barber"
   },
   {
     "id": "drunk"
   },
   {
     "id": "recluse"
-  },
-  {
-    "id": "barber"
   },
   {
     "id": "sweetheart"
@@ -62,22 +62,22 @@
     "id": "poisoner"
   },
   {
-    "id": "spy"
-  },
-  {
     "id": "scarletwoman"
   },
   {
-    "id": "imp"
+    "id": "spy"
   },
   {
     "id": "fanggu"
   },
   {
-    "id": "vigormortis"
+    "id": "imp"
   },
   {
     "id": "nodashii"
+  },
+  {
+    "id": "vigormortis"
   },
   {
     "id": "revolutionary"

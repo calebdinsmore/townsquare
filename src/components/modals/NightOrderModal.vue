@@ -17,7 +17,7 @@
               <br />
               <small v-for="(player, index) in role.players" :class="{ dead: player.isDead }" :key="index">{{
                 player.name + (role.players.length > index + 1 ? "," : "")
-              }}</small>
+                }}</small>
             </span>
             <span class="player" v-if="
               (role.team == 'default' || role.team == 'fabled') &&
@@ -55,7 +55,7 @@
               <br />
               <small v-for="(player, index) in role.players" :class="{ dead: player.isDead }" :key="index">{{
                 player.name + (role.players.length > index + 1 ? "," : "")
-              }}</small>
+                }}</small>
             </span>
             <span class="player" v-if="
               (role.team == 'default' || role.team == 'fabled') &&

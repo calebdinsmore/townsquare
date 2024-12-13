@@ -1,6 +1,7 @@
 [
     {
         "id": "_meta",
+        "logo": "reptiles",
         "name": "Reptiles II : Lizard in the city",
         "author": "Aero"
     },
@@ -81,8 +82,5 @@
     },
     {
         "id": "storm_catcher"
-    },
-    {
-        "id": "djinn"
     }
 ]

@@ -1,26 +1,21 @@
 [
   {
     "id": "_meta",
+    "logo": "rochambeau",
     "name": "Rochambeau",
     "author": "Habby"
   },
   {
-    "id": "librarian"
+    "id": "noble"
   },
   {
     "id": "bountyhunter"
   },
   {
-    "id": "preacher"
+    "id": "highpriestess"
   },
   {
-    "id": "flowergirl"
-  },
-  {
-    "id": "oracle"
-  },
-  {
-    "id": "undertaker"
+    "id": "towncrier"
   },
   {
     "id": "innkeeper"
@@ -29,25 +24,28 @@
     "id": "gambler"
   },
   {
+    "id": "acrobat"
+  },
+  {
     "id": "lycanthrope"
   },
   {
     "id": "gossip"
   },
   {
-    "id": "engineer"
+    "id": "nightwatchman"
   },
   {
-    "id": "mayor"
+    "id": "seamstress"
   },
   {
     "id": "cannibal"
   },
   {
-    "id": "goon"
+    "id": "mayor"
   },
   {
-    "id": "acrobat"
+    "id": "goon"
   },
   {
     "id": "tinker"
@@ -56,10 +54,10 @@
     "id": "moonchild"
   },
   {
-    "id": "godfather"
+    "id": "hatter"
   },
   {
-    "id": "widow"
+    "id": "godfather"
   },
   {
     "id": "poisoner"
@@ -69,6 +67,9 @@
   },
   {
     "id": "assassin"
+  },
+  {
+    "id": "widow"
   },
   {
     "id": "po"

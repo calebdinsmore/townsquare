@@ -1,9 +1,9 @@
 [
     {
         "id": "_meta",
-        "name": "Boozling! v7",
+        "name": "Boozling",
         "author": "Lau",
-        "logo": "https://cdn.shopify.com/oxygen/57467011226/524442/h11pcta59/build/_assets/Balloonist_website-KY6IUGRE.png"
+        "logo": "balloonist"
     },
     {
         "id": "noble"
@@ -12,22 +12,22 @@
         "id": "pixie"
     },
     {
+        "id": "highpriestess"
+    },
+    {
         "id": "balloonist"
     },
     {
-        "id": "fortune_teller"
+        "id": "fortuneteller"
     },
     {
         "id": "oracle"
     },
     {
-        "id": "mathematician"
-    },
-    {
         "id": "savant"
     },
     {
-        "id": "seamstress"
+        "id": "philosopher"
     },
     {
         "id": "huntsman"
@@ -39,10 +39,13 @@
         "id": "slayer"
     },
     {
-        "id": "ravenkeeper"
+        "id": "sage"
     },
     {
         "id": "cannibal"
+    },
+    {
+        "id": "drunk"
     },
     {
         "id": "mutant"
@@ -54,30 +57,27 @@
         "id": "klutz"
     },
     {
-        "id": "drunk"
-    },
-    {
         "id": "golem"
-    },
-    {
-        "id": "cerenovus"
-    },
-    {
-        "id": "scarlet_woman"
     },
     {
         "id": "baron"
     },
     {
+        "id": "cerenovus"
+    },
+    {
+        "id": "scarletwoman"
+    },
+    {
         "id": "marionette"
     },
     {
-        "id": "fang_gu"
+        "id": "nodashii"
+    },
+    {
+        "id": "fanggu"
     },
     {
         "id": "imp"
-    },
-    {
-        "id": "no_dashii"
     }
 ]

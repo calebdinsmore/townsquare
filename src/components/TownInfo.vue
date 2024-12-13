@@ -1,8 +1,7 @@
 <template>
   <ul class="info">
     <li class="edition" :class="['edition-' + edition.id]" :style="{
-      backgroundImage: `url(${edition.logo && grimoire.isImageOptIn ? edition.logo : logoPath
-        })`,
+      backgroundImage: 'url(' + logoUrl + ')',
     }"></li>
     <li v-if="players.length - teams.traveler < 5">
       {{ locale.towninfo.addPlayers }}
@@ -30,7 +29,7 @@
     <li v-if="players.length - teams.traveler >= 5">
       <span>
         {{ teams.townsfolk }}
-        <font-awesome-icon icon="user-friends" class="townfolk fa-user-friends" />
+        <font-awesome-icon icon="user-friends" class="townsfolk fa-user-friends" />
       </span>
       <span>
         {{ teams.outsider }}
@@ -82,7 +81,18 @@ export default {
     Countdown,
   },
   computed: {
-    logoPath: () => `../assets/logos/${this?.edition?.id ?? "custom"}.png`,
+    logoUrl() {
+      const { edition, grimoire } = this;
+      if (edition.logo && !edition.logo.includes('.')) {
+        return new URL(`../assets/logos/${edition.logo}.png`, import.meta.url).href;
+      }
+
+      if (edition.logo && grimoire.isImageOptIn) {
+        return edition.logo;
+      }
+
+      return new URL('../assets/logos/custom.png', import.meta.url).href;
+    },
     teams: function () {
       const { players } = this.$store.state.players;
       const nonTravelers = this.$store.getters["players/nonTravelers"];

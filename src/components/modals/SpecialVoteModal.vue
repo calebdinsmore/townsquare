@@ -63,9 +63,9 @@ export default {
       let playerName = this.players[this.session.playerForSpecialVote].name;
       let input = prompt(
         this.locale.modal.specialvote.complete +
-          playerName +
-          " ____________________" +
-          this.locale.vote.exclam,
+        playerName +
+        " ____________________" +
+        this.locale.vote.exclam,
       );
       if (input) {
         let messages = this.locale.modal.specialvote.customMessages;
