@@ -1,6 +1,5 @@
 {
-  "official": 
-  [
+  "official": [
     {
       "id": "tb",
       "name": "Trouble Brewing",
@@ -32,8 +31,7 @@
       "isOfficial": true
     }
   ],
-  "popular" :
-  [
+  "popular": [
     [
       "Boozling",
       "boozling.json"
@@ -155,8 +153,7 @@
       "whose_cult_is_it_anyway.json"
     ]
   ],
-  "teensyville":
-  [
+  "teensyville": [
     [
       "Comrade Demon",
       "comrade_demon.json"

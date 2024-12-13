@@ -42,20 +42,19 @@ div::after {
   text-align: center;
   content: attr(data-text);
   z-index: 2;
-  background: linear-gradient(
-    180deg,
-    rgba(255, 255, 255, 0) 5%,
-    rgba(255, 255, 255, 0.5) 15%,
-    rgba(255, 255, 255, 0) 35%,
-    rgba(0, 0, 0, 0) 60%,
-    rgba(0, 0, 0, 0.7) 100%
-  );
+  background: linear-gradient(180deg,
+      rgba(255, 255, 255, 0) 5%,
+      rgba(255, 255, 255, 0.5) 15%,
+      rgba(255, 255, 255, 0) 35%,
+      rgba(0, 0, 0, 0) 60%,
+      rgba(0, 0, 0, 0.7) 100%);
 }
 
 @keyframes countdown {
   0% {
     width: 100%;
   }
+
   100% {
     width: 0%;
     display: none;

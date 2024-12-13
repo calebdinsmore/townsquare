@@ -277,7 +277,7 @@
         "id": "Zombuul",
         "reason": "If the Summoner turns a dead player into the Zombuul, the Storyteller treats that player as a Zombuul that has died once."
       },
-	  {
+      {
         "id": "Legion",
         "reason": "If the Summoner creates Legion, most players (including all evil players) become evil Legion."
       },
@@ -328,7 +328,7 @@
         "id": "Courtier",
         "reason": "If the Vizier loses their ability, they learn this. If the Vizier is executed while they have their ability, their team wins."
       },
-	  {
+      {
         "id": "Magician",
         "reason": "If the Vizier and Magician are both in play, the Demon does not learn the Minions."
       },
@@ -483,11 +483,11 @@
         "id": "Minstrel",
         "reason": "If Legion died by execution today, Legion keeps their ability, but the Minstrel might learn they are Legion."
       },
-	  {
+      {
         "id": "Hatter",
         "reason": "If the Hatter dies and Legion is in play, nothing happens. If the Hatter dies and an evil player chooses Legion, all current evil players become Legion."
       },
-	  {
+      {
         "id": "Zealot",
         "reason": "The Zealot might register as evil to Legion’s ability."
       }
@@ -500,7 +500,7 @@
         "id": "Slayer",
         "reason": "If the Slayer shoots the Lleech's host, the host dies."
       },
-	  {
+      {
         "id": "Mastermind",
         "reason": "If the Mastermind is alive and the Lleech's host dies by execution, the Lleech lives but loses their ability."
       }
@@ -513,7 +513,7 @@
         "id": "Grandmother",
         "reason": "If Leviathan is in play and the Grandchild dies by execution, evil wins."
       },
-	  {
+      {
         "id": "King",
         "reason": "If the Leviathan is in play, and at least 1 player is dead, the King learns an alive character each night."
       },
@@ -529,14 +529,14 @@
         "id": "Exorcist",
         "reason": "Evil does not win when more than 1 good player has been executed, if the Exorcist is alive and has ever successfully chosen the Leviathan."
       },
-	  {
+      {
         "id": "Soldier",
         "reason": "If the Leviathan is in play, the Soldier is safe from all evil abilities."
       },
       {
         "id": "Farmer",
         "reason": "Each night*, the Leviathan chooses an alive good player (different to previous nights): a chosen Farmer uses their ability but does not die."
-      },	  
+      },
       {
         "id": "Ravenkeeper",
         "reason": "Each night*, the Leviathan chooses an alive player (different to previous nights): a chosen Ravenkeeper uses their ability but does not die."
@@ -553,7 +553,7 @@
         "id": "Mayor",
         "reason": "If Leviathan is in play and no execution occurs on day 5, good wins."
       },
-	  {
+      {
         "id": "Hatter",
         "reason": "If the Hatter dies on or after day 5, the Demon cannot choose Leviathan."
       },

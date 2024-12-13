@@ -1,12 +1,8 @@
 <template>
   <ul class="info">
-    <li
-      class="edition"
-      :class="['edition-' + edition.id]"
-      :style="{
-        backgroundImage: 'url(' + logoUrl + ')',
-      }"
-    ></li>
+    <li class="edition" :class="['edition-' + edition.id]" :style="{
+      backgroundImage: 'url(' + logoUrl + ')',
+    }"></li>
     <li v-if="players.length - teams.traveler < 5">
       {{ locale.towninfo.addPlayers }}
     </li>
@@ -86,17 +82,15 @@ export default {
   },
   computed: {
     logoUrl() {
-	
       const { edition, grimoire } = this;
-      
       if (edition.logo && !edition.logo.includes('.')) {
-        return new URL('../assets/logos/' + edition.logo + '.png', import.meta.url).href;
+        return new URL(`../assets/logos/${edition.logo}.png`, import.meta.url).href;
       }
-      
+
       if (edition.logo && grimoire.isImageOptIn) {
         return edition.logo;
       }
-      
+
       return new URL('../assets/logos/custom.png', import.meta.url).href;
     },
     teams: function () {

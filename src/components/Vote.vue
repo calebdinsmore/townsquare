@@ -21,7 +21,7 @@
       }}
       <em v-if="typeof session.nomination[1] !== 'object'">{{
         nominee ? nominee.name : session.nomination[1]
-      }}</em>{{ locale.vote.exclam }}
+        }}</em>{{ locale.vote.exclam }}
       <br />
       <em class="blue" v-if="
         !grimoire.isOrganVoteMode ||

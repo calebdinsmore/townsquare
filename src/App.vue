@@ -1,24 +1,13 @@
 <template>
-  <div
-    id="app"
-    @keyup="keyup"
-    tabindex="-1"
-    :class="{
-      night: grimoire.isNight,
-      static: grimoire.isStatic,
-    }"
-    :style="{
+  <div id="app" @keyup="keyup" tabindex="-1" :class="{
+    night: grimoire.isNight,
+    static: grimoire.isStatic,
+  }" :style="{
       backgroundImage: `url('${background}')`,
       backgroundColor: `${backgroundColor}`,
-    }"
-  >
-    <video
-      id="background"
-      v-if="background && background.match(/\.(mp4|webm)$/i)"
-      :src="background"
-      autoplay
-      loop
-    ></video>
+    }">
+    <video id="background" v-if="background && background.match(/\.(mp4|webm)$/i)" :src="background" autoplay
+      loop></video>
     <div class="backdrop"></div>
     <transition name="blur">
       <Intro v-if="!players.length"></Intro>
@@ -150,14 +139,19 @@ export default {
 
 @font-face {
   font-family: "Papyrus";
-  src: url("assets/fonts/papyrus.eot"); /* IE9*/
+  src: url("assets/fonts/papyrus.eot");
+  /* IE9*/
   src:
     url("assets/fonts/papyrus.eot?#iefix") format("embedded-opentype"),
-    /* IE6-IE8 */ url("assets/fonts/papyrus.woff2") format("woff2"),
-    /* chrome firefox */ url("assets/fonts/papyrus.woff") format("woff"),
-    /* chrome firefox */ url("assets/fonts/papyrus.ttf") format("truetype"),
+    /* IE6-IE8 */
+    url("assets/fonts/papyrus.woff2") format("woff2"),
+    /* chrome firefox */
+    url("assets/fonts/papyrus.woff") format("woff"),
+    /* chrome firefox */
+    url("assets/fonts/papyrus.ttf") format("truetype"),
     /* chrome firefox opera Safari, Android, iOS 4.2+*/
-      url("assets/fonts/papyrus.svg#PapyrusW01") format("svg"); /* iOS 4.1- */
+    url("assets/fonts/papyrus.svg#PapyrusW01") format("svg");
+  /* iOS 4.1- */
 }
 
 @font-face {
@@ -189,6 +183,7 @@ body {
 
 a {
   color: $townsfolk;
+
   &:hover {
     color: $demon;
   }
@@ -244,6 +239,7 @@ ul {
   transition: all 250ms;
   filter: blur(0);
 }
+
 .blur-enter,
 .blur-leave-to {
   opacity: 0;
@@ -256,19 +252,23 @@ ul {
   align-items: center;
   justify-content: center;
   align-content: center;
+
   .button {
     margin: 5px 0;
     border-radius: 0;
+
     &:first-child {
       border-top-left-radius: 15px;
       border-bottom-left-radius: 15px;
     }
+
     &:last-child {
       border-top-right-radius: 15px;
       border-bottom-right-radius: 15px;
     }
   }
 }
+
 .button {
   padding: 0;
   border: solid 0.125em transparent;
@@ -277,8 +277,7 @@ ul {
     inset 0 1px 1px #9c9c9c,
     0 0 10px #000;
   background:
-    radial-gradient(at 0 -15%, rgba(#fff, 0.07) 70%, rgba(#fff, 0) 71%) 0 0/ 80%
-      90% no-repeat content-box,
+    radial-gradient(at 0 -15%, rgba(#fff, 0.07) 70%, rgba(#fff, 0) 71%) 0 0/ 80% 90% no-repeat content-box,
     linear-gradient(#4e4e4e, #040404) content-box,
     linear-gradient(#292929, #010101) border-box;
   color: white;
@@ -289,14 +288,17 @@ ul {
   cursor: pointer;
   transition: all 200ms;
   white-space: nowrap;
+
   &:hover {
     color: red;
   }
+
   &.disabled {
     color: gray;
     cursor: default;
     opacity: 0.75;
   }
+
   &:before,
   &:after {
     content: " ";
@@ -304,31 +306,28 @@ ul {
     width: 10px;
     height: 10px;
   }
+
   &.townsfolk {
     background:
-      radial-gradient(
-          at 0 -15%,
-          rgba(255, 255, 255, 0.07) 70%,
-          rgba(255, 255, 255, 0) 71%
-        )
-        0 0/80% 90% no-repeat content-box,
+      radial-gradient(at 0 -15%,
+        rgba(255, 255, 255, 0.07) 70%,
+        rgba(255, 255, 255, 0) 71%) 0 0/80% 90% no-repeat content-box,
       linear-gradient(#0031ad, rgba(5, 0, 0, 0.22)) content-box,
       linear-gradient(#292929, #001142) border-box;
     box-shadow:
       inset 0 1px 1px #002c9c,
       0 0 10px #000;
+
     &:hover:not(.disabled) {
       color: #008cf7;
     }
   }
+
   &.demon {
     background:
-      radial-gradient(
-          at 0 -15%,
-          rgba(255, 255, 255, 0.07) 70%,
-          rgba(255, 255, 255, 0) 71%
-        )
-        0 0/80% 90% no-repeat content-box,
+      radial-gradient(at 0 -15%,
+        rgba(255, 255, 255, 0.07) 70%,
+        rgba(255, 255, 255, 0) 71%) 0 0/80% 90% no-repeat content-box,
       linear-gradient(#ad0000, rgba(5, 0, 0, 0.22)) content-box,
       linear-gradient(#292929, #420000) border-box;
     box-shadow:
@@ -346,7 +345,7 @@ video#background {
 }
 
 /* Night phase backdrop */
-#app > .backdrop {
+#app>.backdrop {
   position: absolute;
   left: 0;
   right: 0;
@@ -354,14 +353,13 @@ video#background {
   top: 0;
   pointer-events: none;
   background: black;
-  background: linear-gradient(
-    180deg,
-    rgba(0, 0, 0, 1) 0%,
-    rgba(1, 22, 46, 1) 50%,
-    rgba(0, 39, 70, 1) 100%
-  );
+  background: linear-gradient(180deg,
+      rgba(0, 0, 0, 1) 0%,
+      rgba(1, 22, 46, 1) 50%,
+      rgba(0, 39, 70, 1) 100%);
   opacity: 0;
   transition: opacity 1s ease-in-out;
+
   &:after {
     content: " ";
     display: block;
@@ -379,12 +377,13 @@ video#background {
   from {
     transform: translate3d(-2000px, 0px, 0px);
   }
+
   to {
     transform: translate3d(0px, 0px, 0px);
   }
 }
 
-#app.night > .backdrop {
+#app.night>.backdrop {
   opacity: 0.5;
 }
 </style>

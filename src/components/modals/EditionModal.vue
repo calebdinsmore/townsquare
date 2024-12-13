@@ -3,73 +3,35 @@
     <h3>{{ locale.modal.edition.title }}</h3>
     <ul>
       <li class="tabs" :class="tab">
-        <span
-          class="tab"
-          icon="book-open"
-          @click="tab = 'official'"
-          :class="{ active: tab == 'official' }"
-          >{{ locale.modal.edition.tab.official }}</span
-        >
-        <span
-          class="tab"
-          icon="broadcast-tower"
-          @click="tab = 'popular'"
-          :class="{ active: tab == 'popular' }"
-          >{{ locale.modal.edition.tab.popular }}</span
-        >
-        <span
-          class="tab"
-          icon="question"
-          @click="tab = 'custom'"
-          :class="{ active: tab == 'custom' }"
-          >{{ locale.modal.edition.tab.custom }}</span
-        >
-        <span
-          class="tab"
-          icon="question"
-          @click="
-            initPool();
-            tab = 'build';
-          "
-          :class="{ active: tab == 'build' }"
-          >{{ locale.modal.edition.tab.build }}</span
-        >
+        <span class="tab" icon="book-open" @click="tab = 'official'" :class="{ active: tab == 'official' }">{{
+          locale.modal.edition.tab.official }}</span>
+        <span class="tab" icon="broadcast-tower" @click="tab = 'popular'" :class="{ active: tab == 'popular' }">{{
+          locale.modal.edition.tab.popular }}</span>
+        <span class="tab" icon="question" @click="tab = 'custom'" :class="{ active: tab == 'custom' }">{{
+          locale.modal.edition.tab.custom }}</span>
+        <span class="tab" icon="question" @click="
+          initPool();
+        tab = 'build';
+        " :class="{ active: tab == 'build' }">{{ locale.modal.edition.tab.build }}</span>
       </li>
       <template v-if="tab == 'official'">
         <ul class="editions">
-          <li
-            v-for="edition in editions.official"
-            class="edition"
-            :class="['edition-' + edition.id]"
-            :style="{
-              backgroundImage: `url(${require(
-                '../../assets/logos/' + edition.id + '.png',
-              )})`,
-            }"
-            :key="edition.id"
-            @click="runEdition(edition)"
-          >
+          <li v-for="edition in editions.official" class="edition" :class="['edition-' + edition.id]" :style="{
+            backgroundImage: `url(${logoPath(edition)})`,
+          }" :key="edition.id" @click="runEdition(edition)">
             {{ edition.name }}
           </li>
         </ul>
       </template>
       <template v-if="tab == 'popular'">
         <ul class="scripts">
-          <li
-            v-for="(script, index) in editions.popular"
-            :key="index"
-            @click="launchScript(script[1])"
-          >
+          <li v-for="(script, index) in editions.popular" :key="index" @click="launchScript(script[1])">
             {{ script[0] }}
           </li>
         </ul>
         <h3>{{ locale.modal.edition.tab.teensyville }}</h3>
         <ul class="scripts">
-          <li
-            v-for="(script, index) in editions.teensyville"
-            :key="index"
-            @click="launchScript(script[1])"
-          >
+          <li v-for="(script, index) in editions.teensyville" :key="index" @click="launchScript(script[1])">
             {{ script[0] }}
           </li>
         </ul>
@@ -79,23 +41,15 @@
           {{ locale.modal.edition.custom.introStart }}
           <a href="https://script.bloodontheclocktower.com/" target="_blank">{{
             locale.modal.edition.custom.scriptTool
-          }}</a>
+            }}</a>
           {{ locale.modal.edition.custom.introEnd }}.<br />
           <br />
           {{ locale.modal.edition.custom.instructionsStart }}
-          <a
-            href="https://github.com/bra1n/townsquare#custom-characters"
-            target="_blank"
-            >{{ locale.modal.edition.custom.documentation }}n</a
-          >
+          <a href="https://github.com/bra1n/townsquare#custom-characters" target="_blank">{{
+            locale.modal.edition.custom.documentation }}n</a>
           {{ locale.modal.edition.custom.instructionsEnd }}<br />
           <b>{{ locale.modal.edition.custom.warning }}</b>
-          <input
-            type="file"
-            ref="upload"
-            accept="application/json"
-            @change="handleUpload"
-          />
+          <input type="file" ref="upload" accept="application/json" @change="handleUpload" />
         </div>
         <div class="button-group">
           <div class="button" @click="openUpload">
@@ -113,12 +67,7 @@
         </div>
       </template>
       <template v-if="tab == 'build'">
-        <section
-          v-for="team in teams"
-          :key="team"
-          class="build team"
-          :class="team"
-        >
+        <section v-for="team in teams" :key="team" class="build team" :class="team">
           <aside class="aside">
             <div>
               <h4>{{ locale.modal.reference.teamNames[team] }}</h4>
@@ -126,13 +75,8 @@
             </div>
           </aside>
           <ul class="roles" :class="team">
-            <li
-              v-for="role in rolesForTeam(team)"
-              class="role"
-              :class="{ selected: role.selected }"
-              :key="role.id"
-              @click="toggleRole(role.id)"
-            >
+            <li v-for="role in rolesForTeam(team)" class="role" :class="{ selected: role.selected }" :key="role.id"
+              @click="toggleRole(role.id)">
               <Token :role="role" />
             </li>
           </ul>
@@ -158,9 +102,9 @@
 
 <script>
 import { mapMutations, mapState } from "vuex";
-import Modal from "./Modal";
+import Modal from "./Modal.vue";
 import { rolesJSON } from "../../store/modules/locale";
-import Token from "../Token";
+import Token from "../Token.vue";
 
 export default {
   components: {
@@ -185,9 +129,7 @@ export default {
   },
   methods: {
     initPool() {
-      console.log("init pool");
-      console.table(this.roles);
-      this.draftPool = rolesJSON;
+      this.draftPool = rolesJSON.default;
       this.resetBuilt();
       for (let [role] of this.roles) {
         this.toggleRole(role);
@@ -255,10 +197,14 @@ export default {
         this.handleURL(url);
       }
     },
+    logoPath(edition) {
+      return new URL(`../../assets/logos/${edition.logo}.png`, import.meta.url).href
+    },
     async launchScript(fileName) {
+      console.log(fileName)
       try {
-        const script = require("../../assets/scripts/" + fileName);
-        this.parseRoles(script);
+        const script = await import("../../assets/scripts/" + fileName);
+        this.parseRoles(script.default);
       } catch (e) {
         alert(`${this.locale.prompt.customError}: ${e.message}`);
       }
@@ -331,6 +277,7 @@ export default {
       this.$store.commit("players/setFabled", { fabled });
     },
     runEdition(edition) {
+      console.log("caca")
       this.$store.commit("setEdition", edition);
       // The editions contain no Fabled
       this.$store.commit("players/setFabled", { fabled: [] });
@@ -342,6 +289,7 @@ export default {
 
 <style scoped lang="scss">
 @use "../../vars.scss" as *;
+
 ul {
   width: 100%;
 }
@@ -365,6 +313,7 @@ ul.editions {
       1px 1px 0 #000,
       0 0 5px rgba(0, 0, 0, 0.75);
     cursor: pointer;
+
     &:hover {
       color: red;
     }
@@ -379,6 +328,7 @@ ul.editions {
     opacity: 1;
   }
 }
+
 .tabs {
   display: flex;
   padding: 0;
@@ -386,6 +336,7 @@ ul.editions {
   width: 100%;
   gap: 0.25rem;
   border-bottom: 3px solid white;
+
   .tab {
     text-align: center;
     flex-grow: 1;
@@ -397,14 +348,14 @@ ul.editions {
     cursor: pointer;
     transition: color 250ms;
     user-select: none;
+
     &:hover {
       color: red;
     }
+
     &.active {
-      background: linear-gradient(
-        rgb(31, 101, 255) 0%,
-        rgba(0, 0, 0, 0.5) 100%
-      );
+      background: linear-gradient(rgb(31, 101, 255) 0%,
+          rgba(0, 0, 0, 0.5) 100%);
     }
   }
 }
@@ -426,6 +377,7 @@ input[type="file"] {
   display: flex;
   gap: 0.75em 1em;
   justify-content: flex-start;
+
   li {
     text-align: left;
     list-style-type: none;
@@ -434,6 +386,7 @@ input[type="file"] {
     padding: 0.15em 1.5em;
     background: linear-gradient(#4e4e4e, #040404);
     user-select: none;
+
     &:hover {
       color: red;
     }
@@ -445,16 +398,19 @@ input[type="file"] {
     background: linear-gradient(-90deg, $townsfolk, transparent);
   }
 }
+
 .outsider {
   aside {
     background: linear-gradient(-90deg, $outsider, transparent);
   }
 }
+
 .minion {
   aside {
     background: linear-gradient(-90deg, $minion, transparent);
   }
 }
+
 .demon {
   aside {
     background: linear-gradient(-90deg, $demon, transparent);
@@ -465,6 +421,7 @@ input[type="file"] {
   display: grid;
   width: 100%;
   grid-template-columns: 3rem 1fr;
+
   aside {
     display: flex;
     flex-direction: column;
@@ -472,19 +429,23 @@ input[type="file"] {
     align-items: center;
     text-transform: uppercase;
     font-size: 0.7rem;
+
     strong {
       display: block;
       font-size: 1.4rem;
     }
+
     div {
       font-size: 1.1rem;
       text-align: center;
       rotate: 90deg;
     }
+
     h4 {
       margin-block: 0.25rem;
     }
   }
+
   .roles {
     display: flex;
     flex-wrap: wrap;
