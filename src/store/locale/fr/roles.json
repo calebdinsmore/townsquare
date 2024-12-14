@@ -1192,7 +1192,7 @@
       "Empoisonné"
     ],
     "setup": false,
-    "ability": "Chaque nuit*, désignez un joueur: il meurt. Vos voisins villageois sont empoisonnés."
+    "ability": "Chaque nuit*, désignez un joueur : il meurt. Vos voisins Villageois sont empoisonnés."
   },
   {
     "id": "vortox",
