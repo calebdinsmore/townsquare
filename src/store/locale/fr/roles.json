@@ -1215,15 +1215,15 @@
     "edition": "snv",
     "team": "traveler",
     "firstNight": 3,
-    "firstNightReminder": "Choisissez un joueur, reveillez-le et indiquez-lui s'il est soigné et l'esprit clair ou s'il bénéficie de double capacité. Traitez-le en conséquences.",
+    "firstNightReminder": "Choisissez un joueur, reveillez-le et indiquez-lui s'il est sobre et sain ou s'il bénéficie de double capacité. Traitez-le en conséquence.",
     "otherNight": 3,
-    "otherNightReminder": "Choisissez un joueur, reveillez-le et indiquez-lui s'il est soigné et l'esprit clair ou s'il bénéficie de double capacité. Traitez-le en conséquences.",
+    "otherNightReminder": "Choisissez un joueur, reveillez-le et indiquez-lui s'il est sobre et sain ou s'il bénéficie de double capacité. Traitez-le en conséquence.",
     "reminders": [
       "Sobriété & Santé",
       "Capacité doublée"
     ],
     "setup": false,
-    "ability": "Chaque nuit, un joueur profite d'un bonus jusqu'à la nuit suivante : soit il devient sobre et en bonne santé et n'aura que de vraies informations, soit il peut utiliser sa capacité deux fois aujourd'hui. Il sait de quel bonus il bénéficie."
+    "ability": "Chaque nuit jusqu'à la suivante, 1) un joueur est sobre, sain et a de vraies infos, ou 2) sa capacité marche deux fois. Il apprend ce bonus."
   },
   {
     "id": "harlot",
