@@ -2,7 +2,7 @@
 
 ## Upcoming version
 
-
+- Changing the order of the three editions, to match the official order
 
 ### Version 3.24.1
 
