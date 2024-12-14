@@ -1141,7 +1141,7 @@
     "otherNightReminder": "Le Chaudronnier désigne un joueur et un personnage. Si ce personnage n'est pas en jeu, réveillez ce joueur et dévoillez-lui son nouveau personnage. Si le personnage est déjà en jeu, rien ne se passe.",
     "reminders": [],
     "setup": false,
-    "ability": "Chaque nuit*, désignez un joueur et un personnage. Si ce personnage n'est pas encore en jeu, ce joueur devient ce personnage. Si un Démon est créé ainsi, les morts cette nuit sont arbitraires."
+    "ability": "Chaque nuit*, désignez un joueur et le personnage qu’il devient (si pas en jeu). Si un Démon est créé, les morts cette nuit sont arbitraires."
   },
   {
     "id": "fanggu",
