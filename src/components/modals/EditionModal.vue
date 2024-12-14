@@ -201,13 +201,7 @@ export default {
       return new URL(`../../assets/logos/${edition.logo}.png`, import.meta.url).href
     },
     async launchScript(fileName) {
-      console.log(fileName)
-      try {
-        const script = await import("/public/scripts/" + fileName);
-        this.parseRoles(script.default);
-      } catch (e) {
-        alert(`${this.locale.prompt.customError}: ${e.message}`);
-      }
+      await this.handleURL(`/scripts/${fileName}`);
     },
     async handleURL(url) {
       const res = await fetch(url);

@@ -6,11 +6,13 @@ export default defineConfig({
   base: "/",
   build: {
     rollupOptions: {
+      ignore: "src/scripts/*",
       output: {
         entryFileNames: "[name].js",
         chunkFileNames: "[name].[hash].js",
         assetFileNames: "[name].[hash][extname]",
       },
+      preserveModules: true,
     },
     target: "es2022",
   },
