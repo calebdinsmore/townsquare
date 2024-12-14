@@ -2,7 +2,7 @@
 
 ## Upcoming version
 
-
+- Minor ability rephrasing in the French version (mainly in Sects & Violets)
 
 ### Version 3.24.1
 
