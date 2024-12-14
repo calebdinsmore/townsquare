@@ -1069,7 +1069,7 @@
       "Échanges"
     ],
     "setup": false,
-    "ability": "Si vous êtes mort aujourd'hui (de jour comme de nuit), le Démon peut désigner 2 joueurs qui ne sont pas un autre Démon et échanger leurs personnages."
+    "ability": "Si vous êtes mort aujourd'hui (de jour ou de nuit), le Démon peut désigner 2 joueurs (pas un autre Démon) et échanger leur personnage."
   },
   {
     "id": "klutz",
