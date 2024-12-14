@@ -1098,7 +1098,7 @@
       "Jumeau"
     ],
     "setup": false,
-    "ability": "Vous et un joueur de l'équipe adverse connaissez vos personnages respectifs. Si le bon joueur meurt par exécution, les Mauvais gagnent. Le bien ne peut pas gagner tant que les deux jumeaux sont en vie."
+    "ability": "Vous & un adversaire savez vos personnages respectifs. Si le bon est exécuté, les mauvais gagnent. Le bien ne peut gagner si vous 2 vivez."
   },
   {
     "id": "witch",
