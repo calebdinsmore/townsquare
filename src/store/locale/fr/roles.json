@@ -1159,7 +1159,7 @@
       "Épuisé"
     ],
     "setup": true,
-    "ability": "Chaque nuit*, désignez un joueur: il meurt. Le premier Étranger tué ainsi devient un Mauvais Fang Gu et vous mourez à sa place. [+1 Étranger]"
+    "ability": "Chaque nuit*, désignez un joueur : il meurt. Le 1er Étranger tué ainsi devient un mauvais Fang Gu et vous mourez à sa place. [+1 Étranger]"
   },
   {
     "id": "vigormortis",
