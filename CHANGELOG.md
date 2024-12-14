@@ -2,7 +2,7 @@
 
 ## Upcoming version
 
-
+- Replacing the icon custom.png
 
 ### Version 3.24.1
 
