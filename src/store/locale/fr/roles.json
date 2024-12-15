@@ -1176,7 +1176,7 @@
       "Empoisonné"
     ],
     "setup": true,
-    "ability": "Chaque nuit*, désignez un joueur : il meurt. Les Sbires tués par vous gardent leurs capacités et empoisonnent un voisin Villageois. [-1 Étranger]"
+    "ability": "Chaque nuit*, désignez un joueur : il meurt. Les Sbires tués par vous gardent leur capacité & empoisonnent 1 voisin Villageois. [-1 Étranger]"
   },
   {
     "id": "nodashii",
