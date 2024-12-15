@@ -12,9 +12,15 @@ const set = (key) => (state, value) => {
   state.grimoire[key] = value;
 };
 
-const toggle = (key) => (state) => {
-  state.grimoire[key] = !state.grimoire[key];
-};
+const toggle =
+  (key) =>
+  ({ grimoire }, val) => {
+    if (val === true || val === false) {
+      grimoire[key] = val;
+    } else {
+      grimoire[key] = !grimoire[key];
+    }
+  };
 
 const loadLocale = async () => {
   const { locale, rolesJSON, jinxesJSON, fabledJSON } = await import(

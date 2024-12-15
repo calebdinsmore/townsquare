@@ -4,9 +4,11 @@
 
 
 
-### Version 3.24.1
+### Version 3.24.4
 
-- Fix: custom script moved to public folder
+- Bugfix missing images
+- Bugfix custom scripts loading
+- Bugfix inverted booleans
 
 ### Version 3.24.0
 
