@@ -3,6 +3,7 @@
 ## Upcoming version
 
 - Replacing the icon custom.png
+- Changing the order of the three editions, to match the official order
 
 ### Version 3.24.4
 
