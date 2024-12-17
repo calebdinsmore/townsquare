@@ -195,7 +195,7 @@ export default {
         this.player.isVoteless &&
         (this.nominee && this.nominee.role.team !== "traveler" ||
           typeof this.session.nomination[1] === "string") &&
-		this.noVoudon
+        this.noVoudon
       )
         return false;
       const session = this.session;
