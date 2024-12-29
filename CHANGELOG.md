@@ -6,6 +6,7 @@
 - Changing the order of the three editions, to match the official order
 - Minor ability rephrasing in the French version (mainly in Sects & Violets)
 - Fixing a bug with the print of the jinxes
+- If Voudon is in play, allowing dead players to vote without vote token.
 
 ### Version 3.24.4
 - Bugfix missing images
