@@ -2,6 +2,9 @@
 
 ## Upcoming version
 
+
+
+### Version 3.25.0
 - Replacing the icon custom.png
 - Changing the order of the three editions, to match the official order
 - Minor ability rephrasing in the French version (mainly in Sects & Violets)
