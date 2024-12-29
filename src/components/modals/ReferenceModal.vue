@@ -240,7 +240,7 @@ h3 {
 
   &.jinxed {
     .icon {
-      margin: 0 -5px;
+      width: 6vmin;
     }
   }
 }
