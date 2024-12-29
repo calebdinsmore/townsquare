@@ -9,6 +9,9 @@
 - Fixed custom scripts background path
 - Updating the night order
 
+### Version 4.0.0
+- Upgraded to vue 3
+
 ### Version 3.25.0
 - Replacing the icon custom.png
 - Changing the order of the three editions, to match the official order
