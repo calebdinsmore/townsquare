@@ -10,19 +10,15 @@
   </div>
 </template>
 
-<script>
-export default {
-  data() {
-    return {
-      gradients: [
-        ["demon", "#ce0100", "#000"],
-        ["townsfolk", "#1f65ff", "#000"],
-        ["minion", "#ff6900", "#000"],
-        ["default", "#4E4E4E", "#000"],
-      ],
-    };
-  },
-};
+<script setup>
+import { ref } from 'vue';
+
+const gradients = ref([
+  ["demon", "#ce0100", "#000"],
+  ["townsfolk", "#1f65ff", "#000"],
+  ["minion", "#ff6900", "#000"],
+  ["default", "#4E4E4E", "#000"],
+]);
 </script>
 
 <style lang="scss" scoped>

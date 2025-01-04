@@ -9,40 +9,32 @@
   </Modal>
 </template>
 
-<script>
-import { mapMutations, mapState } from "vuex";
-import Modal from "./Modal.vue";
-import Token from "../Token.vue";
+<script setup>
+import { computed } from 'vue';
+import { useStore } from 'vuex';
+import Modal from './Modal.vue';
+import Token from '../Token.vue';
 
-export default {
-  components: { Token, Modal },
-  computed: {
-    ...mapState(["modals", "fabled", "grimoire", "locale"]),
-    fabled() {
-      const fabled = [];
-      this.$store.state.fabled.forEach((role) => {
-        // don't show fabled that are already in play
-        if (
-          !this.$store.state.players.fabled.some(
-            (fable) => fable.id === role.id,
-          )
-        ) {
-          fabled.push(role);
-        }
-      });
-      return fabled;
-    },
-  },
-  methods: {
-    setFabled(role) {
-      this.$store.commit("players/setFabled", {
-        fabled: role,
-      });
-      this.$store.commit("toggleModal", "fabled");
-    },
-    ...mapMutations(["toggleModal"]),
-  },
-};
+const store = useStore();
+
+const modals = computed(() => store.state.modals);
+const locale = computed(() => store.state.locale);
+
+
+const fabled = computed(() => {
+  return Array.from(store.state.fabled.values()).filter(role =>
+    !store.state.players.fabled.some(fable => fable.id === role.id)
+  );
+});
+
+function setFabled(role) {
+  store.commit('players/setFabled', { fabled: role });
+  store.commit('toggleModal', 'fabled');
+}
+
+function toggleModal(modal) {
+  store.commit('toggleModal', modal);
+}
 </script>
 
 <style scoped lang="scss">

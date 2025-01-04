@@ -9,31 +9,23 @@
       {{ locale.intro.body }}
       <div class="footer">
         {{ locale.intro.footerStart }}
-        <a href="https://github.com/bra1n/townsquare" target="_blank">GitHub</a>
+        <a href="https://github.com/Pingumask/townsquare" target="_blank">GitHub</a>
         {{ locale.intro.footerEnd }}
       </div>
     </div>
-    <a class="redirect" v-if="language === 'zh-CN'" href="https://clocktower.gstonegames.com">
-      <img src="../assets/gstone.png" class="gstone" alt="" />
-      你想使用中文版魔典吗？
-    </a>
   </div>
 </template>
 
-<script>
-import { mapMutations, mapState, mapGetters } from "vuex";
+<script setup>
+import { computed } from 'vue';
+import { useStore } from 'vuex';
 
-export default {
-  computed: {
-    ...mapState(["locale"]),
-    ...mapGetters({ nightOrder: "players/nightOrder" }),
-  },
-  data() {
-    return {
-      language: window.navigator.userLanguage || window.navigator.language,
-    };
-  },
-  methods: mapMutations(["toggleMenu"]),
+const store = useStore();
+
+const locale = computed(() => store.state.locale);
+
+const toggleMenu = () => {
+  store.commit('toggleMenu');
 };
 </script>
 

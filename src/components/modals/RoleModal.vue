@@ -27,67 +27,64 @@
   </Modal>
 </template>
 
-<script>
-import { mapMutations, mapState } from "vuex";
-import Modal from "./Modal.vue";
-import Token from "../Token.vue";
+<script setup>
+import { computed, ref } from 'vue';
+import { useStore } from 'vuex';
+import Modal from './Modal.vue';
+import Token from '../Token.vue';
 
-export default {
-  components: { Token, Modal },
-  props: ["playerIndex"],
-  computed: {
-    availableRoles() {
-      const availableRoles = [];
-      const players = this.$store.state.players.players;
-      this.$store.state.roles.forEach((role) => {
-        // don't show bluff roles that are already assigned to players
-        if (
-          this.playerIndex >= 0 ||
-          (this.playerIndex < 0 &&
-            !players.some((player) => player.role.id === role.id))
-        ) {
-          availableRoles.push(role);
-        }
-      });
-      availableRoles.push({});
-      return availableRoles;
-    },
-    ...mapState(["modals", "roles", "session", "locale"]),
-    ...mapState("players", ["players"]),
-    ...mapState(["otherTravelers"]),
-  },
-  data() {
-    return {
-      tab: "editionRoles",
-    };
-  },
-  methods: {
-    setRole(role) {
-      if (this.playerIndex < 0) {
-        // assign to bluff slot (index < 0)
-        this.$store.commit("players/setBluff", {
-          index: this.playerIndex * -1 - 1,
-          role,
-        });
-      } else {
-        if (this.session.isSpectator && role.team === "traveler") return;
-        // assign to player
-        const player = this.$store.state.players.players[this.playerIndex];
-        this.$store.commit("players/update", {
-          player,
-          property: "role",
-          value: role,
-        });
-      }
-      this.tab = "editionRoles";
-      this.$store.commit("toggleModal", "role");
-    },
-    close() {
-      this.tab = "editionRoles";
-      this.toggleModal("role");
-    },
-    ...mapMutations(["toggleModal"]),
-  },
+const props = defineProps(['playerIndex']);
+const store = useStore();
+
+const tab = ref('editionRoles');
+
+const availableRoles = computed(() => {
+  const availableRoles = [];
+  const players = store.state.players.players;
+  store.state.roles.forEach((role) => {
+    // don't show bluff roles that are already assigned to players
+    if (
+      props.playerIndex >= 0 ||
+      (props.playerIndex < 0 &&
+        !players.some((player) => player.role.id === role.id))
+    ) {
+      availableRoles.push(role);
+    }
+  });
+  availableRoles.push({});
+  return availableRoles;
+});
+
+const modals = computed(() => store.state.modals);
+const session = computed(() => store.state.session);
+const locale = computed(() => store.state.locale);
+const players = computed(() => store.state.players.players);
+const otherTravelers = computed(() => store.state.otherTravelers);
+
+const setRole = (role) => {
+  if (props.playerIndex < 0) {
+    // assign to bluff slot (index < 0)
+    store.commit('players/setBluff', {
+      index: props.playerIndex * -1 - 1,
+      role,
+    });
+  } else {
+    if (session.value.isSpectator && role.team === 'traveler') return;
+    // assign to player
+    const player = store.state.players.players[props.playerIndex];
+    store.commit('players/update', {
+      player,
+      property: 'role',
+      value: role,
+    });
+  }
+  tab.value = 'editionRoles';
+  store.commit('toggleModal', 'role');
+};
+
+const close = () => {
+  tab.value = 'editionRoles';
+  store.commit('toggleModal', 'role');
 };
 </script>
 

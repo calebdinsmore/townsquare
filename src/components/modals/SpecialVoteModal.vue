@@ -22,58 +22,61 @@
   </Modal>
 </template>
 
-<script>
-import { mapMutations, mapState } from "vuex";
-import Modal from "./Modal.vue";
+<script setup>
+import { computed } from 'vue';
+import { useStore } from 'vuex';
+import Modal from './Modal.vue';
 
-export default {
-  components: {
-    Modal,
-  },
-  computed: {
-    ...mapState(["modals", "locale", "grimoire", "session"]),
-    ...mapState("players", ["players"]),
-  },
-  methods: {
-    launchVote(nomination) {
-      this.$store.commit("session/nomination", { nomination });
-      this.$store.commit("toggleModal", "specialVote");
-    },
-    bishopVote() {
-      this.launchVote([
-        this.locale.modal.specialvote.st,
-        this.session.playerForSpecialVote,
-      ]);
-    },
-    atheistVote() {
-      this.launchVote([
-        this.session.playerForSpecialVote,
-        this.locale.modal.specialvote.st,
-      ]);
-    },
-    cultleaderVote() {
-      this.launchVote([
-        this.session.playerForSpecialVote,
-        this.locale.modal.specialvote.cultleaderMessages,
-      ]);
-    },
-    customVote() {
-      let playerName = this.players[this.session.playerForSpecialVote].name;
-      let input = prompt(
-        this.locale.modal.specialvote.complete +
-        playerName +
-        " ____________________" +
-        this.locale.vote.exclam,
-      );
-      if (input) {
-        let messages = this.locale.modal.specialvote.customMessages;
-        messages[0] = input;
-        this.launchVote([this.session.playerForSpecialVote, messages]);
-      }
-    },
-    ...mapMutations(["toggleModal"]),
-  },
-};
+const store = useStore();
+
+const modals = computed(() => store.state.modals);
+const locale = computed(() => store.state.locale);
+const session = computed(() => store.state.session);
+const players = computed(() => store.state.players.players);
+
+function launchVote(nomination) {
+  store.commit('session/nomination', { nomination });
+  store.commit('toggleModal', 'specialVote');
+}
+
+function bishopVote() {
+  launchVote([
+    locale.value.modal.specialvote.st,
+    session.value.playerForSpecialVote,
+  ]);
+}
+
+function atheistVote() {
+  launchVote([
+    session.value.playerForSpecialVote,
+    locale.value.modal.specialvote.st,
+  ]);
+}
+
+function cultleaderVote() {
+  launchVote([
+    session.value.playerForSpecialVote,
+    locale.value.modal.specialvote.cultleaderMessages,
+  ]);
+}
+
+function customVote() {
+  const playerName = players.value[session.value.playerForSpecialVote].name;
+  const input = prompt(
+    locale.value.modal.specialvote.complete +
+    playerName +
+    " ____________________" +
+    locale.value.vote.exclam,
+  );
+  if (!input) return;
+  const messages = locale.value.modal.specialvote.customMessages;
+  messages[0] = input;
+  launchVote([session.value.playerForSpecialVote, messages]);
+}
+
+function toggleModal(modalName) {
+  store.commit('toggleModal', modalName);
+}
 </script>
 
 <style scoped lang="scss">

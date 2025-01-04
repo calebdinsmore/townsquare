@@ -2,24 +2,21 @@
   <div :data-text="timerName" :style="style" class="countdown"></div>
 </template>
 
-<script>
-export default {
-  props: {
-    timerName: String,
-    timerDuration: Number,
-  },
-  computed: {
-    style() {
-      return `--timer: ${this.timerDuration}`;
-    },
-  },
-};
+<script setup>
+import { computed, defineProps } from 'vue';
+
+const props = defineProps({
+  timerName: String,
+  timerDuration: Number,
+});
+
+const style = computed(() => `--timer: ${props.timerDuration}`);
 </script>
 
 <style lang="scss" scoped>
 div {
   width: 100%;
-  height: 1.6em;
+  height: 1.4em;
   border: 2px solid black;
   background: rgba(0, 0, 0, 0.4);
   position: relative;

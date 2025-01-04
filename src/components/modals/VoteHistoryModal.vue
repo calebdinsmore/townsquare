@@ -24,16 +24,16 @@
     <table>
       <thead>
         <tr>
-          <td>{{ locale.modal.voteHistory.time }}</td>
-          <td>{{ locale.modal.voteHistory.nominator }}</td>
-          <td>{{ locale.modal.voteHistory.nominee }}</td>
-          <td>{{ locale.modal.voteHistory.type }}</td>
-          <td>{{ locale.modal.voteHistory.votes }}</td>
-          <td>{{ locale.modal.voteHistory.majority }}</td>
-          <td>
+          <th scope="col">{{ locale.modal.voteHistory.time }}</th>
+          <th scope="col">{{ locale.modal.voteHistory.nominator }}</th>
+          <th scope="col">{{ locale.modal.voteHistory.nominee }}</th>
+          <th scope="col">{{ locale.modal.voteHistory.type }}</th>
+          <th scope="col">{{ locale.modal.voteHistory.votes }}</th>
+          <th scope="col">{{ locale.modal.voteHistory.majority }}</th>
+          <th scope="col">
             <font-awesome-icon icon="user-friends" class="fa fa-user-friends" />
             {{ locale.modal.voteHistory.voters }}
-          </td>
+          </th>
         </tr>
       </thead>
       <tbody>
@@ -75,29 +75,27 @@
   </Modal>
 </template>
 
-<script>
+<script setup>
+import { computed } from "vue";
+import { useStore } from "vuex";
 import Modal from "./Modal.vue";
-import { mapMutations, mapState } from "vuex";
 
-export default {
-  components: {
-    Modal,
-  },
-  computed: {
-    ...mapState(["session", "modals", "locale"]),
-  },
-  methods: {
-    clearVoteHistory() {
-      this.$store.commit("session/clearVoteHistory");
-    },
-    setRecordVoteHistory() {
-      this.$store.commit(
-        "session/setVoteHistoryAllowed",
-        !this.session.isVoteHistoryAllowed,
-      );
-    },
-    ...mapMutations(["toggleModal"]),
-  },
+const store = useStore();
+
+const session = computed(() => store.state.session);
+const modals = computed(() => store.state.modals);
+const locale = computed(() => store.state.locale);
+
+const clearVoteHistory = () => {
+  store.commit("session/clearVoteHistory");
+};
+
+const setRecordVoteHistory = () => {
+  store.commit("session/setVoteHistoryAllowed", !session.value.isVoteHistoryAllowed);
+};
+
+const toggleModal = (modalName) => {
+  store.commit("toggleModal", modalName);
 };
 </script>
 
@@ -117,7 +115,6 @@ export default {
 
 .options {
   display: flex;
-  justify-content: center;
   align-items: center;
   justify-content: center;
   align-content: center;
@@ -148,7 +145,7 @@ table {
   margin-right: auto;
 }
 
-thead td {
+thead th {
   font-weight: bold;
   border-bottom: 1px solid white;
   text-align: center;

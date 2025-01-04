@@ -57,117 +57,117 @@
   </Modal>
 </template>
 
-<script>
+<script setup>
+import { computed, ref, onMounted, watch } from 'vue';
+import { useStore } from 'vuex';
 import Modal from "./Modal.vue";
 import gameJSON from "../../game.json";
 import Token from "../Token.vue";
-import { mapGetters, mapMutations, mapState } from "vuex";
 
 const randomElement = (arr) => arr[Math.floor(Math.random() * arr.length)];
 
-export default {
-  components: {
-    Token,
-    Modal,
-  },
-  data: function () {
-    return {
-      roleSelection: {},
-      game: gameJSON,
-      allowMultiple: false,
-    };
-  },
-  computed: {
-    selectedRoles: function () {
-      return Object.values(this.roleSelection)
-        .map((roles) => roles.reduce((a, { selected }) => a + selected, 0))
-        .reduce((a, b) => a + b, 0);
-    },
-    hasSelectedSetupRoles: function () {
-      return Object.values(this.roleSelection).some((roles) =>
-        roles.some((role) => role.selected && role.setup),
-      );
-    },
-    fabledWithSetup: function () {
-      const { fabled } = this.$store.state.players;
-      let res = [];
-      for (let i = 0; i < fabled.length; i++) {
-        if (fabled[i].setup) {
-          res.push(fabled[i]);
-        }
-      }
-      return res;
-    },
-    ...mapState(["roles", "modals", "locale"]),
-    ...mapState("players", ["players", "fabled"]),
-    ...mapGetters({ nonTravelers: "players/nonTravelers" }),
-  },
-  methods: {
-    selectRandomRoles() {
-      this.roleSelection = {};
-      this.roles.forEach((role) => {
-        if (!this.roleSelection[role.team]) {
-          this.roleSelection[role.team] = [];
-        }
-        this.roleSelection[role.team].push(role);
-        role.selected = 0;
-      });
-      delete this.roleSelection["traveler"];
-      const playerCount = Math.max(5, this.nonTravelers);
-      const composition = this.game[playerCount - 5];
-      Object.keys(composition).forEach((team) => {
-        for (let x = 0; x < composition[team]; x++) {
-          if (this.roleSelection[team]) {
-            const available = this.roleSelection[team].filter(
-              (role) => !role.selected,
-            );
-            if (available.length) {
-              randomElement(available).selected = 1;
-            }
-          }
-        }
-      });
-    },
-    assignRoles() {
-      if (this.selectedRoles <= this.nonTravelers && this.selectedRoles) {
-        // generate list of selected roles and randomize it
-        const roles = Object.values(this.roleSelection)
-          .map((roles) =>
-            roles
-              // duplicate roles selected more than once and filter unselected
-              .reduce((a, r) => [...a, ...Array(r.selected).fill(r)], []),
-          )
-          // flatten into a single array
-          .reduce((a, b) => [...a, ...b], [])
-          .map((a) => [Math.random(), a])
-          .sort((a, b) => a[0] - b[0])
-          .map((a) => a[1]);
-        this.players.forEach((player) => {
-          if (player.role.team !== "traveler" && roles.length) {
-            const value = roles.pop();
-            this.$store.commit("players/update", {
-              player,
-              property: "role",
-              value,
-            });
-          }
-        });
-        this.$store.commit("toggleModal", "roles");
-      }
-    },
-    ...mapMutations(["toggleModal"]),
-  },
-  mounted: function () {
-    if (!Object.keys(this.roleSelection).length) {
-      this.selectRandomRoles();
+const store = useStore();
+
+const roleSelection = ref({});
+const game = ref(gameJSON);
+const allowMultiple = ref(false);
+
+const roles = computed(() => store.state.roles);
+const modals = computed(() => store.state.modals);
+const locale = computed(() => store.state.locale);
+const players = computed(() => store.state.players.players);
+const fabled = computed(() => store.state.players.fabled);
+const nonTravelers = computed(() => store.getters['players/nonTravelers']);
+
+const selectedRoles = computed(() => {
+  return Object.values(roleSelection.value)
+    .map((roles) => roles.reduce((a, { selected }) => a + selected, 0))
+    .reduce((a, b) => a + b, 0);
+});
+
+const hasSelectedSetupRoles = computed(() => {
+  return Object.values(roleSelection.value).some((roles) =>
+    roles.some((role) => role.selected && role.setup),
+  );
+});
+
+const fabledWithSetup = computed(() => {
+  let res = [];
+  for (const fable of fabled.value) {
+    if (fable.setup) {
+      res.push(fable);
     }
-  },
-  watch: {
-    roles() {
-      this.selectRandomRoles();
-    },
-  },
+  }
+  return res;
+});
+
+const selectRandomRoles = () => {
+  roleSelection.value = {};
+  roles.value.forEach((role) => {
+    if (!roleSelection.value[role.team]) {
+      roleSelection.value[role.team] = [];
+    }
+    roleSelection.value[role.team].push(role);
+    role.selected = 0;
+  });
+  delete roleSelection.value["traveler"];
+  const playerCount = Math.max(5, nonTravelers.value);
+  const composition = game.value[playerCount - 5];
+  Object.keys(composition).forEach((team) => {
+    for (let x = 0; x < composition[team]; x++) {
+      if (roleSelection.value[team]) {
+        const available = roleSelection.value[team].filter(
+          (role) => !role.selected,
+        );
+        if (available.length) {
+          randomElement(available).selected = 1;
+        }
+      }
+    }
+  });
 };
+
+const assignRoles = () => {
+  if (selectedRoles.value <= nonTravelers.value && selectedRoles.value) {
+    // generate list of selected roles and randomize it
+    const roles = Object.values(roleSelection.value)
+      .map((roles) =>
+        roles
+          // duplicate roles selected more than once and filter unselected
+          .reduce((a, r) => [...a, ...Array(r.selected).fill(r)], []),
+      )
+      // flatten into a single array
+      .reduce((a, b) => [...a, ...b], [])
+      .map((a) => [Math.random(), a])
+      .sort((a, b) => a[0] - b[0])
+      .map((a) => a[1]);
+    players.value.forEach((player) => {
+      if (player.role.team !== "traveler" && roles.length) {
+        const value = roles.pop();
+        store.commit("players/update", {
+          player,
+          property: "role",
+          value,
+        });
+      }
+    });
+    store.commit("toggleModal", "roles");
+  }
+};
+
+const toggleModal = (modal) => {
+  store.commit("toggleModal", modal);
+};
+
+onMounted(() => {
+  if (!Object.keys(roleSelection.value).length) {
+    selectRandomRoles();
+  }
+});
+
+watch(roles, () => {
+  selectRandomRoles();
+});
 </script>
 
 <style lang="scss" scoped>

@@ -15,7 +15,7 @@
     <Vote v-if="session.nomination"></Vote>
 
     <TownSquare></TownSquare>
-    <Menu ref="menu"></Menu>
+    <Menu ref="menuRef"></Menu>
     <EditionModal />
     <FabledModal />
     <RolesModal />
@@ -29,8 +29,9 @@
   </div>
 </template>
 
-<script>
-import { mapState } from "vuex";
+<script setup>
+import { computed, ref } from "vue";
+import { useStore } from "vuex";
 import app from "../package.json";
 import TownSquare from "./components/TownSquare.vue";
 import TownInfo from "./components/TownInfo.vue";
@@ -47,90 +48,73 @@ import VoteHistoryModal from "./components/modals/VoteHistoryModal.vue";
 import GameStateModal from "./components/modals/GameStateModal.vue";
 import SpecialVoteModal from "./components/modals/SpecialVoteModal.vue";
 
-export default {
-  components: {
-    GameStateModal,
-    VoteHistoryModal,
-    FabledModal,
-    NightOrderModal,
-    Vote,
-    ReferenceModal,
-    Intro,
-    TownInfo,
-    TownSquare,
-    Menu,
-    EditionModal,
-    RolesModal,
-    Gradients,
-    SpecialVoteModal,
-  },
-  computed: {
-    ...mapState(["grimoire", "session", "edition"]),
-    ...mapState("players", ["players"]),
-    background: function () {
-      if (this.grimoire.isStreamerMode) {
-        return "none";
+const store = useStore();
+const version = app.version;
+
+const menuRef = ref(null);
+
+const grimoire = computed(() => store.state.grimoire);
+const session = computed(() => store.state.session);
+const edition = computed(() => store.state.edition);
+const players = computed(() => store.state.players.players);
+
+const background = computed(() => {
+  if (grimoire.value.isStreamerMode) {
+    return "none";
+  }
+  return grimoire.value.background || edition.value.background || "none";
+});
+
+const backgroundColor = computed(() => {
+  return grimoire.value.isStreamerMode ? "#00FF00" : "transparent";
+});
+
+function keyup({ key, ctrlKey, metaKey }) {
+  if (ctrlKey || metaKey) return;
+  switch (key.toLocaleLowerCase()) {
+    case "g":
+      store.commit("toggleGrimoire");
+      break;
+    case "a":
+      menuRef.value.addPlayer();
+      break;
+    case "h":
+      menuRef.value.hostSession();
+      break;
+    case "j":
+      menuRef.value.joinSession();
+      break;
+    case "r":
+      store.commit("toggleModal", "reference");
+      break;
+    case "n":
+      store.commit("toggleModal", "nightOrder");
+      break;
+    case "e":
+      if (session.value.isSpectator) return;
+      store.commit("toggleModal", "edition");
+      break;
+    case "c":
+      if (session.value.isSpectator) return;
+      store.commit("toggleModal", "roles");
+      break;
+    case "v":
+      if (session.value.voteHistory.length || !session.value.isSpectator) {
+        store.commit("toggleModal", "voteHistory");
       }
-      return this.grimoire.background || this.edition.background || "none";
-    },
-    backgroundColor: function () {
-      return this.grimoire.isStreamerMode ? "#00FF00" : "transparent";
-    },
-  },
-  data() {
-    return {
-      version: app.version,
-    };
-  },
-  methods: {
-    keyup({ key, ctrlKey, metaKey }) {
-      if (ctrlKey || metaKey) return;
-      switch (key.toLocaleLowerCase()) {
-        case "g":
-          this.$store.commit("toggleGrimoire");
-          break;
-        case "a":
-          this.$refs.menu.addPlayer();
-          break;
-        case "h":
-          this.$refs.menu.hostSession();
-          break;
-        case "j":
-          this.$refs.menu.joinSession();
-          break;
-        case "r":
-          this.$store.commit("toggleModal", "reference");
-          break;
-        case "n":
-          this.$store.commit("toggleModal", "nightOrder");
-          break;
-        case "e":
-          if (this.session.isSpectator) return;
-          this.$store.commit("toggleModal", "edition");
-          break;
-        case "c":
-          if (this.session.isSpectator) return;
-          this.$store.commit("toggleModal", "roles");
-          break;
-        case "v":
-          if (this.session.voteHistory.length || !this.session.isSpectator) {
-            this.$store.commit("toggleModal", "voteHistory");
-          }
-          break;
-        case "s":
-          if (this.session.isSpectator) return;
-          this.$refs.menu.toggleNight();
-          break;
-        case "b":
-          if (this.session.isSpectator) return;
-          this.$refs.menu.toggleRinging();
-          break;
-        case "escape":
-          this.$store.commit("toggleModal");
-      }
-    },
-  },
-};
+      break;
+    case "s":
+      if (session.value.isSpectator) return;
+      menuRef.value.toggleNight();
+      break;
+    case "b":
+      if (session.value.isSpectator) return;
+      menuRef.value.toggleRinging();
+      break;
+    case "escape":
+      store.commit("toggleModal");
+  }
+}
 </script>
 
 <style lang="scss">
@@ -223,9 +207,8 @@ ul {
 
 #version {
   position: absolute;
-  text-align: right;
-  right: 10px;
-  bottom: 10px;
+  text-align: center;
+  bottom: 0;
   font-size: 60%;
   opacity: 0.5;
 }

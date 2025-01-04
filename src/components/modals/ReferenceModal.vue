@@ -8,7 +8,7 @@
       {{ edition.name || "Custom Script" }}
     </h3>
     <div v-for="(teamRoles, team) in rolesGrouped" :key="team" :class="['team', team]">
-      <aside>
+      <aside :aria-label="locale.modal.reference.teamNames[team]">
         <h4>{{ locale.modal.reference.teamNames[team] }}</h4>
       </aside>
       <ul>
@@ -20,9 +20,9 @@
               })`,
           }"></span>
           <div class="role">
-            <span class="player" v-if="Object.keys(playersByRole).length">{{
-              playersByRole[role.id] ? playersByRole[role.id].join(", ") : ""
-              }}</span>
+            <span class="player" v-if="Object.keys(playersByRole).length">
+              {{ playersByRole[role.id] ? playersByRole[role.id].join(", ") : "" }}
+            </span>
             <span class="name">{{ role.name }}</span>
             <span class="ability">{{ role.ability }}</span>
           </div>
@@ -33,7 +33,7 @@
     </div>
 
     <div class="team jinxed" v-if="jinxed.length">
-      <aside>
+      <aside :aria-label="locale.modal.reference.jinxed">
         <h4>{{ locale.modal.reference.jinxed }}</h4>
       </aside>
       <ul>
@@ -57,71 +57,77 @@
   </Modal>
 </template>
 
-<script>
+<script setup>
+import { computed } from "vue";
+import { useStore } from "vuex";
 import Modal from "./Modal.vue";
-import { mapMutations, mapState } from "vuex";
 
-export default {
-  components: {
-    Modal,
-  },
-  computed: {
-    /**
+const store = useStore();
+
+const roles = computed(() => store.state.roles);
+const modals = computed(() => store.state.modals);
+const edition = computed(() => store.state.edition);
+const grimoire = computed(() => store.state.grimoire);
+const jinxes = computed(() => store.state.jinxes);
+const locale = computed(() => store.state.locale);
+const players = computed(() => store.state.players.players);
+
+/**
      * Return a list of jinxes in the form of role IDs and a reason
      * @returns {*[]} [{first, second, reason}]
      */
-    jinxed: function () {
-      const jinxed = [];
-      this.roles.forEach((role) => {
-        if (this.jinxes.get(role.id)) {
-          this.jinxes.get(role.id).forEach((reason, second) => {
-            if (this.roles.get(second)) {
-              jinxed.push({
-                first: role,
-                second: this.roles.get(second),
-                reason,
-              });
-            }
+const jinxed = computed(() => {
+  const jinxedList = [];
+  roles.value.forEach((role) => {
+    if (jinxes.value.get(role.id)) {
+      jinxes.value.get(role.id).forEach((reason, second) => {
+        if (roles.value.get(second)) {
+          jinxedList.push({
+            first: role,
+            second: roles.value.get(second),
+            reason,
           });
         }
       });
-      return jinxed;
-    },
-    rolesGrouped: function () {
-      const rolesGrouped = {};
-      this.roles.forEach((role) => {
-        if (!rolesGrouped[role.team]) {
-          rolesGrouped[role.team] = [];
-        }
-        rolesGrouped[role.team].push(role);
-      });
-      delete rolesGrouped["traveler"];
-      return rolesGrouped;
-    },
-    playersByRole: function () {
-      const players = {};
-      this.players.forEach(({ name, role }) => {
-        if (role && role.id && role.team !== "traveler") {
-          if (!players[role.id]) {
-            players[role.id] = [];
-          }
-          players[role.id].push(name);
-        }
-      });
-      return players;
-    },
-    ...mapState(["roles", "modals", "edition", "grimoire", "jinxes", "locale"]),
-    ...mapState("players", ["players"]),
-  },
-  methods: {
-    rolePath(role) {
-      return new URL(
-        `../../assets/icons/${role.imageAlt || role.id}.png`,
-        import.meta.url,
-      ).href;
-    },
-    ...mapMutations(["toggleModal"]),
-  },
+    }
+  });
+  return jinxedList;
+});
+
+const rolesGrouped = computed(() => {
+  const grouped = {};
+  roles.value.forEach((role) => {
+    if (!grouped[role.team]) {
+      grouped[role.team] = [];
+    }
+    grouped[role.team].push(role);
+  });
+  delete grouped["traveler"];
+  return grouped;
+});
+
+const playersByRole = computed(() => {
+  const playersMap = {};
+  players.value.forEach(({ name, role }) => {
+    if (role && role.id && role.team !== "traveler") {
+      if (!playersMap[role.id]) {
+        playersMap[role.id] = [];
+      }
+      playersMap[role.id].push(name);
+    }
+  });
+  return playersMap;
+});
+
+const rolePath = (role) => {
+  return new URL(
+    `../../assets/icons/${role.imageAlt || role.id}.png`,
+    import.meta.url,
+  ).href;
+};
+
+const toggleModal = (modalName) => {
+  store.commit("toggleModal", modalName);
 };
 </script>
 

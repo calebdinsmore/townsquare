@@ -5,7 +5,7 @@
       <li class="tabs" :class="tab">
         <span class="tab" icon="book-open" @click="tab = 'official'" :class="{ active: tab == 'official' }">{{
           locale.modal.edition.tab.official }}</span>
-        <span class="tab" icon="broadcast-tower" @click="tab = 'popular'" :class="{ active: tab == 'popular' }">{{
+        <span class="tab" icon="tower-broadcast" @click="tab = 'popular'" :class="{ active: tab == 'popular' }">{{
           locale.modal.edition.tab.popular }}</span>
         <span class="tab" icon="question" @click="tab = 'custom'" :class="{ active: tab == 'custom' }">{{
           locale.modal.edition.tab.custom }}</span>
@@ -16,9 +16,8 @@
       </li>
       <template v-if="tab == 'official'">
         <ul class="editions">
-          <li v-for="edition in editions.official" class="edition" :class="['edition-' + edition.id]" :style="{
-            backgroundImage: `url(${logoPath(edition)})`,
-          }" :key="edition.id" @click="runEdition(edition)">
+          <li v-for="edition in editions.official" class="edition" :class="['edition-' + edition.id]"
+            :style="{ backgroundImage: `url(${logoPath(edition)})` }" :key="edition.id" @click="runEdition(edition)">
             {{ edition.name }}
           </li>
         </ul>
@@ -39,9 +38,9 @@
       <template v-if="tab == 'custom'">
         <div class="custom">
           {{ locale.modal.edition.custom.introStart }}
-          <a href="https://script.bloodontheclocktower.com/" target="_blank">{{
-            locale.modal.edition.custom.scriptTool
-          }}</a>
+          <a href="https://script.bloodontheclocktower.com/" target="_blank">
+            {{ locale.modal.edition.custom.scriptTool }}
+          </a>
           {{ locale.modal.edition.custom.introEnd }}.<br />
           <br />
           {{ locale.modal.edition.custom.instructionsStart }}
@@ -99,185 +98,189 @@
   </Modal>
 </template>
 
-<script>
-import { mapMutations, mapState } from "vuex";
+<script setup>
+import { computed, ref } from "vue";
+import { useStore } from "vuex";
 import Modal from "./Modal.vue";
 import { rolesJSON } from "../../store/modules/locale";
 import Token from "../Token.vue";
 
-export default {
-  components: {
-    Modal,
-    Token,
-  },
-  data() {
-    return {
-      tab: "official",
-      draftPool: rolesJSON,
-      teams: ["townsfolk", "outsider", "minion", "demon"],
-      recommendedTeamSize: {
-        townsfolk: 13,
-        outsider: 4,
-        minion: 4,
-        demon: 4,
-      },
-    };
-  },
-  computed: {
-    ...mapState(["modals", "locale", "editions", "roles", "jinxes"]),
-  },
-  methods: {
-    initPool() {
-      this.draftPool = rolesJSON.default;
-      this.resetBuilt();
-      for (let [role] of this.roles) {
-        this.toggleRole(role);
+const store = useStore();
+const tab = ref("official");
+const draftPool = ref(rolesJSON);
+const teams = ["townsfolk", "outsider", "minion", "demon"];
+const recommendedTeamSize = {
+  townsfolk: 13,
+  outsider: 4,
+  minion: 4,
+  demon: 4,
+};
+
+const modals = computed(() => store.state.modals);
+const locale = computed(() => store.state.locale);
+const editions = computed(() => store.state.editions);
+const roles = computed(() => store.state.roles);
+const jinxes = computed(() => store.state.jinxes);
+
+function initPool() {
+  draftPool.value = rolesJSON.default;
+  resetBuilt();
+  for (let [role] of roles.value) {
+    toggleRole(role);
+  }
+}
+
+function toggleRole(id) {
+  const role = draftPool.value.find((r) => r.id === id);
+  if (role) {
+    role.selected = !role.selected;
+  }
+}
+
+function rolesForTeam(team) {
+  return draftPool.value?.filter((role) => role.team === team) ?? [];
+}
+
+function selectedInTeam(team) {
+  return draftPool.value?.filter(
+    (role) => role.team === team && role.selected,
+  ).length;
+}
+
+function resetBuilt() {
+  for (let role of draftPool.value) {
+    role.selected = false;
+  }
+}
+
+function randomizeBuilt() {
+  resetBuilt();
+  for (let team of teams) {
+    let currentPool = rolesForTeam(team);
+    for (let i = 0; i < recommendedTeamSize[team]; i++) {
+      let picked = currentPool.splice(
+        Math.floor(Math.random() * currentPool.length),
+        1,
+      )[0];
+      picked.selected = true;
+    }
+  }
+}
+
+function startBuilt() {
+  const selected = draftPool.value.filter((role) => role.selected);
+  parseRoles(selected);
+}
+
+function openUpload() {
+  document.querySelector("input[type='file']").click();
+}
+
+function handleUpload(event) {
+  const file = event.target.files[0];
+  if (!file?.size) {
+    return;
+  }
+  const reader = new FileReader();
+  reader.addEventListener("load", () => {
+    try {
+      const uploadedRoles = JSON.parse(reader.result);
+      parseRoles(uploadedRoles);
+    } catch (e) {
+      alert(`Error reading custom script: ${e.message}`);
+    }
+    event.target.value = "";
+  });
+  reader.readAsText(file);
+}
+
+function promptURL() {
+  const url = prompt(locale.value.prompt.customUrl);
+  if (url) {
+    handleURL(url);
+  }
+}
+
+function logoPath(edition) {
+  return new URL(`../../assets/logos/${edition.logo}.png`, import.meta.url).href;
+}
+
+async function launchScript(fileName) {
+  await handleURL(`/scripts/${fileName}`);
+}
+
+async function handleURL(url) {
+  const res = await fetch(url);
+  if (res?.json) {
+    try {
+      const script = await res.json();
+      parseRoles(script);
+    } catch (e) {
+      alert(`${locale.value.prompt.customError}: ${e.message}`);
+    }
+  }
+}
+
+async function readFromClipboard() {
+  const text = await navigator.clipboard.readText();
+  try {
+    const uploadedRoles = JSON.parse(text);
+    parseRoles(uploadedRoles);
+  } catch (e) {
+    alert(`Error reading custom script: ${e.message}`);
+  }
+}
+
+function parseRoles(pickedRoles) {
+  if (!pickedRoles || !pickedRoles.length) return;
+  pickedRoles = pickedRoles.map((role) =>
+    typeof role === "string" ? { id: role } : role,
+  );
+  const metaIndex = pickedRoles.findIndex(({ id }) => id === "_meta");
+  const meta = metaIndex > -1 ? pickedRoles.splice(metaIndex, 1).pop() : {};
+  store.commit("setCustomRoles", pickedRoles);
+  store.commit("setEdition", { ...meta, id: "custom" });
+  const fabled = [];
+  let djinnAdded = false;
+  let djinnNeeded = false;
+  let bootleggerAdded = false;
+  let bootleggerNedded = false;
+  pickedRoles.forEach((role) => {
+    if (store.state.fabled.has(role.id || role)) {
+      fabled.push(store.state.fabled.get(role.id || role));
+      if ((role.id || role) == "djinn") {
+        djinnAdded = true;
+      } else if ((role.id || role) == "bootlegger") {
+        bootleggerAdded = true;
       }
-    },
-    toggleRole(id) {
-      const role = this.draftPool.find((r) => r.id === id);
-      if (role) {
-        role.selected = !role.selected;
-      }
-    },
-    rolesForTeam(team) {
-      return this.draftPool?.filter((role) => role.team === team) ?? [];
-    },
-    selectedInTeam(team) {
-      return this.draftPool?.filter(
-        (role) => role.team === team && role.selected,
-      ).length;
-    },
-    resetBuilt() {
-      for (let role of this.draftPool) {
-        role.selected = false;
-      }
-    },
-    randomizeBuilt() {
-      this.resetBuilt();
-      for (let team of this.teams) {
-        let currentPool = this.rolesForTeam(team);
-        for (let i = 0; i < this.recommendedTeamSize[team]; i++) {
-          let picked = currentPool.splice(
-            Math.floor(Math.random() * currentPool.length),
-            1,
-          )[0];
-          picked.selected = true;
-        }
-      }
-    },
-    startBuilt() {
-      const selected = this.draftPool.filter((role) => role.selected);
-      this.parseRoles(selected);
-    },
-    openUpload() {
-      this.$refs.upload.click();
-    },
-    handleUpload() {
-      const file = this.$refs.upload.files[0];
-      if (!file?.size) {
-        return;
-      }
-      const reader = new FileReader();
-      reader.addEventListener("load", () => {
-        try {
-          const uploadedRoles = JSON.parse(reader.result);
-          this.parseRoles(uploadedRoles);
-        } catch (e) {
-          alert(`Error reading custom script: ${e.message}`);
-        }
-        this.$refs.upload.value = "";
-      });
-      reader.readAsText(file);
-    },
-    promptURL() {
-      const url = prompt(this.locale.prompt.customUrl);
-      if (url) {
-        this.handleURL(url);
-      }
-    },
-    logoPath(edition) {
-      return new URL(`../../assets/logos/${edition.logo}.png`, import.meta.url).href
-    },
-    async launchScript(fileName) {
-      await this.handleURL(`/scripts/${fileName}`);
-    },
-    async handleURL(url) {
-      const res = await fetch(url);
-      if (res?.json) {
-        try {
-          const script = await res.json();
-          this.parseRoles(script);
-        } catch (e) {
-          alert(`${this.locale.prompt.customError}: ${e.message}`);
-        }
-      }
-    },
-    async readFromClipboard() {
-      const text = await navigator.clipboard.readText();
-      try {
-        const uploadedRoles = JSON.parse(text);
-        this.parseRoles(uploadedRoles);
-      } catch (e) {
-        alert(`Error reading custom script: ${e.message}`);
-      }
-    },
-    parseRoles(pickedRoles) {
-      if (!pickedRoles || !pickedRoles.length) return;
-      pickedRoles = pickedRoles.map((role) =>
-        typeof role === "string" ? { id: role } : role,
-      );
-      const metaIndex = pickedRoles.findIndex(({ id }) => id === "_meta");
-      const meta = metaIndex > -1 ? pickedRoles.splice(metaIndex, 1).pop() : {};
-      this.$store.commit("setCustomRoles", pickedRoles);
-      this.$store.commit("setEdition", { ...meta, id: "custom" });
-      // set fabled
-      const fabled = [];
-      let djinnAdded = false;
-      let djinnNeeded = false;
-      let bootleggerAdded = false;
-      let bootleggerNedded = false;
-      pickedRoles.forEach((role) => {
-        if (this.$store.state.fabled.has(role.id || role)) {
-          fabled.push(this.$store.state.fabled.get(role.id || role));
-          if ((role.id || role) == "djinn") {
-            djinnAdded = true;
-          } else if ((role.id || role) == "bootlegger") {
-            bootleggerAdded = true;
-          }
-        } else if (role.edition == "custom" || role.image) {
-          /* If the role isn't fabled, but detected as custom, we will need a Bootlegger
+    } else if (role.edition == "custom" || role.image) {
+      /* If the role isn't fabled, but detected as custom, we will need a Bootlegger
            * NB: The actual version isn't perfect, since they only detect custom roles with an image or with the argument "edition":"custom".
            * The code will could be changed later, when all non-custom roles will have an attribute "edition"
            */
-          bootleggerNedded = true;
-        }
-        // If the role isn't fabled, neither custom, and if we neither added a Djinn neither planned to add a Djinn, we look if this role is jinxed
-        else if (!djinnAdded && !djinnNeeded && this.jinxes.get(role.id)) {
-          this.jinxes.get(role.id).forEach((reason, second) => {
-            if (this.roles.get(second)) {
-              djinnNeeded = true;
-            }
-          });
+      bootleggerNedded = true;
+    } else if (!djinnAdded && !djinnNeeded && jinxes.value.get(role.id)) {
+      // If the role isn't fabled, neither custom, and if we neither added a Djinn neither planned to add a Djinn, we look if this role is jinxed
+      jinxes.value.get(role.id).forEach((reason, second) => {
+        if (roles.value.get(second)) {
+          djinnNeeded = true;
         }
       });
-      if (djinnNeeded && !djinnAdded) {
-        fabled.push(this.$store.state.fabled.get("djinn"));
-      }
-      if (bootleggerNedded && !bootleggerAdded) {
-        fabled.push(this.$store.state.fabled.get("bootlegger"));
-      }
-      this.$store.commit("players/setFabled", { fabled });
-    },
-    runEdition(edition) {
-      console.log("caca")
-      this.$store.commit("setEdition", edition);
-      // The editions contain no Fabled
-      this.$store.commit("players/setFabled", { fabled: [] });
-    },
-    ...mapMutations(["toggleModal", "setEdition"]),
-  },
-};
+    }
+  });
+  if (djinnNeeded && !djinnAdded) {
+    fabled.push(store.state.fabled.get("djinn"));
+  }
+  if (bootleggerNedded && !bootleggerAdded) {
+    fabled.push(store.state.fabled.get("bootlegger"));
+  }
+  store.commit("players/setFabled", { fabled });
+}
+
+function runEdition(edition) {
+  store.commit("setEdition", edition);
+  store.commit("players/setFabled", { fabled: [] });
+}
 </script>
 
 <style scoped lang="scss">

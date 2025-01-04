@@ -1,16 +1,13 @@
 # Release Notes
 
-## Upcoming version
+### Version 4.0.0
 
-
+- Upgraded to vue 3
 
 ### Version 3.25.1
 
 - Fixed custom scripts background path
 - Updating the night order
-
-### Version 4.0.0
-- Upgraded to vue 3
 
 ### Version 3.25.0
 - Replacing the icon custom.png
