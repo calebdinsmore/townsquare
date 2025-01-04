@@ -2,7 +2,7 @@
 
 ## Upcoming version
 
-
+- Fixed custom scripts background path
 
 ### Version 3.25.0
 - Replacing the icon custom.png
