@@ -3,7 +3,8 @@
 ## Upcoming version
 
 - Fixed custom scripts background path
-
+- Updating the night order
+- 
 ### Version 3.25.0
 - Replacing the icon custom.png
 - Changing the order of the three editions, to match the official order
