@@ -1,5 +1,13 @@
 # Release Notes
 
+## Upcomming Version
+
+
+
+### Version 4.0.1
+
+- Bugfix : close edition modale
+
 ### Version 4.0.0
 
 - Upgraded to vue 3

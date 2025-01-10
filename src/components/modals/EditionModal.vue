@@ -281,6 +281,10 @@ function runEdition(edition) {
   store.commit("setEdition", edition);
   store.commit("players/setFabled", { fabled: [] });
 }
+
+function toggleModal(modal) {
+  store.commit('toggleModal', modal);
+}
 </script>
 
 <style scoped lang="scss">
