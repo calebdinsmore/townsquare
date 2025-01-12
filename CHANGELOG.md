@@ -2,7 +2,7 @@
 
 ## Upcomming Version
 
-
+- Centering the icon "custom.png"
 
 ### Version 4.0.1
 
