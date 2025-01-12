@@ -609,7 +609,7 @@
       "Mort"
     ],
     "setup": false,
-    "ability": "Quand vous apprenez votre mort, désignez publiquement un joueur encore en vie. Cette nuit, s'il était bon, il meurt."
+    "ability": "Quand vous apprenez votre mort, désignez publiquement un joueur vivant. Cette nuit, s'il était bon, il meurt."
   },
   {
     "id": "goon",
@@ -1082,7 +1082,7 @@
     "otherNightReminder": "",
     "reminders": [],
     "setup": false,
-    "ability": "Quand vous apprenez votre mort, désignez publiquement un joueur encore en vie : s'il est Mauvais, votre équipe perd."
+    "ability": "Quand vous apprenez votre mort, désignez publiquement un joueur vivant. S'il est mauvais, votre équipe perd."
   },
   {
     "id": "eviltwin",
