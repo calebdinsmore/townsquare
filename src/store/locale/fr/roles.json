@@ -779,7 +779,7 @@
       "Apprenti"
     ],
     "setup": false,
-    "ability": "Au cours de votre première nuit, vous acquérez une capacité de villageois si vous êtes bon, ou une capacité de Sbire si vous êtes Mauvais."
+    "ability": "Durant votre première nuit, vous acquérez une capacité de Villageois si vous êtes bon, ou une capacité de Sbire si vous êtes mauvais."
   },
   {
     "id": "matron",
