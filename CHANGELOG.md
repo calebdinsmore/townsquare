@@ -2,7 +2,7 @@
 
 ## Upcomming Version
 
-
+- Minor rephrasing in the French version (mainly in Sects & Violets and Bad Moon Rising)
 
 ### Version 4.0.1
 
