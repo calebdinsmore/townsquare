@@ -792,7 +792,7 @@
     "otherNightReminder": "",
     "reminders": [],
     "setup": false,
-    "ability": "Chaque jour, vous pouvez choisir 3 paires de joueurs et échanger leurs sièges. Les joueurs ne peuvent pas quitter leurs sièges pour parler en privé."
+    "ability": "Chaque jour, vous pouvez échanger les places de jusqu'à 3 paires de joueurs. Personne ne peut quitter son siège pour parler en privé."
   },
   {
     "id": "judge",
