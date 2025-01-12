@@ -1207,7 +1207,7 @@
       "Mort"
     ],
     "setup": false,
-    "ability": "Chaque nuit*, désignez un joueur : il meurt. Les capacités de Villageois donnent de fausses infos. Le jour, sans exécution, les mauvais gagnent."
+    "ability": "Chaque nuit*, désignez un joueur : il meurt. Les infos des capacités de Villageois sont fausses. Le jour, sans exécution, les mauvais gagnent."
   },
   {
     "id": "barista",
