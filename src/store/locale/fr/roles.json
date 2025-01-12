@@ -482,7 +482,7 @@
     "firstNight": 0,
     "firstNightReminder": "",
     "otherNight": 51,
-    "otherNightReminder": "Si les annonces publiques de la Commère étaient vraie aujourd'hui, choisisser un joueur non protégé. Ce joueur meurt.",
+    "otherNightReminder": "Si l'annonce publique de la Commère était vraie aujourd'hui, choisisser un joueur. Ce joueur meurt.",
     "reminders": [
       "Mort"
     ],
