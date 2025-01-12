@@ -2,7 +2,7 @@
 
 ## Upcomming Version
 
-
+- Allowing the Story Teller to give back vote token
 
 ### Version 4.0.1
 
