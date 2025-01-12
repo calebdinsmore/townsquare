@@ -2,7 +2,7 @@
 
 ## Upcomming Version
 
-
+- Adding the Wizard
 
 ### Version 4.0.1
 
