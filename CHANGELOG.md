@@ -2,7 +2,7 @@
 
 ## Upcomming Version
 
-
+- Adding a token for the Pit-Hag
 
 ### Version 4.0.1
 
