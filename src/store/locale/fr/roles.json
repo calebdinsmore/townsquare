@@ -823,7 +823,7 @@
       "Accuser mauvais"
     ],
     "setup": false,
-    "ability": "Seul le Narrateur peut lancer des accusations. Chaque jour, au moins un de vos adversaires est accusé."
+    "ability": "Seul le Narrateur peut accuser. Chaque jour, au moins un de vos adversaires est accusé."
   },
   {
     "id": "voudon",
@@ -918,13 +918,13 @@
     "firstNight": 0,
     "firstNightReminder": "",
     "otherNight": 71,
-    "otherNightReminder": "Indiquez si un Sbire a lancé une accusation aujourd'hui",
+    "otherNightReminder": "Indiquez si un Sbire a accusé accusation aujourd'hui",
     "reminders": [
       "A Accusé",
       "N'a pas accusé"
     ],
     "setup": false,
-    "ability": "Chaque nuit*, vous apprenez si un Sbire a lancé une accusation aujourd'hui."
+    "ability": "Chaque nuit*, vous apprenez si un Sbire a accusé aujourd'hui."
   },
   {
     "id": "oracle",
@@ -1251,7 +1251,7 @@
     "otherNightReminder": "",
     "reminders": [],
     "setup": false,
-    "ability": "Chaque jour, après la première exécution, vous pouvez lancer une nouvelle accusation."
+    "ability": "Chaque jour, après la première exécution, vous pouvez accuser de nouveau."
   },
   {
     "id": "bonecollector",
