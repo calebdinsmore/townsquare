@@ -11,6 +11,7 @@
   - Exorcist
   - Gossip
   - Mastermind
+  - Matron
   - Vortox
   - Zombuul
 - Character renames in French version
