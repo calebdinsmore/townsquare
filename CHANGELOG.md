@@ -8,6 +8,7 @@
 - Minor rephrasing in the French version (mainly in Sects & Violets and Bad Moon Rising)
   - Gossip
 - Character renames in French version
+  - Boomdandy
   - Mastermind
   - Sweetheart
 
