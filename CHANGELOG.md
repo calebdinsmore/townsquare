@@ -6,7 +6,9 @@
 - Adding the Wizard
 - Adding a "dead" reminder token for the Pit-Hag
 - Minor rephrasing in the French version (mainly in Sects & Violets and Bad Moon Rising)
-  - Gossip 
+  - Gossip
+- Character renames in French version
+  - Mastermind
 
 ### Version 4.0.1
 
