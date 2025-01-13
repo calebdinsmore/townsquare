@@ -89,7 +89,7 @@
       },
       {
         "id": "Boomdandy",
-        "reason": "Si le Médecin de Peste est exécuté et que le Narrateur aurait du gagner une capacité d'Homme-bombe, la capacité d'Homme-bombe s'active immédiatement."
+        "reason": "Si le Médecin de Peste est exécuté et que le Narrateur aurait du gagner la capacité du Dynamiteur, la capacité du Dynamiteur s'active immédiatement."
       },
       {
         "id": "Scarlet Woman",
@@ -292,7 +292,7 @@
     "hatred": [
       {
         "id": "Al-Hadikhia",
-        "reason": "Si l'Al-Hadikhia meurt par exécution, et si le Cerveau est en vie, l'Al-Hadikhia désigne trois joueurs bons cette nuit. Si tous choisit de vivre, les mauvais gagnent ; sinon, les bons gagnent."
+        "reason": "Si l'Al-Hadikhia meurt par exécution, et si le Conspirateur est en vie, l'Al-Hadikhia désigne trois joueurs bons cette nuit. Si tous choisit de vivre, les mauvais gagnent ; sinon, les bons gagnent."
       }
     ]
   },
@@ -502,7 +502,7 @@
       },
       {
         "id": "Mastermind",
-        "reason": "Si le Cerveau est en vie et que l'hôte de la Ssangssue meurt par execution, la Ssangssue survit mais perd sa capacité."
+        "reason": "Si le Conspirateur est en vie et que l'hôte de la Ssangssue meurt par execution, la Ssangssue survit mais perd sa capacité."
       }
     ]
   },

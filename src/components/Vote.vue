@@ -203,7 +203,8 @@ const noVoudon = computed(() => {
 const canVote = computed(() => {
   if (!player.value) return false;
   if (
-    player.value.isVoteless &&
+    (player.value.isDead || player.value.role.id == "beggar") &&
+    !player.value.voteToken &&
     (nominee.value && nominee.value.role.team !== "traveler" ||
       typeof session.value.nomination[1] === "string") &&
     noVoudon.value
