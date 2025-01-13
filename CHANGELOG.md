@@ -12,7 +12,7 @@
 
 ### Version 4.0.1
 
-- Bugfix : close edition modale
+- Bugfix : close edition modal
 
 ### Version 4.0.0
 
