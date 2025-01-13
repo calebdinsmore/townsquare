@@ -3,6 +3,7 @@
 ## Upcomming Version
 
 - Allowing the Story Teller to give back vote token
+- Adding the Wizard
 
 ### Version 4.0.1
 

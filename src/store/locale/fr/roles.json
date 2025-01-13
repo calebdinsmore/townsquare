@@ -2070,6 +2070,21 @@
     "ability": "Le Démon (même si ivre ou empoisonné) a la capacité d'un personnage bon qui n'est pas en jeu. Vous savez tous les deux laquelle."
   },
   {
+    "id": "wizard",
+    "name": "Sorcier",
+    "edition": "",
+    "team": "minion",
+    "firstNight": 30,
+    "firstNightReminder": "Appliquez la capacité du Sorcier, si besoin.",
+    "otherNight": 13,
+    "otherNightReminder": "Appliquez la capacité du Sorcier, si besoin.",
+    "reminders": [
+      "?"
+    ],
+    "setup": false,
+    "ability": "Une fois par partie, faites un vœu. S’il est exaucé, il se peut que votre vœu ait un prix et laisse un indice sur sa nature."
+  },
+  {
     "id": "lilmonsta",
     "name": "Bébé monstre",
     "edition": "",
