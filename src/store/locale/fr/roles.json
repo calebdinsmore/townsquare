@@ -716,7 +716,7 @@
       "Mort"
     ],
     "setup": false,
-    "ability": "Chaque nuit*, si personne n'est mort aujourd'hui, désignez un joueur : il meurt. La première fois que vous mourez, vous vivez mais apparaissez mort."
+    "ability": "Chaque nuit*, s'il n'y a pas eu de mort aujourd'hui, désignez un joueur : il meurt. Après votre 1re mort, vous vivez mais apparaissez mort."
   },
   {
     "id": "pukka",

@@ -11,6 +11,7 @@
   - Gossip
   - Mastermind
   - Vortox
+  - Zombuul
 - Character renames in French version
   - Boomdandy
   - Mastermind
