@@ -4,6 +4,8 @@
 
 - Allowing the Story Teller to give back vote token
 - Adding the Wizard
+- Minor rephrasing in the French version (mainly in Sects & Violets and Bad Moon Rising)
+  - Gossip 
 
 ### Version 4.0.1
 
