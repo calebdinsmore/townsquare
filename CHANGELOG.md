@@ -7,6 +7,7 @@
 - Adding a "dead" reminder token for the Pit-Hag
 - French translation :
   - Uniformizing phrasing for "nominate"
+  - Uniformizing phrasing for "alive"
   - Minor rephrasing (mainly shortening abilities in Sects & Violets and Bad Moon Rising)
     - Apprentice
     - Barber
