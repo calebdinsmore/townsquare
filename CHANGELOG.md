@@ -4,6 +4,7 @@
 
 - Allowing the Story Teller to give back vote token
 - Adding the Wizard
+- Adding a "dead" reminder token for the Pit-Hag
 - Minor rephrasing in the French version (mainly in Sects & Violets and Bad Moon Rising)
   - Gossip 
 
