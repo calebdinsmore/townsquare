@@ -9,6 +9,7 @@
   - Gossip
 - Character renames in French version
   - Mastermind
+  - Sweetheart
 
 ### Version 4.0.1
 

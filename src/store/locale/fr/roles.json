@@ -1043,13 +1043,13 @@
   },
   {
     "id": "sweetheart",
-    "name": "Bien-aimé",
+    "name": "Dulcinée",
     "edition": "snv",
     "team": "outsider",
     "firstNight": 0,
     "firstNightReminder": "",
     "otherNight": 54,
-    "otherNightReminder": "Si le Bien-aimé est mort aujourd'hui, choisissez un joueur qui sera définitivement Ivre.",
+    "otherNightReminder": "Si la Dulcinée est morte aujourd'hui, choisissez un joueur qui sera désormais ivre.",
     "reminders": [
       "Ivre"
     ],
