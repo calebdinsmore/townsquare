@@ -5,21 +5,23 @@
 - Allowing the Story Teller to give back vote token
 - Adding the Wizard
 - Adding a "dead" reminder token for the Pit-Hag
-- Minor rephrasing in the French version (mainly shortening abilities in Sects & Violets and Bad Moon Rising)
-  - Apprentice
-  - Barber
-  - Exorcist
-  - Gossip
-  - Judge
-  - Mastermind
-  - Matron
-  - Vortox
-  - Voudon
-  - Zombuul
-- Character renames in French version
-  - Boomdandy
-  - Mastermind
-  - Sweetheart
+- French translation :
+  - Uniformizing phrasing for "nominate"
+  - Minor rephrasing (mainly shortening abilities in Sects & Violets and Bad Moon Rising)
+    - Apprentice
+    - Barber
+    - Exorcist
+    - Gossip
+    - Judge
+    - Mastermind
+    - Matron
+    - Vortox
+    - Voudon
+    - Zombuul
+  - Character renames in French version
+    - Boomdandy
+    - Mastermind
+    - Sweetheart
 
 ### Version 4.0.1
 
