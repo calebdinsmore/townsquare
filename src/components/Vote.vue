@@ -56,9 +56,9 @@
         </em>
         <div v-if="!session.isVoteInProgress && session.lockedVote < 1">
           {{ locale.vote.timePerPlayer }}
-          <font-awesome-icon @mousedown.prevent="setVotingSpeed(-500)" icon="minus-circle" class="fa fa-minus-circle" />
+          <font-awesome-icon @mousedown.prevent="setVotingSpeed(-250)" icon="minus-circle" class="fa fa-minus-circle" />
           {{ session.votingSpeed / 1000 }}s
-          <font-awesome-icon @mousedown.prevent="setVotingSpeed(500)" icon="plus-circle" class="fa fa-plus-circle" />
+          <font-awesome-icon @mousedown.prevent="setVotingSpeed(250)" icon="plus-circle" class="fa fa-plus-circle" />
         </div>
         <div class="button-group">
           <div class="button townsfolk" v-if="!session.isVoteInProgress" @click="countdown">
@@ -301,7 +301,7 @@ const vote = (vote) => {
 
 const setVotingSpeed = (diff) => {
   const speed = Math.round(session.value.votingSpeed + diff);
-  if (speed > 0) {
+  if (speed >= 0) {
     store.commit("session/setVotingSpeed", speed);
   }
 };

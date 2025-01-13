@@ -2,8 +2,7 @@
 
 ## Upcomming Version
 
-
-
+- Allow voting delay to go down to 0 to lock everyone at once
 
 ### Version 4.1.0
 
