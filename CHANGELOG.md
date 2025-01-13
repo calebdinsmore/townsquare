@@ -10,6 +10,7 @@
   - Barber
   - Exorcist
   - Gossip
+  - Judge
   - Mastermind
   - Matron
   - Vortox
