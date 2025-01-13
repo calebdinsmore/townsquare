@@ -14,6 +14,7 @@
   - Mastermind
   - Matron
   - Vortox
+  - Voudon
   - Zombuul
 - Character renames in French version
   - Boomdandy

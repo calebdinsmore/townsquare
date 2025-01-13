@@ -836,7 +836,7 @@
     "otherNightReminder": "",
     "reminders": [],
     "setup": false,
-    "ability": "Seuls vous et les morts pouvez voter. Les morts n'ont pas besoin de jetons pour voter. La majorité à 50% n'est pas requise pour condamner un joueur."
+    "ability": "Seuls vous et les morts pouvez voter. Ils n'ont pas besoin de jeton pour ça. La majorité à 50% n'est pas requise."
   },
   {
     "id": "clockmaker",
