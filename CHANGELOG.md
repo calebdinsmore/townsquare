@@ -6,6 +6,7 @@
 - Adding the Wizard
 - Adding a "dead" reminder token for the Pit-Hag
 - Minor rephrasing in the French version (mainly shortening abilities in Sects & Violets and Bad Moon Rising)
+  - Apprentice
   - Barber
   - Exorcist
   - Gossip
