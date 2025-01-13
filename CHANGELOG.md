@@ -5,8 +5,9 @@
 - Allowing the Story Teller to give back vote token
 - Adding the Wizard
 - Adding a "dead" reminder token for the Pit-Hag
-- Minor rephrasing in the French version (mainly in Sects & Violets and Bad Moon Rising)
+- Minor rephrasing in the French version (mainly shortening abilities in Sects & Violets and Bad Moon Rising)
   - Gossip
+  - Vortox
 - Character renames in French version
   - Boomdandy
   - Mastermind
