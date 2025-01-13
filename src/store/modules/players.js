@@ -3,7 +3,7 @@ const NEWPLAYER = {
   id: "",
   role: {},
   reminders: [],
-  isVoteless: false,
+  voteToken: false,
   isDead: false,
   pronouns: "",
 };

@@ -4,7 +4,7 @@
       {
         dead: props.player.isDead,
         marked: session.markedPlayer === index,
-        'no-vote': props.player.isVoteless,
+        'no-vote': !props.player.voteToken,
         you: session.sessionId && props.player.id && props.player.id === session.playerId,
         'vote-yes': session.votes[index],
         'vote-lock': voteLocked,
@@ -76,7 +76,10 @@
 
       <!-- Ghost vote icon -->
       <font-awesome-icon icon="vote-yea" class="fa fa-vote-yea has-vote"
-        v-if="props.player.isDead && !props.player.isVoteless" @click="updatePlayer('isVoteless', true)"
+        v-if="(props.player.isDead || player.role.id=='beggar') && props.player.voteToken" @click="updatePlayer('voteToken', false)"
+        :title="locale.player.ghostVote" />
+      <font-awesome-icon icon="vote-yea" class="fa fa-vote-yea has-vote no-token"
+        v-if="(props.player.isDead || player.role.id=='beggar') && !props.player.voteToken && !session.isSpectator" @click="updatePlayer('voteToken', true)"
         :title="locale.player.ghostVote" />
 
       <!-- On block icon -->
@@ -233,19 +236,19 @@ function toggleStatus() {
       if (props.player.isMarked) {
         updatePlayer("isMarked", false);
       }
-    } else if (props.player.isVoteless) {
-      updatePlayer("isVoteless", false);
+    } else if (!props.player.voteToken) {
+      updatePlayer("voteToken", true);
       updatePlayer("isDead", false);
     } else {
-      updatePlayer("isVoteless", true);
+      updatePlayer("voteToken", false);
     }
   } else {
     updatePlayer("isDead", !props.player.isDead);
     if (props.player.isMarked) {
       updatePlayer("isMarked", false);
     }
-    if (props.player.isVoteless) {
-      updatePlayer("isVoteless", false);
+    if (props.player.voteToken != props.player.isDead) {
+      updatePlayer("voteToken", !props.player.voteToken);
     }
   }
 }
@@ -592,6 +595,18 @@ li.move:not(.from) .player .overlay svg.move {
 .player .has-vote {
   color: #fff;
   filter: drop-shadow(0 0 3px black);
+  transition: opacity 250ms;
+  z-index: 2;
+
+  #townsquare.public & {
+    opacity: 0;
+    pointer-events: none;
+  }
+}
+
+.player .no-token {
+  color: #000;
+  filter: drop-shadow(0 0 3px white);
   transition: opacity 250ms;
   z-index: 2;
 
