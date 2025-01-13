@@ -5,6 +5,7 @@
 - Allowing the Story Teller to give back vote token
 - Adding the Wizard
 - Adding a "dead" reminder token for the Pit-Hag
+- Centering the icon "custom.png"
 - French translation :
   - Uniformizing phrasing for "nominate"
   - Uniformizing phrasing for "alive"
