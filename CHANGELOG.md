@@ -9,6 +9,7 @@
   - Barber
   - Exorcist
   - Gossip
+  - Mastermind
   - Vortox
 - Character renames in French version
   - Boomdandy
