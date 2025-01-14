@@ -113,8 +113,8 @@ const teams = computed(() => {
     traveler: players.value.length - nonTravelers,
     alive,
     aliveNT,
-    votes: alive + players.value.filter(
-      player => player.isDead === true && player.isVoteless !== true
+    votes: players.value.filter(
+      player => (!player.isDead && player.role.id !== "beggar") || player.voteToken
     ).length,
   };
 });
