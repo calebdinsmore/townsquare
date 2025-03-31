@@ -28,7 +28,7 @@
   - Devil's advocate reminder
   - Zombuul reminder
   - Exorcist reminder
-  - Puzzlemaster reminder
+  - Puzzlemaster reminders
   - Damsel reminder
 
 ### Version 4.1.1
