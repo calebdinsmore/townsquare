@@ -13,6 +13,7 @@
   - Dusk
   - "Safe" in reminders (already changed earlier in abilities)
   - "Has ability" reminders
+  - "No ability" reminders
   - Fibbin renamed from "Menteur" to "Baratineur"
   - Pit-hag renamed from "Chaudronnier" to "Chaudronnière"
   - Evil twin ability 
