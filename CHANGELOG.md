@@ -9,6 +9,7 @@
   - Noble ability
   - Bounty hunter ability
   - King ability
+  - Cult Leader ability
 
 ### Version 4.1.0
 - Correcting a bug with the "give back token" update
