@@ -6,6 +6,8 @@
 - When sending roles, checking if all roles can be sent to a player
 - Ignoring out of date characters in the script builder
 - French Translation updates :
+  - Dawn
+  - Dusk
   - Evil twin ability 
   - Noble ability
   - Bounty hunter ability
