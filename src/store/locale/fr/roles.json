@@ -1175,7 +1175,7 @@
     "otherNightReminder": "Le Vigormortis désigne un joueur. Ce joueur meurt. Si c'est un Sbire, l'un de ses voisins Villageois est empoisonné.",
     "reminders": [
       "Mort",
-      "Capacité conservée",
+      "A sa capacité",
       "Empoisonné"
     ],
     "setup": true,
@@ -1267,7 +1267,7 @@
     "otherNightReminder": "Le Collecteur d'os peut, s'il n'a pas encore utilisé sa capacité, désigner un joueur mort. S'il le fait, le joueur désigné peut utiliser sa capacité jusqu'à la nuit prochaine. (Pensez à le reveiller si sa capacité s'active la nuit).",
     "reminders": [
       "Épuisé",
-      "Capacité Dispo"
+      "A sa capacité"
     ],
     "setup": false,
     "ability": "Une fois par partie, la nuit*, désignez un joueur mort : il retrouve sa capacité jusqu'au crépuscule."
@@ -1328,7 +1328,7 @@
     "otherNightReminder": "",
     "reminders": [
       "Persuadé",
-      "Capacité Dispo"
+      "A sa capacité"
     ],
     "setup": false,
     "ability": "Vous commencez en connaissant un Villageois en jeu. Quand il meurt, si vous étiez persuadé d'être ce personnage, vous gagnez sa capacité."

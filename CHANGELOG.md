@@ -12,6 +12,7 @@
   - Dawn
   - Dusk
   - "Safe" in reminders (already changed earlier in abilities)
+  - "Has ability" reminders
   - Evil twin ability 
   - Noble ability
   - Bounty hunter ability
