@@ -13,6 +13,7 @@
   - Dusk
   - "Safe" in reminders (already changed earlier in abilities)
   - "Has ability" reminders
+  - Fibbin renamed from "Menteur" to "Baratineur"
   - Evil twin ability 
   - Noble ability
   - Bounty hunter ability
