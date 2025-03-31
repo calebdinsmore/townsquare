@@ -4,6 +4,8 @@
 
 - When sending roles, checking if all roles can be sent to a player
 - Ignoring out of date characters in the script builder
+- French Translation updates :
+  - Evil twin ability rephrased
 
 ### Version 4.1.0
 - Correcting a bug with the "give back token" update
