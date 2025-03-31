@@ -1,6 +1,7 @@
 # Release Notes
 
 ## Upcomming Version
+- Updating Organ Grinder's ability text
 - Replacing the icons "dawn.png" and "dusk.png"
 - Updating some custom scripts
 - When sending roles, checking if all roles can be sent to a player
@@ -18,6 +19,7 @@
   - Atheist ability
   - Cannibal ability
   - Shugenja ability
+  - Organ grinder ability
 
 ### Version 4.1.1
 - Correcting a bug with the "give back token" update
