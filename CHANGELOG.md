@@ -1,6 +1,7 @@
 # Release Notes
 
 ## Upcomming Version
+- Printing default image on reminders (bug correction)
 - Updating Organ Grinder's ability text
 - Replacing the icons "dawn.png" and "dusk.png"
 - Updating some custom scripts
