@@ -2,6 +2,7 @@
 
 ## Upcomming Version
 
+- When sending roles, checking if all roles can be sent to a player
 - Ignoring out of date characters in the script builder
 
 ### Version 4.1.0
