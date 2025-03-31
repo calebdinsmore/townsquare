@@ -31,6 +31,7 @@
   - Puzzlemaster reminders
   - Damsel reminder
   - Lleech reminder
+  - Goblin reminder
 
 ### Version 4.1.1
 - Correcting a bug with the "give back token" update
