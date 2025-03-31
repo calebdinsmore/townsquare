@@ -13,6 +13,7 @@
   - Amnesiac ability
   - Huntsman ability
   - Atheist ability
+  - Cannibal ability
 
 ### Version 4.1.0
 - Correcting a bug with the "give back token" update
