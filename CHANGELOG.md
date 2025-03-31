@@ -16,7 +16,7 @@
   - Cannibal ability
   - Shugenja ability
 
-### Version 4.1.0
+### Version 4.1.1
 - Correcting a bug with the "give back token" update
 - Allow voting delay to go down to 0 to lock everyone at once
 
