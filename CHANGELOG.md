@@ -1,6 +1,7 @@
 # Release Notes
 
 ## Upcomming Version
+- Using official "safe" reminded instead of "protected"
 - Printing default image on reminders (bug correction)
 - Updating Organ Grinder's ability text
 - Replacing the icons "dawn.png" and "dusk.png"
@@ -10,6 +11,7 @@
 - French Translation updates :
   - Dawn
   - Dusk
+  - "Safe" in reminders (already changed earlier in abilities)
   - Evil twin ability 
   - Noble ability
   - Bounty hunter ability
