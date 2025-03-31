@@ -24,6 +24,7 @@
   - Shugenja ability
   - Organ grinder ability
   - Fang gu reminders
+  - Devil's advocate reminder
 
 ### Version 4.1.1
 - Correcting a bug with the "give back token" update
