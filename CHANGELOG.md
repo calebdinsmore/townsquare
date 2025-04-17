@@ -9,6 +9,7 @@
 - When sending roles, checking if all roles can be sent to a player
 - Ignoring out of date characters in the script builder
 - Added "Wrong" reminder for the juggler
+- Added "Changed" reminder for the engineer
 - French Translation updates :
   - Dawn
   - Dusk
@@ -17,8 +18,8 @@
   - "No ability" reminders
   - Fibbin renamed from "Menteur" to "Baratineur"
   - Pit-hag renamed from "Chaudronnier" to "Chaudronnière"
-  - Various abilities
-  - Various reminder
+  - Various abilities rephrased
+  - Various reminders added and/or adjusted
 
 ### Version 4.1.1
 - Correcting a bug with the "give back token" update
