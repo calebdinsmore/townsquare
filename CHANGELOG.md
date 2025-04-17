@@ -16,30 +16,8 @@
   - "No ability" reminders
   - Fibbin renamed from "Menteur" to "Baratineur"
   - Pit-hag renamed from "Chaudronnier" to "Chaudronnière"
-  - Evil twin ability 
-  - Noble ability
-  - Bounty hunter ability
-  - King ability
-  - Cult Leader ability
-  - Amnesiac ability
-  - Huntsman ability
-  - Atheist ability
-  - Cannibal ability
-  - Shugenja ability
-  - Organ grinder ability
-  - Fang gu reminders
-  - Devil's advocate reminder
-  - Zombuul reminder
-  - Exorcist reminder
-  - Puzzlemaster reminders
-  - Damsel reminder
-  - Lleech reminder
-  - Goblin reminder
-  - Angel reminder
-  - Barista reminders
-  - Flowergirl reminders
-  - Hatter reminder
-  - Barber reminder
+  - Various abilities
+  - Various reminder
 
 ### Version 4.1.1
 - Correcting a bug with the "give back token" update
