@@ -20,6 +20,7 @@
   - Pit-hag renamed from "Chaudronnier" to "Chaudronnière"
   - Various abilities rephrased
   - Various reminders added and/or adjusted
+  - Shorter Puzzlemaster's ability
 
 ### Version 4.1.1
 - Correcting a bug with the "give back token" update
