@@ -1915,7 +1915,7 @@
       "Revendiqué"
     ],
     "setup": false,
-    "ability": "Si vous dites publiquement que vous êtes le Gobelin quand vous êtes accusé et que vous êtes exécuté durant la même journée, votre équipe gagne."
+    "ability": "Si vous révélez publiquement être le Gobelin quand vous êtes accusé et que vous êtes exécuté durant ce même jour, votre équipe gagne."
   },
   {
     "id": "mephit",
