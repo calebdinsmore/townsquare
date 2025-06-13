@@ -1887,7 +1887,7 @@
       "Peur"
     ],
     "setup": false,
-    "ability": "Chaque nuit, désignez un joueur. S'il est accusé par vous et exécuté, son équipe perd. Tout le monde sait si vous désignez un nouveau joueur."
+    "ability": "Chaque nuit, désignez un joueur : si vous l'accusez et l'exécutez, son équipe perd. Tout le monde sait si vous désignez un nouveau joueur."
   },
   {
     "id": "psychopath",
