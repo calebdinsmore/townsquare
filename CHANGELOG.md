@@ -10,6 +10,7 @@
 - Ignoring out of date characters in the script builder
 - Added "Wrong" reminder for the juggler
 - Added "Changed" reminder for the engineer
+- Adding the Hermit
 - French Translation updates :
   - Dawn
   - Dusk
