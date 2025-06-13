@@ -2040,7 +2040,7 @@
     "otherNightReminder": "",
     "reminders": [],
     "setup": false,
-    "ability": "Tous les joueurs savent que vous êtes le Vizir. Vous ne pouvez mourir de jour. Si un bon vote, vous pouvez choisir d'exécuter immédiatement."
+    "ability": "Tous les joueurs savent que vous êtes le Vizir. Vous ne pouvez mourir le jour. Si un bon vote, vous pouvez choisir d'exécuter immédiatement."
   },
   {
     "id": "xaan",
