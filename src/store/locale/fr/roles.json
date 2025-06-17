@@ -159,7 +159,7 @@
       "Plus de capacité"
     ],
     "setup": false,
-    "ability": "Une seule fois par partie, pendant la journée, désignez publiquement un joueur : s'il est le Démon, il meurt."
+    "ability": "Une seule fois par partie, durant le jour, désignez publiquement un joueur : s'il est le Démon, il meurt."
   },
   {
     "id": "soldier",
@@ -1000,7 +1000,7 @@
       "Plus de capacité"
     ],
     "setup": false,
-    "ability": "Une fois par partie, pendant la journée, posez en privé au Narrateur une question fermée."
+    "ability": "Une fois par partie, durant le jour, posez en privé au Narrateur une question fermée."
   },
   {
     "id": "juggler",
@@ -1480,7 +1480,7 @@
       "Épuisé"
     ],
     "setup": false,
-    "ability": "Une fois par partie, pendant la journée, vous pouvez rendre visite au Narrateur et lui demander un conseil pour remporter la partie."
+    "ability": "Une fois par partie, durant le jour, vous pouvez rendre visite au Narrateur et lui demander un conseil pour aider votre équipe à gagner."
   },
   {
     "id": "huntsman",
