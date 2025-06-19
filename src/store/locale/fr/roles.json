@@ -1871,7 +1871,7 @@
       "3"
     ],
     "setup": true,
-    "ability": "Vous avez les capacités de tous les Étrangers. [-0 à -1 Étranger]"
+    "ability": "Vous avez les capacités de tous les Étrangers. [-0 ou -1 Étranger]"
   },
   {
     "id": "widow",
