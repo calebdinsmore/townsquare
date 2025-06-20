@@ -158,6 +158,19 @@
     "ability": "Désignez un rôle de gentil. S'il est en jeu, il ne peut mourrir que par exécution, mais les joueurs mauvais savent qui a ce rôle."
   },
   {
+    "id": "deusexfiasco",
+    "firstNightReminder": "",
+    "otherNight": 3,
+    "otherNightReminder": "Si la partie approche du dernier jour et vous n'avez fait aucune erreur accidentelle, faites une erreur volontaire avant la fin de la partie.",
+    "reminders": [
+      "Oups"
+    ],
+    "setup": false,
+    "name": "Deus ex Fiasco",
+    "team": "fabled",
+    "ability": "Au moins une fois par partie, le Narrateur fera une erreur, la corrigera, et l’admettra publiquement."
+  },
+  {
     "id": "ferryman",
     "firstNightReminder": "",
     "otherNight": 1002,
