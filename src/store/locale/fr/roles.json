@@ -1714,6 +1714,21 @@
     "ability": "Si le Démon vous tue, tous les joueurs l'apprennent. Désormais, vous pouvez accuser deux fois par jour et voter deux fois par accusation."
   },
   {
+    "id": "princess",
+    "name": "Princesse",
+    "edition": "",
+    "team": "townsfolk",
+    "firstNight": 0,
+    "firstNightReminder": "",
+    "otherNight": 31,
+    "otherNightReminder": "Si aujourd'hui était le premier jour de la Princesse, et si elle a accusé et exécuté un joueur, le Démon ne tue pas (réveillez quand même le Démon).",
+    "reminders": [
+      "Ne tue pas"
+    ],
+    "setup": false,
+    "ability": "Durant votre 1er jour, si vous accusez et exécutez un joueur, le Démon ne tue pas cette nuit."
+  },
+  {
     "id": "snitch",
     "name": "Cafteur",
     "edition": "",
