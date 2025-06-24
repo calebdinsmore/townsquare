@@ -10,6 +10,7 @@
 - Ignoring out of date characters in the script builder
 - Added "Wrong" reminder for the juggler
 - Added "Changed" reminder for the engineer
+- Correcting Banshee's night reminders
 - French Translation updates :
   - Dawn
   - Dusk
