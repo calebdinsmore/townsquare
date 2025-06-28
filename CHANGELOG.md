@@ -13,6 +13,8 @@
 - French Translation updates :
   - Dawn
   - Dusk
+  - During
+  - Day
   - "Safe" in reminders (already changed earlier in abilities)
   - "Has ability" reminders
   - "No ability" reminders
