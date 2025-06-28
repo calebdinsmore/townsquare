@@ -1714,6 +1714,21 @@
     "ability": "Si le Démon vous tue, tous les joueurs l'apprennent. Désormais, vous pouvez accuser deux fois par jour et voter deux fois par accusation."
   },
   {
+    "id": "princess",
+    "name": "Princesse",
+    "edition": "",
+    "team": "townsfolk",
+    "firstNight": 0,
+    "firstNightReminder": "",
+    "otherNight": 31,
+    "otherNightReminder": "Si aujourd'hui était le premier jour de la Princesse, et si elle a accusé et exécuté un joueur, le Démon ne tue pas (réveillez quand même le Démon).",
+    "reminders": [
+      "Ne tue pas"
+    ],
+    "setup": false,
+    "ability": "Durant votre 1er jour, si vous accusez et exécutez un joueur, le Démon ne tue pas cette nuit."
+  },
+  {
     "id": "snitch",
     "name": "Cafteur",
     "edition": "",
@@ -1740,7 +1755,7 @@
       "Essai utilisé"
     ],
     "setup": false,
-    "ability": "Un joueur est Ivre de façon permanente, même après votre mort. Une fois par partie, en privé, vous pouvez tenter de deviner qui est le joueur Ivre. Si vous voyez juste, le Narrateur vous dévoile qui est le Démon, si vous vous trompez, il vous indique un autre joueur comme étant le Démon."
+    "ability": "1 joueur est ivre, même après votre mort. Si vous devinez qui (un seul essai), vous apprenez le Démon, mais l'info est fausse en cas d'erreur."
   },
   {
     "id": "heretic",
@@ -1855,6 +1870,23 @@
     ],
     "setup": false,
     "ability": "Durant votre première nuit, désignez un autre joueur : vous acquérez son alignement (sans savoir lequel), même si ivre ou empoisonné."
+  },
+  {
+    "id": "hermit",
+    "name": "Ermite",
+    "edition": "",
+    "team": "outsider",
+    "firstNight": 0,
+    "firstNightReminder": "",
+    "otherNight": 0,
+    "otherNightReminder": "",
+    "reminders": [
+      "1",
+      "2",
+      "3"
+    ],
+    "setup": true,
+    "ability": "Vous avez les capacités de tous les Étrangers. [-0 ou -1 Étranger]"
   },
   {
     "id": "widow",

@@ -29,6 +29,10 @@
     "id": "Cannibal",
     "hatred": [
       {
+        "id": "Princess",
+        "reason": "Si le Cannibale a accusé et exécuté la Princesse aujourd'hui, le Démon ne tue pas cette nuit."
+      },
+      {
         "id": "Juggler",
         "reason": "Si le Jongleur a deviné des rôles durant son premier jour et est alors mort par exécution, le Cannibale apprend cette nuit combien de rôles le Jongleur a deviné correctement."
       },
@@ -456,6 +460,15 @@
       {
         "id": "Marionette",
         "reason": "Si le Kazali veut créer une Marionnette, il doit choisir l'un de ses voisins."
+      }
+    ]
+  },
+  {
+    "id": "Al-Hadikhia",
+    "hatred": [
+      {
+        "id": "Princess",
+        "reason": "Si la Princesse a accusé et exécuté un joueur durant son premier jour, personne ne meurt par la capacité d'Al-Hadikhia cette nuit."
       }
     ]
   },
