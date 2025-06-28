@@ -159,7 +159,7 @@
       "Plus de capacité"
     ],
     "setup": false,
-    "ability": "Une seule fois par partie, pendant la journée, désignez publiquement un joueur : s'il est le Démon, il meurt."
+    "ability": "Une seule fois par partie, durant le jour, désignez publiquement un joueur : s'il est le Démon, il meurt."
   },
   {
     "id": "soldier",
@@ -1000,7 +1000,7 @@
       "Plus de capacité"
     ],
     "setup": false,
-    "ability": "Une fois par partie, pendant la journée, posez en privé au Narrateur une question fermée."
+    "ability": "Une fois par partie, durant le jour, posez en privé au Narrateur une question fermée."
   },
   {
     "id": "juggler",
@@ -1480,7 +1480,7 @@
       "Épuisé"
     ],
     "setup": false,
-    "ability": "Une fois par partie, pendant la journée, vous pouvez rendre visite au Narrateur et lui demander un conseil pour remporter la partie."
+    "ability": "Une fois par partie, durant le jour, vous pouvez rendre visite au Narrateur et lui demander un conseil pour aider votre équipe à gagner."
   },
   {
     "id": "huntsman",
@@ -1714,6 +1714,21 @@
     "ability": "Si le Démon vous tue, tous les joueurs l'apprennent. Désormais, vous pouvez accuser deux fois par jour et voter deux fois par accusation."
   },
   {
+    "id": "princess",
+    "name": "Princesse",
+    "edition": "",
+    "team": "townsfolk",
+    "firstNight": 0,
+    "firstNightReminder": "",
+    "otherNight": 31,
+    "otherNightReminder": "Si aujourd'hui était le premier jour de la Princesse, et si elle a accusé et exécuté un joueur, le Démon ne tue pas (réveillez quand même le Démon).",
+    "reminders": [
+      "Ne tue pas"
+    ],
+    "setup": false,
+    "ability": "Durant votre 1er jour, si vous accusez et exécutez un joueur, le Démon ne tue pas cette nuit."
+  },
+  {
     "id": "snitch",
     "name": "Cafteur",
     "edition": "",
@@ -1740,7 +1755,7 @@
       "Essai utilisé"
     ],
     "setup": false,
-    "ability": "Un joueur est Ivre de façon permanente, même après votre mort. Une fois par partie, en privé, vous pouvez tenter de deviner qui est le joueur Ivre. Si vous voyez juste, le Narrateur vous dévoile qui est le Démon, si vous vous trompez, il vous indique un autre joueur comme étant le Démon."
+    "ability": "1 joueur est ivre, même après votre mort. Si vous devinez qui (un seul essai), vous apprenez le Démon, mais l'info est fausse en cas d'erreur."
   },
   {
     "id": "heretic",
@@ -1857,6 +1872,23 @@
     "ability": "Durant votre première nuit, désignez un autre joueur : vous acquérez son alignement (sans savoir lequel), même si ivre ou empoisonné."
   },
   {
+    "id": "hermit",
+    "name": "Ermite",
+    "edition": "",
+    "team": "outsider",
+    "firstNight": 0,
+    "firstNightReminder": "",
+    "otherNight": 0,
+    "otherNightReminder": "",
+    "reminders": [
+      "1",
+      "2",
+      "3"
+    ],
+    "setup": true,
+    "ability": "Vous avez les capacités de tous les Étrangers. [-0 ou -1 Étranger]"
+  },
+  {
     "id": "widow",
     "name": "Veuve",
     "edition": "",
@@ -1872,7 +1904,7 @@
       "Sait"
     ],
     "setup": false,
-    "ability": "Lors de votre première nuit, regardez le grimoire et désignez un joueur : il est empoisonné. Un des Bons joueurs sait qu'il y a une Veuve dans la partie."
+    "ability": "Lors de votre première nuit, regardez le Grimoire et désignez un joueur : il est empoisonné. Un joueur bon sait qu'une Veuve est en jeu."
   },
   {
     "id": "fearmonger",
@@ -1887,7 +1919,7 @@
       "Peur"
     ],
     "setup": false,
-    "ability": "Chaque nuit, désignez un joueur. S'il est accusé par vous et exécuté, son équipe perd. Tout le monde sait si vous désignez un nouveau joueur."
+    "ability": "Chaque nuit, désignez un joueur : si vous l'accusez et l'exécutez, son équipe perd. Tout le monde sait si vous désignez un nouveau joueur."
   },
   {
     "id": "psychopath",
@@ -1900,7 +1932,7 @@
     "otherNightReminder": "",
     "reminders": [],
     "setup": false,
-    "ability": "Chaque jour, avant les accusations, vous pouvez désigner publiquement un joueur : il meurt. Si vous êtes exécuté, vous ne mourez que si vous perdez à pierre-feuille-ciseaux."
+    "ability": "Chaque jour, avant les accusations, vous pouvez choisir un joueur en public : il meurt. Si exécuté, vous ne mourez qu'en perdant à chifoumi."
   },
   {
     "id": "goblin",
@@ -1915,7 +1947,7 @@
       "Revendiqué"
     ],
     "setup": false,
-    "ability": "Si vous dites publiquement que vous êtes le Gobelin quand vous êtes accusé et que vous êtes exécuté durant la même journée, votre équipe gagne."
+    "ability": "Si vous révélez publiquement être le Gobelin quand vous êtes accusé et que vous êtes exécuté durant ce même jour, votre équipe gagne."
   },
   {
     "id": "mephit",
@@ -2040,7 +2072,7 @@
     "otherNightReminder": "",
     "reminders": [],
     "setup": false,
-    "ability": "Tous les joueurs savent que vous êtes le Vizir. Vous ne pouvez mourir de jour. Si un bon vote, vous pouvez choisir d'exécuter immédiatement."
+    "ability": "Tous les joueurs savent que vous êtes le Vizir. Vous ne pouvez mourir le jour. Si un bon vote, vous pouvez choisir d'exécuter immédiatement."
   },
   {
     "id": "xaan",
@@ -2072,7 +2104,7 @@
     "otherNightReminder": "",
     "reminders": [],
     "setup": false,
-    "ability": "Le Démon (même si ivre ou empoisonné) a la capacité d'un personnage bon qui n'est pas en jeu. Vous savez tous les deux laquelle."
+    "ability": "Le Démon (même si ivre ou empoisonné) a la capacité d'un personnage bon qui n'est pas en jeu. Vous savez tous deux laquelle."
   },
   {
     "id": "wizard",
