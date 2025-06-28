@@ -23,6 +23,7 @@
   - Various abilities rephrased
   - Various reminders added and/or adjusted
 - Adding new characters:
+  - Deus ex Fiasco
   - Hermit
   - Princess
 
