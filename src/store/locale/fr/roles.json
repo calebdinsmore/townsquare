@@ -1704,9 +1704,9 @@
     "edition": "",
     "team": "townsfolk",
     "firstNight": 0,
-    "firstNightReminder": "Si la Banshee a été tuée par le Démon, marquez-la et annoncez-le aux joueurs",
+    "firstNightReminder": "",
     "otherNight": 56,
-    "otherNightReminder": "",
+    "otherNightReminder": "Si la Banshee a été tuée par le Démon, marquez-la et annoncez-le aux joueurs.",
     "reminders": [
       "A sa capacité"
     ],

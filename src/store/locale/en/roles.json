@@ -1702,9 +1702,9 @@
     "edition": "",
     "team": "townsfolk",
     "firstNight": 0,
-    "firstNightReminder": "Announce that the Banshee has died. Mark the Banshee with their reminder.",
+    "firstNightReminder": "",
     "otherNight": 56,
-    "otherNightReminder": "",
+    "otherNightReminder": "Announce that the Banshee has died. Mark the Banshee with their reminder.",
     "reminders": [
       "Has Ability"
     ],
