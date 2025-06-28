@@ -1932,7 +1932,7 @@
     "otherNightReminder": "",
     "reminders": [],
     "setup": false,
-    "ability": "Chaque jour, avant les accusations, vous pouvez désigner publiquement un joueur : il meurt. Si vous êtes exécuté, vous ne mourez que si vous perdez à pierre-feuille-ciseaux."
+    "ability": "Chaque jour, avant les accusations, vous pouvez choisir un joueur en public : il meurt. Si exécuté, vous ne mourez qu'en perdant à chifoumi."
   },
   {
     "id": "goblin",
