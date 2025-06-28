@@ -703,7 +703,7 @@
     "otherNightReminder": "",
     "reminders": [],
     "setup": false,
-    "ability": "Si le Démon meurt par exécution (mettant fin à la partie), jouez une journée de plus. Si un joueur est alors exécuté, son équipe perd."
+    "ability": "Si le Démon meurt par exécution (mettant fin à la partie), jouez un jour de plus. Si un joueur est alors exécuté, son équipe perd."
   },
   {
     "id": "zombuul",
@@ -1010,7 +1010,7 @@
     "firstNight": 0,
     "firstNightReminder": "",
     "otherNight": 74,
-    "otherNightReminder": "Si aujourd'hui était la première journée du jongleur, indiquez-lui combien de ses prédictions étaient juste.",
+    "otherNightReminder": "Si aujourd'hui était le premier jour du Jongleur, indiquez-lui combien de ses prédictions étaient juste.",
     "reminders": [
       "Correct",
       "Faux"
