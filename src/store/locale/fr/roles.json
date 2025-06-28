@@ -1755,7 +1755,7 @@
       "Essai utilisé"
     ],
     "setup": false,
-    "ability": "Un joueur est Ivre de façon permanente, même après votre mort. Une fois par partie, en privé, vous pouvez tenter de deviner qui est le joueur Ivre. Si vous voyez juste, le Narrateur vous dévoile qui est le Démon, si vous vous trompez, il vous indique un autre joueur comme étant le Démon."
+    "ability": "1 joueur est ivre, même après votre mort. Si vous devinez qui (un seul essai), vous apprenez le Démon, mais l'info est fausse en cas d'erreur."
   },
   {
     "id": "heretic",
