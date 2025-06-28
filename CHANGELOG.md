@@ -21,6 +21,7 @@
   - Various abilities rephrased
   - Various reminders added and/or adjusted
 - Adding new characters:
+  - Hermit
   - Princess
 
 ### Version 4.1.1

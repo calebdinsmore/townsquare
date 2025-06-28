@@ -1855,6 +1855,23 @@
     "ability": "If there are 5 or more players alive, you must vote for every nomination."
   },
   {
+    "id": "hermit",
+    "name": "Hermit",
+    "edition": "",
+    "team": "outsider",
+    "firstNight": 0,
+    "firstNightReminder": "",
+    "otherNight": 0,
+    "otherNightReminder": "",
+    "reminders": [
+      "1",
+      "2",
+      "3"
+    ],
+    "setup": true,
+    "ability": "You have all Outsider abilities. [-0 or -1 Outsiders]"
+  },
+  {
     "id": "ogre",
     "name": "Ogre",
     "edition": "",
