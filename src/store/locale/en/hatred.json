@@ -29,6 +29,10 @@
     "id": "Cannibal",
     "hatred": [
       {
+        "id": "Princess",
+        "reason": "If the Cannibal nominated & executed the Princess today, the Demon doesn’t kill tonight."
+      },
+      {
         "id": "Juggler",
         "reason": "If the Juggler guesses on their first day and dies by execution, tonight the living Cannibal learns how many guesses the Juggler got correct."
       },
@@ -456,6 +460,15 @@
       {
         "id": "Marionette",
         "reason": "If the Kazali chooses to create a Marionette, they must choose one of their neighbors."
+      }
+    ]
+  },
+  {
+    "id": "Al-Hadikhia",
+    "hatred": [
+      {
+        "id": "Princess",
+        "reason": "If the Princess nominated & executed a player on their 1st day, no one dies to the Al-Hadikhia ability tonight."
       }
     ]
   },
