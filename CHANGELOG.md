@@ -1,6 +1,7 @@
 # Release Notes
 
 ## Upcomming Version
+- Alternative night order for the editions
 - Using official "safe" reminded instead of "protected"
 - Printing default image on reminders (bug correction)
 - Updating Organ Grinder's ability text
