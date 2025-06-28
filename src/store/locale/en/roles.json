@@ -97,9 +97,9 @@
     "firstNightReminder": "",
     "otherNight": 68,
     "otherNightEdition": 65.5,
-    "otherNightReminder": "If a player was executed today: Show that player\u2019s character token.",
+    "otherNightReminder": "If a player died by execution today: Show that player\u2019s character token.",
     "reminders": [
-      "Executed"
+      "Died today"
     ],
     "setup": false,
     "ability": "Each night*, you learn which character died by execution today."
@@ -114,7 +114,7 @@
     "otherNight": 17,
     "otherNightReminder": "The previously protected player is no longer protected. The Monk points to a player not themself. Mark that player 'Protected'.",
     "reminders": [
-      "Protected"
+      "Safe"
     ],
     "setup": false,
     "ability": "Each night*, choose a player (not yourself): they are safe from the Demon tonight."
@@ -217,6 +217,7 @@
       "Drunk"
     ],
     "setup": true,
+    "forbidden": true,
     "ability": "You do not know you are the Drunk. You think you are a Townsfolk character, but you are not."
   },
   {
@@ -456,7 +457,7 @@
     "otherNightEdition": 9,
     "otherNightReminder": "The previously protected and drunk players lose those markers. The Innkeeper points to two players. Those players are protected. One is drunk.",
     "reminders": [
-      "Protected",
+      "Safe",
       "Drunk"
     ],
     "setup": false,
@@ -503,9 +504,9 @@
     "otherNight": 11,
     "otherNightReminder": "Reduce the remaining number of days the marked player is poisoned. If the Courtier has not yet used their ability: The Courtier either shows a 'no' head signal, or points to a character on the sheet. If the Courtier used their ability: If that character is in play, that player is drunk.",
     "reminders": [
-      "Drunk 3",
-      "Drunk 2",
       "Drunk 1",
+      "Drunk 2",
+      "Drunk 3",
       "No ability"
     ],
     "setup": false,
@@ -645,6 +646,7 @@
       "Chosen"
     ],
     "setup": false,
+    "forbidden": true,
     "ability": "You think you are a Demon, but you are not. The Demon knows who you are & who you choose at night."
   },
   {
@@ -1015,7 +1017,8 @@
     "otherNight": 74,
     "otherNightReminder": "If today was the Juggler\u2019s first day: Show the hand signal for the number (0, 1, 2, etc.) of 'Correct' markers. Remove markers.",
     "reminders": [
-      "Correct"
+      "Correct",
+      "Wrong"
     ],
     "setup": false,
     "ability": "On your 1st day, publicly guess up to 5 players' characters. That night, you learn how many you got correct."
@@ -1225,8 +1228,8 @@
     "otherNight": 3,
     "otherNightReminder": "Choose a player, wake them and tell them which Barista power is affecting them. Treat them accordingly (sober/healthy/true info or activate their ability twice).",
     "reminders": [
-      "Sober & Healthy",
-      "Ability twice"
+      "Sober and Healthy",
+      "Acts twice"
     ],
     "setup": false,
     "ability": "Each night, until dusk, 1) a player becomes sober, healthy and gets true info, or 2) their ability works twice. They learn which."
@@ -1359,7 +1362,7 @@
     "otherNight": 8,
     "otherNightReminder": "The Preacher chooses a player. If a Minion is chosen, wake the Minion and show the 'This character selected you' card and then the Preacher token.",
     "reminders": [
-      "At a sermon"
+      "No ability"
     ],
     "setup": false,
     "ability": "Each night, choose a player: a Minion, if chosen, learns this. All chosen Minions have no ability."
@@ -1464,6 +1467,7 @@
     "otherNight": 7,
     "otherNightReminder": "The Engineer shows a 'no' head signal, or points to a Demon or points to the relevant number of Minions. If the Engineer chose characters, replace the Demon or Minions with the choices, then wake the relevant players and show them the 'You are' card and the relevant character tokens.",
     "reminders": [
+      "Changed",
       "No ability"
     ],
     "setup": false,
@@ -1705,14 +1709,29 @@
     "edition": "",
     "team": "townsfolk",
     "firstNight": 0,
-    "firstNightReminder": "Announce that the Banshee has died. Mark the Banshee with their reminder.",
+    "firstNightReminder": "",
     "otherNight": 56,
-    "otherNightReminder": "",
+    "otherNightReminder": "Announce that the Banshee has died. Mark the Banshee with their reminder.",
     "reminders": [
       "Has Ability"
     ],
     "setup": false,
     "ability": "If the Demon kills you, all players learn this. From now on, you may nominate twice per day and vote twice per nomination."
+  },
+  {
+    "id": "princess",
+    "name": "Princess",
+    "edition": "",
+    "team": "townsfolk",
+    "firstNight": 0,
+    "firstNightReminder": "",
+    "otherNight": 31,
+    "otherNightReminder": "If today was the Princess' first day, and if they nominated and executed a player, the Demon cannot kill (still wake the Demon).",
+    "reminders": [
+      "Doesn't Kill"
+    ],
+    "setup": false,
+    "ability": "On your 1st day, if you nominated & executed a player, the Demon doesn’t kill tonight."
   },
   {
     "id": "snitch",
@@ -1843,6 +1862,23 @@
     "ability": "If there are 5 or more players alive, you must vote for every nomination."
   },
   {
+    "id": "hermit",
+    "name": "Hermit",
+    "edition": "",
+    "team": "outsider",
+    "firstNight": 0,
+    "firstNightReminder": "",
+    "otherNight": 0,
+    "otherNightReminder": "",
+    "reminders": [
+      "1",
+      "2",
+      "3"
+    ],
+    "setup": true,
+    "ability": "You have all Outsider abilities. [-0 or -1 Outsiders]"
+  },
+  {
     "id": "ogre",
     "name": "Ogre",
     "edition": "",
@@ -1920,6 +1956,7 @@
   },
   {
     "id": "mephit",
+    "outOfDate": true,
     "name": "Mezepheles",
     "edition": "",
     "team": "minion",
@@ -1964,6 +2001,7 @@
       "Is the Marionette"
     ],
     "setup": true,
+    "forbidden": true,
     "ability": "You think you are a good character but you are not. The Demon knows who you are. [You neighbour the Demon]"
   },
   {
@@ -1993,7 +2031,7 @@
       "Used vote"
     ],
     "setup": false,
-    "ability": "All players keep their eyes closed when voting & the vote tally is secret. Each night, choose if you are drunk or not."
+    "ability": "All players keep their eyes closed when voting and the vote tally is secret. Each night, choose if you are drunk until dusk."
   },
   {
     "id": "summoner",
@@ -2103,6 +2141,7 @@
       "Dead"
     ],
     "setup": true,
+    "forbidden": true,
     "ability": "Each night, Minions choose who babysits Lil' Monsta & 'is the Demon'. Each night*, a player might die. [+1 Minion]"
   },
   {

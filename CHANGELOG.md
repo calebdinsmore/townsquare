@@ -1,10 +1,35 @@
 # Release Notes
 
 ## Upcomming Version
-
 - Alternative night order for the editions
+- Using official "safe" reminded instead of "protected"
+- Printing default image on reminders (bug correction)
+- Updating Organ Grinder's ability text
+- Replacing the icons "dawn.png" and "dusk.png"
+- Updating some custom scripts
+- When sending roles, checking if all roles can be sent to a player
+- Ignoring out of date characters in the script builder
+- Added "Wrong" reminder for the juggler
+- Added "Changed" reminder for the engineer
+- Correcting Banshee's night reminders
+- French Translation updates :
+  - Dawn
+  - Dusk
+  - During
+  - Day
+  - "Safe" in reminders (already changed earlier in abilities)
+  - "Has ability" reminders
+  - "No ability" reminders
+  - Fibbin renamed from "Menteur" to "Baratineur"
+  - Pit-hag renamed from "Chaudronnier" to "Chaudronnière"
+  - Various abilities rephrased
+  - Various reminders added and/or adjusted
+- Adding new characters:
+  - Deus ex Fiasco
+  - Hermit
+  - Princess
 
-### Version 4.1.0
+### Version 4.1.1
 - Correcting a bug with the "give back token" update
 - Allow voting delay to go down to 0 to lock everyone at once
 

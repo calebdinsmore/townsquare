@@ -16,7 +16,7 @@
     "firstNightReminder": "",
     "otherNightReminder": "",
     "reminders": [
-      "Protect",
+      "Protected",
       "Something Bad"
     ],
     "setup": false,
@@ -156,6 +156,19 @@
     "name": "Storm Catcher",
     "team": "fabled",
     "ability": "Name a good character. If in play, they can only die by execution, but evil players learn which player it is."
+  },
+  {
+    "id": "deusexfiasco",
+    "firstNightReminder": "",
+    "otherNight": 3,
+    "otherNightReminder": "If the game is approaching the final day and you had not made an accidental mistake, make a deliberate mistake before the game ends.",
+    "reminders": [
+      "Whoopsie"
+    ],
+    "setup": false,
+    "name": "Deus ex Fiasco",
+    "team": "fabled",
+    "ability": "At least once per game, the Storyteller will make a mistake, correct it, and publicly admit to it."
   },
   {
     "id": "ferryman",
