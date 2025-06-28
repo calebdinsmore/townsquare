@@ -1904,7 +1904,7 @@
       "Sait"
     ],
     "setup": false,
-    "ability": "Lors de votre première nuit, regardez le grimoire et désignez un joueur : il est empoisonné. Un des Bons joueurs sait qu'il y a une Veuve dans la partie."
+    "ability": "Lors de votre première nuit, regardez le Grimoire et désignez un joueur : il est empoisonné. Un joueur bon sait qu'une Veuve est en jeu."
   },
   {
     "id": "fearmonger",
