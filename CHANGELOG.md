@@ -2,6 +2,7 @@
 
 ## Upcomming Version
 - Automatic rooster sound when we switch to day
+- Adding new scripts from the Carousel Collection
 - Alternative night order for the editions
 - Using official "safe" reminded instead of "protected"
 - Printing default image on reminders (bug correction)
