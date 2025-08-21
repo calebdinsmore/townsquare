@@ -2,6 +2,7 @@
   <ul class="info">
     <audio preload="auto">
       <source src="../assets/sounds/countdown.mp3">
+      <source src="../assets/sounds/rooster.mp3">
     </audio>
     <li class="edition" :class="['edition-' + edition.id]" :style="{
       backgroundImage: 'url(' + logoUrl + ')',
