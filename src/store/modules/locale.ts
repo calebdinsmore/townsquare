@@ -1,7 +1,7 @@
-const supportedLanguages = ["en", "fr"];
-const MASTER_LANGUAGE = "en";
-const userLanguages = window.navigator.languages;
-let usedLanguage = null;
+const supportedLanguages = ["en", "fr"] as string[];
+const MASTER_LANGUAGE = "en" as string;
+const userLanguages = window.navigator.languages as string[];
+let usedLanguage = null as string | null;
 
 for (let lang of userLanguages) {
   if (supportedLanguages.includes(lang)) {

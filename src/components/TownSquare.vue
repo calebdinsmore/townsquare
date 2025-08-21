@@ -5,419 +5,521 @@
     vote: session.nomination,
   }">
     <ul class="circle" :class="['size-' + players.length]">
-      <Player v-for="(player, index) in players" :key="index" :player="player" @trigger="handleTrigger(index, $event)"
-        :class="{
-          from: Math.max(swap, move, nominate) === index,
-          swap: swap > -1,
-          move: move > -1,
-          nominate: nominate > -1,
-        }"></Player>
+      <Seat v-for="(player, index) in players" :key="index" :player="player" :class="{
+        from: Math.max(swap, move, nominate) === index,
+        swap: swap > -1,
+        move: move > -1,
+        nominate: nominate > -1,
+      }" @trigger="handleTrigger(index, $event)" />
     </ul>
 
-    <div class="bluffs" v-if="players.length" ref="bluffs" :class="{ closed: !isBluffsOpen }">
+    <div v-if="players.length" ref="bluffs" class="bluffs" :class="{ closed: !isBluffsOpen }">
       <h3>
-        <span v-if="session.isSpectator">{{ locale.townsquare.others }}</span>
-        <span v-else>{{ locale.townsquare.bluffs }}</span>
+        <span v-if="session.isSpectator">{{ t('townsquare.others') }}</span>
+        <span v-else>{{ t('townsquare.bluffs') }}</span>
         <font-awesome-icon icon="times-circle" class="fa fa-times-circle" @click.stop="toggleBluffs" />
         <font-awesome-icon icon="plus-circle" class="fa fa-plus-circle" @click.stop="toggleBluffs" />
       </h3>
       <ul>
         <li v-for="index in bluffSize" :key="index" @click="openRoleModal(index * -1)">
-          <Token :role="bluffs[index - 1]"></Token>
+          <Token :role="bluffs[index - 1]" />
         </li>
       </ul>
     </div>
 
-    <div class="storytelling" v-if="!session.isSpectator" ref="storytelling" :class="{ closed: !isTimeControlsOpen }">
+    <div v-if="!session.isSpectator" ref="storytelling" class="storytelling" :class="{ closed: !isTimeControlsOpen }">
       <h3>
-        <span>{{ locale.townsquare.storytellerTools }}</span>
+        <span>{{ t('townsquare.storytellerTools') }}</span>
         <font-awesome-icon icon="times-circle" class="fa fa-times-circle" @click.stop="toggleTimeControls" />
         <font-awesome-icon icon="plus-circle" class="fa fa-plus-circle" @click.stop="toggleTimeControls" />
       </h3>
       <div class="button-group">
-        <div @click="setTimer()" class="button">🕑 {{ timerDuration }} min</div>
-        <div @click="renameTimer()" class="button">🗏 {{ timerName }}</div>
-        <div class="button demon" @click="stopTimer()" :class="{ disabled: !timerOn }">
+        <div class="button" @click="setTimer()">
+          🕑 {{ timerDuration }} min
+        </div>
+        <div class="button" @click="renameTimer()">
+          🗏 {{ timerName }}
+        </div>
+        <div class="button demon" :class="{ disabled: !timerOn }" @click="stopTimer()">
           ■
         </div>
-        <div class="button townfolk" @click="startTimer()" :class="{ disabled: timerOn }">
+        <div class="button townfolk" :class="{ disabled: timerOn }" @click="startTimer()">
           ⏵
         </div>
       </div>
-      <div class="button-group" v-if="session.nomination">
-        <div @click="setAccusationTimer()" class="button" v-if="typeof session.nomination[1] !== 'object'">
-          {{ locale.townsquare.timer.accusation.button }}
+      <div v-if="session.nomination" class="button-group">
+        <div v-if="!isSpecialVoteWithMessages" class="button" @click="setAccusationTimer()">
+          {{ t('townsquare.timer.accusation.button') }}
         </div>
-        <div @click="setSpecialVoteTimer()" class="button" v-else>
-          {{ session.nomination[1][2] }}
+        <div v-else class="button" @click="setSpecialVoteTimer()">
+          {{ session.nomination.specialVote?.buttonLabel || session.nomination.specialVote?.type || 'Special Vote' }}
         </div>
-        <div @click="setDefenseTimer()" class="button" v-if="typeof session.nomination[1] !== 'object'">
-          {{ locale.townsquare.timer.defense.button }}
+        <div v-if="!isSpecialVoteWithMessages" class="button" @click="setDefenseTimer()">
+          {{ t('townsquare.timer.defense.button') }}
         </div>
-        <div @click="setDebateTimer()" class="button" v-if="typeof session.nomination[1] !== 'object'">
-          {{ locale.townsquare.timer.debate.button }}
+        <div v-if="!isSpecialVoteWithMessages" class="button" @click="setDebateTimer()">
+          {{ t('townsquare.timer.debate.button') }}
         </div>
-        <div @click="setSpecialDebateTimer()" class="button" v-else>
-          {{ locale.townsquare.timer.debate.button }}
+        <div v-else class="button" @click="setSpecialDebateTimer()">
+          {{ t('townsquare.timer.debate.button') }}
         </div>
       </div>
-      <div class="button-group" v-else>
-        <div @click="setDaytimeTimer()" class="button">
-          {{ locale.townsquare.timer.daytime.button }}
+      <div v-else class="button-group">
+        <div class="button" @click="setDaytimeTimer()">
+          {{ t('townsquare.timer.daytime.button') }}
         </div>
-        <div @click="setNominationTimer()" class="button">
-          {{ locale.townsquare.timer.nominations.button }}
+        <div class="button" @click="setNominationTimer()">
+          {{ t('townsquare.timer.nominations.button') }}
         </div>
-        <div @click="setDuskTimer()" class="button">
-          {{ locale.townsquare.timer.dusk.button }}
+        <div class="button" @click="setDuskTimer()">
+          {{ t('townsquare.timer.dusk.button') }}
         </div>
       </div>
       <div class="button-group">
-        <div @click="toggleNight()" class="button" :class="{ disabled: grimoire.isNight }">
+        <div class="button" :class="{ disabled: grimoire.isNight }" @click="toggleNight()">
           ☀
         </div>
-        <div @click="toggleNight()" class="button" :class="{ disabled: !grimoire.isNight }">
+        <div class="button" :class="{ disabled: !grimoire.isNight }" @click="toggleNight()">
           ☽
         </div>
       </div>
       <div class="button-group">
-        <div @click="toggleRinging()" class="button">
+        <div class="button" @click="toggleRinging()">
           <font-awesome-icon :icon="['fas', 'bell']" />
         </div>
       </div>
     </div>
 
-    <div class="fabled" :class="{ closed: !isFabledOpen }" v-if="fabled.length">
+    <div v-if="fabled.length" class="fabled" :class="{ closed: !isFabledOpen }">
       <h3>
-        <span>{{ locale.townsquare.fabled }}</span>
+        <span>{{ t('townsquare.fabled') }}</span>
         <font-awesome-icon icon="times-circle" class="fa fa-times-circle" @click.stop="toggleFabled" />
         <font-awesome-icon icon="plus-circle" class="fa fa-plus-circle" @click.stop="toggleFabled" />
       </h3>
       <ul>
         <li v-for="(role, index) in fabled" :key="index" @click="removeFabled(index)">
-          <div class="night-order first" v-if="
+          <div v-if="
             nightOrder.get(role).first &&
             (grimoire.isNightOrder || !session.isSpectator)
-          ">
+          " class="night-order first">
             <em>{{ nightOrder.get(role).first }}.</em>
             <span v-if="role.firstNightReminder">{{ role.firstNightReminder }}</span>
           </div>
-          <div class="night-order other" v-if="
+          <div v-if="
             nightOrder.get(role).other &&
             (grimoire.isNightOrder || !session.isSpectator)
-          ">
+          " class="night-order other">
             <em>{{ nightOrder.get(role).other }}.</em>
             <span v-if="role.otherNightReminder">{{ role.otherNightReminder }}</span>
           </div>
-          <Token :role="role"></Token>
+          <Token :role="role" />
         </li>
       </ul>
     </div>
 
-    <ReminderModal :player-index="selectedPlayer"></ReminderModal>
-    <RoleModal :player-index="selectedPlayer"></RoleModal>
+    <ReminderModal :player-index="selectedPlayer" />
+    <RoleModal :player-index="selectedPlayer" />
   </div>
 </template>
 
-<script>
-import { mapGetters, mapState } from "vuex";
-import Player from "./Player.vue";
+<script setup lang="ts">
+import type { Player as PlayerType } from '@/types';
+import { isActiveNomination } from '@/types';
+import { computed, ref } from "vue";
+import { useStore } from "vuex";
+import { useTranslation } from '@/composables/useTranslation';
+import Seat from "./Seat.vue";
 import Token from "./Token.vue";
 import ReminderModal from "./modals/ReminderModal.vue";
 import RoleModal from "./modals/RoleModal.vue";
 
-export default {
-  components: {
-    Player,
-    Token,
-    RoleModal,
-    ReminderModal,
-  },
-  computed: {
-    ...mapGetters({ nightOrder: "players/nightOrder" }),
-    ...mapState(["grimoire", "roles", "session", "locale"]),
-    ...mapState("players", ["players", "bluffs", "fabled"]),
-    firstMessage() {
-      return JSON.stringify(this.locale.modal.nightOrder.firstNight);
-    },
-    otherMessage() {
-      return JSON.stringify(this.locale.modal.nightOrder.otherNights);
-    },
-  },
-  data() {
-    return {
-      selectedPlayer: 0,
-      bluffSize: 3,
-      swap: -1,
-      move: -1,
-      nominate: -1,
-      isBluffsOpen: true,
-      isFabledOpen: true,
-      isTimeControlsOpen: false,
-      timerName: "Timer",
-      timerDuration: 1,
-      timerOn: false,
-      timerEnder: false,
+const store = useStore();
+const { t } = useTranslation();
+
+// Computed properties from store
+const nightOrder = computed(() => store.getters["players/nightOrder"]);
+const grimoire = computed(() => store.state.grimoire);
+const session = computed(() => store.state.session);
+const players = computed(() => store.state.players.players);
+const bluffs = computed(() => store.state.players.bluffs);
+const fabled = computed(() => store.state.players.fabled);
+
+const isSpecialVoteWithMessages = computed(() => {
+  if (!isActiveNomination(session.value.nomination)) return false;
+  const nomination = session.value.nomination;
+  return !!nomination.specialVote?.timerText;
+});
+
+// Used in CSS v-bind
+// eslint-disable-next-line @typescript-eslint/no-unused-vars, no-unused-vars
+const firstMessage = computed(() => {
+  return JSON.stringify(t('modal.nightOrder.firstNight'));
+});
+
+// eslint-disable-next-line @typescript-eslint/no-unused-vars, no-unused-vars
+const otherMessage = computed(() => {
+  return JSON.stringify(t('modal.nightOrder.otherNights'));
+});
+
+// Reactive data
+const selectedPlayer = ref(0);
+const bluffSize = ref(3);
+const swap = ref(-1);
+const move = ref(-1);
+const nominate = ref(-1);
+const isBluffsOpen = ref(true);
+const isFabledOpen = ref(true);
+const isTimeControlsOpen = ref(false);
+const timerName = ref("Timer");
+const timerDuration = ref(1);
+const timerOn = ref(false);
+const timerEnder = ref<ReturnType<typeof setTimeout> | null>(null);
+// Methods converted to functions
+const toggleBluffs = () => {
+  isBluffsOpen.value = !isBluffsOpen.value;
+};
+
+const toggleFabled = () => {
+  isFabledOpen.value = !isFabledOpen.value;
+};
+
+const toggleTimeControls = () => {
+  isTimeControlsOpen.value = !isTimeControlsOpen.value;
+};
+
+const removeFabled = (index: number) => {
+  if (session.value.isSpectator) return;
+  store.commit("players/setFabled", { index });
+};
+
+const toggleNight = () => {
+  store.commit("toggleNight");
+  if (grimoire.value.isNight) {
+    store.commit("session/setMarkedPlayer", -1);
+  }
+  else {
+    store.commit("toggleRooster", true);
+    setTimeout(() => store.commit("toggleRooster", false), 4000);
+  }
+};
+
+const toggleRinging = () => {
+  store.commit("toggleRinging", true);
+  setTimeout(() => store.commit("toggleRinging", false), 4000);
+};
+const handleTrigger = (playerIndex: number, event: string | [string] | [string, unknown]) => {
+  // Handle both string events and array events
+  const [method, params] = Array.isArray(event) ? [event[0], event[1]] : [event, undefined];
+  const methodMap: Record<string, Function> = {
+    claimSeat,
+    openReminderModal,
+    openRoleModal,
+    removePlayer,
+    swapPlayer,
+    movePlayer,
+    nominatePlayer,
+    toggleBluffs,
+    toggleFabled,
+    toggleTimeControls,
+    removeFabled,
+    toggleNight,
+    toggleRinging,
+    renameTimer,
+    setDaytimeTimer,
+    setNominationTimer,
+    setDuskTimer,
+    setAccusationTimer,
+    setDefenseTimer,
+    setDebateTimer,
+    setSpecialVoteTimer,
+    setSpecialDebateTimer,
+    setTimer,
+    startTimer,
+    stopTimer,
+  };
+
+  if (typeof methodMap[method] === "function") {
+    methodMap[method](playerIndex, params);
+  }
+};
+
+const claimSeat = (playerIndex: number) => {
+  if (!session.value.isSpectator) return;
+  if (session.value.playerId === players.value[playerIndex].id) {
+    store.commit("session/claimSeat", -1);
+  } else {
+    store.commit("session/claimSeat", playerIndex);
+  }
+};
+
+const openReminderModal = (playerIndex: number) => {
+  selectedPlayer.value = playerIndex;
+  store.commit("toggleModal", "reminder");
+};
+
+const openRoleModal = (playerIndex: number) => {
+  const player = players.value[playerIndex];
+  if (session.value.isSpectator && player && player.role.team === "traveler")
+    return;
+  selectedPlayer.value = playerIndex;
+  store.commit("toggleModal", "role");
+};
+const removePlayer = (playerIndex: number) => {
+  if (session.value.isSpectator || session.value.lockedVote) return;
+  if (!confirm(`Do you really want to remove ${players.value[playerIndex].name}?`)) return;
+  const { nomination } = session.value;
+  if (nomination) {
+    if (nomination.includes(playerIndex)) {
+      // abort vote if removed player is either nominator or nominee
+      store.commit("session/nomination");
+    } else if (
+      nomination.nominator > playerIndex ||
+      nomination.nominee > playerIndex
+    ) {
+      // update nomination array if removed player has lower index
+      store.commit("session/setNomination", [
+        nomination.nominator > playerIndex ? nomination.nominator - 1 : nomination.nominator,
+        nomination.nominee > playerIndex ? nomination.nominee - 1 : nomination.nominee,
+      ]);
+    }
+  }
+  store.commit("players/remove", playerIndex);
+};
+const swapPlayer = (from: number, to?: PlayerType) => {
+  if (session.value.isSpectator || session.value.lockedVote) return;
+  if (to === undefined) {
+    cancel();
+    swap.value = from;
+  } else {
+    if (session.value.nomination) {
+      // update nomination if one of the involved players is swapped
+      const swapTo = players.value.indexOf(to);
+      const updatedNomination = session.value.nomination.map((nom: number) => {
+        if (nom === swap.value) return swapTo;
+        if (nom === swapTo) return swap.value;
+        return nom;
+      });
+      if (
+        session.value.nomination.nominator !== updatedNomination.nominator ||
+        session.value.nomination.nominee !== updatedNomination.nominee
+      ) {
+        store.commit("session/setNomination", updatedNomination);
+      }
+    }
+    store.commit("players/swap", [
+      swap.value,
+      players.value.indexOf(to),
+    ]);
+    cancel();
+  }
+};
+const movePlayer = (from: number, to?: PlayerType) => {
+  if (session.value.isSpectator || session.value.lockedVote) return;
+  if (to === undefined) {
+    cancel();
+    move.value = from;
+  } else {
+    if (session.value.nomination) {
+      // update nomination if it is affected by the move
+      const moveTo = players.value.indexOf(to);
+      const updatedNomination = session.value.nomination.map((nom: number) => {
+        if (nom === move.value) return moveTo;
+        if (nom > move.value && nom <= moveTo) return nom - 1;
+        if (nom < move.value && nom >= moveTo) return nom + 1;
+        return nom;
+      });
+      if (
+        session.value.nomination.nominator !== updatedNomination.nominator ||
+        session.value.nomination.nominee !== updatedNomination.nominee
+      ) {
+        store.commit("session/setNomination", updatedNomination);
+      }
+    }
+    store.commit("players/move", [
+      move.value,
+      players.value.indexOf(to),
+    ]);
+    cancel();
+  }
+};
+
+const nominatePlayer = (from: number, to?: PlayerType) => {
+  if (session.value.isSpectator || session.value.lockedVote) return;
+  if (to === undefined) {
+    cancel();
+    if (from !== nominate.value) {
+      nominate.value = from;
+    }
+  } else {
+    const nomination = {
+      nominator: nominate.value,
+      nominee: players.value.indexOf(to)
     };
-  },
-  methods: {
-    toggleBluffs() {
-      this.isBluffsOpen = !this.isBluffsOpen;
-    },
-    toggleFabled() {
-      this.isFabledOpen = !this.isFabledOpen;
-    },
-    toggleTimeControls() {
-      this.isTimeControlsOpen = !this.isTimeControlsOpen;
-    },
-    removeFabled(index) {
-      if (this.session.isSpectator) return;
-      this.$store.commit("players/setFabled", { index });
-    },
-    toggleNight() {
-      this.$store.commit("toggleNight");
-      if (this.grimoire.isNight) {
-        this.$store.commit("session/setMarkedPlayer", -1);
-      }
-      else {	
-        this.$store.commit("toggleRooster", true);
-        setTimeout(this.$store.commit, 4000, "toggleRooster", false);
-      }
-    },
-    toggleRinging() {
-      this.$store.commit("toggleRinging", true);
-      setTimeout(this.$store.commit, 4000, "toggleRinging", false);
-    },
-    handleTrigger(playerIndex, [method, params]) {
-      if (typeof this[method] === "function") {
-        this[method](playerIndex, params);
-      }
-    },
-    claimSeat(playerIndex) {
-      if (!this.session.isSpectator) return;
-      if (this.session.playerId === this.players[playerIndex].id) {
-        this.$store.commit("session/claimSeat", -1);
-      } else {
-        this.$store.commit("session/claimSeat", playerIndex);
-      }
-    },
-    openReminderModal(playerIndex) {
-      this.selectedPlayer = playerIndex;
-      this.$store.commit("toggleModal", "reminder");
-    },
-    openRoleModal(playerIndex) {
-      const player = this.players[playerIndex];
-      if (this.session.isSpectator && player && player.role.team === "traveler")
-        return;
-      this.selectedPlayer = playerIndex;
-      this.$store.commit("toggleModal", "role");
-    },
-    removePlayer(playerIndex) {
-      if (this.session.isSpectator || this.session.lockedVote) return;
-      if (!confirm(`Do you really want to remove ${this.players[playerIndex].name}?`)) return;
-      const { nomination } = this.session;
-      if (nomination) {
-        if (nomination.includes(playerIndex)) {
-          // abort vote if removed player is either nominator or nominee
-          this.$store.commit("session/nomination");
-        } else if (
-          nomination[0] > playerIndex ||
-          nomination[1] > playerIndex
-        ) {
-          // update nomination array if removed player has lower index
-          this.$store.commit("session/setNomination", [
-            nomination[0] > playerIndex ? nomination[0] - 1 : nomination[0],
-            nomination[1] > playerIndex ? nomination[1] - 1 : nomination[1],
-          ]);
-        }
-      }
-      this.$store.commit("players/remove", playerIndex);
-    },
-    swapPlayer(from, to) {
-      if (this.session.isSpectator || this.session.lockedVote) return;
-      if (to === undefined) {
-        this.cancel();
-        this.swap = from;
-      } else {
-        if (this.session.nomination) {
-          // update nomination if one of the involved players is swapped
-          const swapTo = this.players.indexOf(to);
-          const updatedNomination = this.session.nomination.map((nom) => {
-            if (nom === this.swap) return swapTo;
-            if (nom === swapTo) return this.swap;
-            return nom;
-          });
-          if (
-            this.session.nomination[0] !== updatedNomination[0] ||
-            this.session.nomination[1] !== updatedNomination[1]
-          ) {
-            this.$store.commit("session/setNomination", updatedNomination);
-          }
-        }
-        this.$store.commit("players/swap", [
-          this.swap,
-          this.players.indexOf(to),
-        ]);
-        this.cancel();
-      }
-    },
-    movePlayer(from, to) {
-      if (this.session.isSpectator || this.session.lockedVote) return;
-      if (to === undefined) {
-        this.cancel();
-        this.move = from;
-      } else {
-        if (this.session.nomination) {
-          // update nomination if it is affected by the move
-          const moveTo = this.players.indexOf(to);
-          const updatedNomination = this.session.nomination.map((nom) => {
-            if (nom === this.move) return moveTo;
-            if (nom > this.move && nom <= moveTo) return nom - 1;
-            if (nom < this.move && nom >= moveTo) return nom + 1;
-            return nom;
-          });
-          if (
-            this.session.nomination[0] !== updatedNomination[0] ||
-            this.session.nomination[1] !== updatedNomination[1]
-          ) {
-            this.$store.commit("session/setNomination", updatedNomination);
-          }
-        }
-        this.$store.commit("players/move", [
-          this.move,
-          this.players.indexOf(to),
-        ]);
-        this.cancel();
-      }
-    },
-    nominatePlayer(from, to) {
-      if (this.session.isSpectator || this.session.lockedVote) return;
-      if (to === undefined) {
-        this.cancel();
-        if (from !== this.nominate) {
-          this.nominate = from;
-        }
-      } else {
-        const nomination = [this.nominate, this.players.indexOf(to)];
-        this.$store.commit("session/nomination", { nomination });
-        this.cancel();
-      }
-    },
-    cancel() {
-      this.move = -1;
-      this.swap = -1;
-      this.nominate = -1;
-    },
-    renameTimer() {
-      let newName = prompt(
-        this.locale.townsquare.timer.prompt.name,
-        this.timerName,
-      );
-      if (newName === "") {
-        newName = this.locale.townsquare.timer.default.text;
-      }
-      this.timerName = newName.trim();
-    },
-    setDaytimeTimer() {
-      this.timerDuration = 8;
-      this.timerName = this.locale.townsquare.timer.daytime.text;
-    },
-    setNominationTimer() {
-      this.timerDuration = 2;
-      this.timerName = this.timerName =
-        this.locale.townsquare.timer.nominations.text;
-    },
-    setDuskTimer() {
-      this.timerDuration = 1;
-      this.timerName = this.timerName = this.locale.townsquare.timer.dusk.text;
-    },
-    setAccusationTimer() {
-      this.timerDuration = 1;
-      let timerText = this.locale.townsquare.timer.accusation.text;
-      timerText = timerText
-        .replace(
-          "$accusator",
-          typeof this.session.nomination[0] == "number"
-            ? this.players[this.session.nomination[0]].name
-            : this.session.nomination[0][0].toUpperCase() +
-            this.session.nomination[0].slice(1),
-        )
-        .replace(
-          "$accusee",
-          typeof this.session.nomination[1] == "number"
-            ? this.players[this.session.nomination[1]].name
-            : this.session.nomination[1],
-        );
-      this.timerName = timerText;
-    },
-    setDefenseTimer() {
-      this.timerDuration = 1;
-      let timerText = this.locale.townsquare.timer.defense.text;
-      timerText = timerText
-        .replace(
-          "$accusee",
-          typeof this.session.nomination[1] == "number"
-            ? this.players[this.session.nomination[1]].name
-            : this.session.nomination[1][0].toUpperCase() +
-            this.session.nomination[1].slice(1),
-        )
-        .replace(
-          "$accusator",
-          typeof this.session.nomination[0] == "number"
-            ? this.players[this.session.nomination[0]].name
-            : this.session.nomination[0],
-        );
-      this.timerName = timerText;
-    },
-    setDebateTimer() {
-      this.timerDuration = 2;
-      let timerText = this.locale.townsquare.timer.debate.text;
-      timerText = timerText.replace(
-        "$accusee",
-        typeof this.session.nomination[1] == "number"
-          ? this.players[this.session.nomination[1]].name
-          : this.session.nomination[1],
-      );
-      this.timerName = timerText;
-    },
-    setSpecialVoteTimer() {
-      this.timerDuration = 1;
-      let timerText =
-        this.players[this.session.nomination[0]].name +
-        " " +
-        this.session.nomination[1][0];
-      this.timerName = timerText;
-    },
-    setSpecialDebateTimer() {
-      this.timerDuration = 2;
-      let timerText = this.session.nomination[1][1];
-      timerText = timerText.replace(
-        "$player",
-        this.players[this.session.nomination[0]].name,
-      );
-      this.timerName = timerText;
-    },
-    setTimer() {
-      let newDuration = prompt(this.locale.townsquare.timer.prompt.duration);
-      if (isNaN(newDuration)) {
-        return alert(this.locale.townsquare.timer.prompt.durationError);
-      }
-      if (newDuration > 0) {
-        this.timerDuration = newDuration;
-      }
-    },
-    startTimer() {
-      let timer = { name: this.timerName, duration: this.timerDuration * 60 };
-      this.$store.commit("setTimer", timer);
-      this.timerOn = true;
-      this.timerEnder = setTimeout(this.stopTimer, timer.duration * 1000);
-    },
-    stopTimer() {
-      this.$store.commit("setTimer", {});
-      this.timerOn = false;
-      clearTimeout(this.timerEnder);
-    },
-  },
+    store.commit("session/nomination", { nomination });
+    cancel();
+  }
+};
+
+const cancel = () => {
+  move.value = -1;
+  swap.value = -1;
+  nominate.value = -1;
+};
+const renameTimer = () => {
+  let newName = prompt(
+    t('townsquare.timer.prompt.name'),
+    timerName.value,
+  );
+  if (newName === "") {
+    newName = t('townsquare.timer.default.text');
+  }
+  if (newName) {
+    timerName.value = newName.trim();
+  }
+};
+
+const setDaytimeTimer = () => {
+  timerDuration.value = 8;
+  timerName.value = t('townsquare.timer.daytime.text');
+};
+
+const setNominationTimer = () => {
+  timerDuration.value = 2;
+  timerName.value = t('townsquare.timer.nominations.text');
+};
+
+const setDuskTimer = () => {
+  timerDuration.value = 1;
+  timerName.value = t('townsquare.timer.dusk.text');
+};
+const setAccusationTimer = () => {
+  if (!isActiveNomination(session.value.nomination)) return;
+
+  timerDuration.value = 1;
+  const nomination = session.value.nomination;
+
+  let timerText = t('townsquare.timer.accusation.text');
+
+  // Get nominator name for $accusator placeholder
+  const nominatorName = typeof nomination.nominator === 'number'
+    ? players.value[nomination.nominator]?.name || ''
+    : typeof nomination.nominator === 'string'
+      ? nomination.nominator.charAt(0).toUpperCase() + nomination.nominator.slice(1)
+      : '';
+
+  // Get nominee name for $accusee placeholder
+  const nomineeName = typeof nomination.nominee === 'number'
+    ? players.value[nomination.nominee]?.name || ''
+    : nomination.nominee || '';
+
+  timerText = timerText
+    .replace("$accusator", nominatorName)
+    .replace("$accusee", nomineeName);
+
+  timerName.value = timerText;
+};
+
+const setDefenseTimer = () => {
+  if (!isActiveNomination(session.value.nomination)) return;
+
+  timerDuration.value = 1;
+  const nomination = session.value.nomination;
+
+  let timerText = t('townsquare.timer.defense.text');
+
+  // Get nominee name for $accusee placeholder
+  const nomineeName = typeof nomination.nominee === 'number'
+    ? players.value[nomination.nominee]?.name || ''
+    : typeof nomination.nominee === 'string'
+      ? nomination.nominee.charAt(0).toUpperCase() + nomination.nominee.slice(1)
+      : '';
+
+  // Get nominator name for $accusator placeholder
+  const nominatorName = typeof nomination.nominator === 'number'
+    ? players.value[nomination.nominator]?.name || ''
+    : nomination.nominator || '';
+
+  timerText = timerText
+    .replace("$accusee", nomineeName)
+    .replace("$accusator", nominatorName);
+
+  timerName.value = timerText;
+};
+const setDebateTimer = () => {
+  if (!isActiveNomination(session.value.nomination)) return;
+
+  timerDuration.value = 2;
+  const nomination = session.value.nomination;
+
+  let timerText = t('townsquare.timer.debate.text');
+
+  // Get nominee name for $accusee placeholder
+  const nomineeName = typeof nomination.nominee === 'number'
+    ? players.value[nomination.nominee]?.name || ''
+    : nomination.nominee || '';
+
+  timerText = timerText.replace("$accusee", nomineeName);
+  timerName.value = timerText;
+};
+
+const setSpecialVoteTimer = () => {
+  if (!isActiveNomination(session.value.nomination)) return;
+
+  timerDuration.value = 1;
+  const nomination = session.value.nomination;
+
+  // Get nominator name
+  const nominatorName = typeof nomination.nominator === 'number'
+    ? players.value[nomination.nominator]?.name || ''
+    : nomination.nominator || '';
+
+  // Get the timer text
+  const message = nomination.specialVote?.timerText || '';
+
+  const timerText = `${nominatorName} ${message}`;
+  timerName.value = timerText;
+};
+
+const setSpecialDebateTimer = () => {
+  if (!isActiveNomination(session.value.nomination)) return;
+
+  timerDuration.value = 2;
+  const nomination = session.value.nomination;
+
+  // Get the debate text
+  let timerText = nomination.specialVote?.debateText || '';
+
+  // Replace $player placeholder with nominator name
+  const nominatorName = typeof nomination.nominator === 'number'
+    ? players.value[nomination.nominator]?.name || ''
+    : nomination.nominator || '';
+
+  timerText = timerText.replace("$player", nominatorName);
+  timerName.value = timerText;
+};
+const setTimer = () => {
+  let newDuration = prompt(t('townsquare.timer.prompt.duration'));
+  if (isNaN(Number(newDuration))) {
+    return alert(t('townsquare.timer.prompt.durationError'));
+  }
+  if (Number(newDuration) > 0) {
+    timerDuration.value = Number(newDuration);
+  }
+};
+
+const startTimer = () => {
+  let timer = { name: timerName.value, duration: timerDuration.value * 60 };
+  store.commit("setTimer", timer);
+  timerOn.value = true;
+  timerEnder.value = setTimeout(stopTimer, timer.duration * 1000);
+};
+
+const stopTimer = () => {
+  store.commit("setTimer", {});
+  timerOn.value = false;
+  if (timerEnder.value) {
+    clearTimeout(timerEnder.value);
+  }
 };
 </script>
 

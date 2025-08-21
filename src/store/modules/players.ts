@@ -1,52 +1,54 @@
-const NEWPLAYER = {
+import type { Player, Role, PlayersState, Edition } from "../../types";
+
+const NEWPLAYER: Player = {
   name: "",
   id: "",
-  role: {},
+  role: {} as Role,
   reminders: [],
   voteToken: false,
   isDead: false,
   pronouns: "",
 };
 
-const state = () => ({
+const state = (): PlayersState => ({
   players: [],
   fabled: [],
   bluffs: [],
 });
 
 const getters = {
-  alive({ players }) {
+  alive({ players }: PlayersState): number {
     return players.filter((player) => !player.isDead).length;
   },
-  nonTravelers({ players }) {
+  nonTravelers({ players }: PlayersState): number {
     const nonTravelers = players.filter(
       (player) => player.role.team !== "traveler",
     );
     return Math.min(nonTravelers.length, 15);
   },
   // calculate a Map of player => night order
-  nightOrder({ players, fabled }, getters, { edition }) {
-    
+  nightOrder({ players, fabled }: PlayersState, _getters: unknown, { edition }: { edition: Edition }) {
+
     // gives the index of the first night for a player. This function supposes that, if they are called, "player" has an attribute "role".
-    function getFirstNight(player, officialEdition) {
-      if(officialEdition && player.role.firstNightEdition) {
+    function getFirstNight(player: Player, officialEdition: boolean): number {
+      if (officialEdition && player.role.firstNightEdition) {
         return player.role.firstNightEdition;
-	  }
-      return player.role.firstNight;
+      }
+      return player.role.firstNight || 0;
     }
-    
+
     // gives the index of the other nights (not the first one) for a player. This function supposes that, if they are called, "player" has an attribute "role".
-    function getOtherNight(player, officialEdition) {
-      if(officialEdition && player.role.otherNightEdition) {
+    function getOtherNight(player: Player, officialEdition: boolean): number {
+      if (officialEdition && player.role.otherNightEdition) {
         return player.role.otherNightEdition;
-	  }
-      return player.role.otherNight;
+      }
+      return player.role.otherNight || 0;
     }
-    
-    
-    const firstNight = [0];
-    const otherNight = [0];
-    fabled.forEach((role) => {
+
+
+    const firstNight: (Player | Role | number)[] = [0];
+    const otherNight: (Player | Role | number)[] = [0];
+    fabled.forEach((role: Role) => {
       if (role.firstNight) {
         firstNight.push(role);
       }
@@ -54,7 +56,7 @@ const getters = {
         otherNight.push(role);
       }
     });
-    players.forEach((player) => {
+    players.forEach((player: Player) => {
       if (player.role.firstNight) {
         firstNight.push(player);
       }
@@ -66,21 +68,21 @@ const getters = {
     // Else, (meaning x is instead a Fabled), to know their night order we look at x.firstNight or x.otherNight
     firstNight.sort(
       (a, b) =>
-        (a.role ? getFirstNight(a, edition.isOfficial) : a.firstNight) -
-        (b.role ? getFirstNight(b, edition.isOfficial) : b.firstNight),
+        ((a as Player).role ? getFirstNight(a as Player, edition.isOfficial || false) : (a as Role).firstNight || 0) -
+        ((b as Player).role ? getFirstNight(b as Player, edition.isOfficial || false) : (b as Role).firstNight || 0),
     );
     otherNight.sort(
       (a, b) =>
-        (a.role ? getOtherNight(a, edition.isOfficial) : a.otherNight) -
-        (b.role ? getOtherNight(b, edition.isOfficial) : b.otherNight),
+        ((a as Player).role ? getOtherNight(a as Player, edition.isOfficial || false) : (a as Role).otherNight || 0) -
+        ((b as Player).role ? getOtherNight(b as Player, edition.isOfficial || false) : (b as Role).otherNight || 0),
     );
-    const nightOrder = new Map();
-    players.forEach((player) => {
+    const nightOrder = new Map<Player | Role, { first: number; other: number }>();
+    players.forEach((player: Player) => {
       const first = Math.max(firstNight.indexOf(player), 0);
       const other = Math.max(otherNight.indexOf(player), 0);
       nightOrder.set(player, { first, other });
     });
-    fabled.forEach((role) => {
+    fabled.forEach((role: Role) => {
       const first = Math.max(firstNight.indexOf(role), 0);
       const other = Math.max(otherNight.indexOf(role), 0);
       nightOrder.set(role, { first, other });
@@ -90,25 +92,27 @@ const getters = {
 };
 
 const actions = {
-  randomize({ state, commit }) {
+
+  randomize({ state, commit }: { state: PlayersState; commit: (mutation: string, payload?: unknown) => void }) {
     const players = state.players
-      .map((a) => [Math.random(), a])
+      .map((a: Player) => [Math.random(), a] as [number, Player])
       .sort((a, b) => a[0] - b[0])
       .map((a) => a[1]);
     commit("set", players);
   },
-  clearRoles({ state, commit, rootState }) {
-    let players;
+
+  clearRoles({ state, commit, rootState }: { state: PlayersState; commit: (mutation: string, payload?: unknown) => void; rootState: { session: { isSpectator: boolean } } }) {
+    let players: Player[];
     if (rootState.session.isSpectator) {
-      players = state.players.map((player) => {
+      players = state.players.map((player: Player) => {
         if (player.role.team !== "traveler") {
-          player.role = {};
+          player.role = {} as Role;
         }
         player.reminders = [];
         return player;
       });
     } else {
-      players = state.players.map(({ name, id, pronouns }) => ({
+      players = state.players.map(({ name, id, pronouns }: Player) => ({
         ...NEWPLAYER,
         name,
         id,
@@ -121,12 +125,12 @@ const actions = {
 };
 
 const mutations = {
-  clear(state) {
+  clear(state: PlayersState) {
     state.players = [];
     state.bluffs = [];
     state.fabled = [];
   },
-  set(state, players = []) {
+  set(state: PlayersState, players: Player[] = []) {
     state.players = players;
   },
   /**
@@ -137,40 +141,43 @@ const mutations = {
   An example of this is in the sendPlayerPronouns and _updatePlayerPronouns
   in socket.js.
    */
-  update(state, { player, property, value }) {
+
+  update(state: PlayersState, { player, property, value }: { player: Player; property: keyof Player; value: unknown }) {
     const index = state.players.indexOf(player);
     if (index >= 0) {
-      state.players[index][property] = value;
+      (state.players[index] as unknown as Record<string, unknown>)[property] = value;
     }
   },
-  add(state, name) {
+  add(state: PlayersState, name: string) {
     state.players.push({
       ...NEWPLAYER,
       name,
     });
   },
-  remove(state, index) {
+  remove(state: PlayersState, index: number) {
     state.players.splice(index, 1);
   },
-  swap(state, [from, to]) {
-    [state.players[from], state.players[to]] = [
-      state.players[to],
-      state.players[from],
-    ];
-    // hack: "modify" the array so that Vue notices something changed
-    state.players.splice(0, 0);
+  swap(state: PlayersState, [from, to]: [number, number]) {
+    if (state.players[from] && state.players[to]) {
+      [state.players[from], state.players[to]] = [
+        state.players[to],
+        state.players[from],
+      ];
+      // hack: "modify" the array so that Vue notices something changed
+      state.players.splice(0, 0);
+    }
   },
-  move(state, [from, to]) {
-    state.players.splice(to, 0, state.players.splice(from, 1)[0]);
+  move(state: PlayersState, [from, to]: [number, number]) {
+    state.players.splice(to, 0, state.players.splice(from, 1)[0]!);
   },
-  setBluff(state, { index, role } = {}) {
+  setBluff(state: PlayersState, { index, role }: { index?: number; role?: Role } = {}) {
     if (index !== undefined) {
-      state.bluffs.splice(index, 1, role);
+      state.bluffs.splice(index, 1, role!);
     } else {
       state.bluffs = [];
     }
   },
-  setFabled(state, { index, fabled } = {}) {
+  setFabled(state: PlayersState, { index, fabled }: { index?: number; fabled?: Role | Role[] } = {}) {
     if (index !== undefined) {
       state.fabled.splice(index, 1);
     } else if (fabled) {

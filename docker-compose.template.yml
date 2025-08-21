@@ -32,7 +32,7 @@ services:
       # VITE_SERVER_URL: ws://localhost:8078/
       VITE_SERVER_URL: wss://live.clocktower.online:8080/
     ports:
-      - "${NODE_PORT:-8079}:5173"
+      - "8080:5173"
     working_dir: /app/townsquare
     networks:
       - townsquare-network

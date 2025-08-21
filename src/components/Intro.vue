@@ -1,30 +1,29 @@
 <template>
   <div class="intro">
-    <img src="../../public/apple-icon.png" alt="" class="logo" />
+    <img src="/apple-icon.png" alt="" class="logo">
     <div>
-      {{ locale.intro.header }}
+      {{ t('intro.header') }}
       <span class="button" @click="toggleMenu">
-        <font-awesome-icon icon="cog" class="fa fa-cog" /> {{ locale.intro.menu }}
+        <font-awesome-icon icon="cog" class="fa fa-cog" /> {{ t('intro.menu') }}
       </span>
-      {{ locale.intro.body }}
+      {{ t('intro.body') }}
       <div class="footer">
-        {{ locale.intro.footerStart }}
+        {{ t('intro.footerStart') }}
         <a href="https://github.com/Pingumask/townsquare" target="_blank">GitHub</a>
-        {{ locale.intro.footerEnd }}
+        {{ t('intro.footerEnd') }}
       </div>
     </div>
   </div>
 </template>
 
-<script setup>
-import { computed } from 'vue';
+<script setup lang="ts">
 import { useStore } from 'vuex';
+import { useTranslation } from '@/composables/useTranslation';
 
 const store = useStore();
+const { t } = useTranslation();
 
-const locale = computed(() => store.state.locale);
-
-const toggleMenu = () => {
+const toggleMenu = (): void => {
   store.commit('toggleMenu');
 };
 </script>

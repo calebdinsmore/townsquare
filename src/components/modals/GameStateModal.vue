@@ -1,23 +1,35 @@
 <template>
-  <Modal class="game-state" v-if="modals.gameState" @close="toggleModal('gameState')">
-    <h3>{{ locale.modal.gameState.title }}</h3>
-    <textarea :value="gamestate" @input.stop="input = $event.target.value" @click="$event.target.select()"
-      @keyup.stop=""></textarea>
+  <Modal v-if="modals.gameState" class="game-state" @close="toggleModal('gameState')">
+    <h3>{{ t('modal.gameState.title') }}</h3>
+    <textarea :value="gamestate" @input.stop="input = ($event.target as HTMLTextAreaElement).value"
+      @click="($event.target as HTMLTextAreaElement).select()" @keyup.stop="" />
     <div class="button-group">
       <div class="button townsfolk" @click="copy">
-        <font-awesome-icon icon="copy" class="fa fa-copy" /> {{ locale.modal.gameState.copy }}
+        <font-awesome-icon icon="copy" class="fa fa-copy" /> {{ t('modal.gameState.copy') }}
       </div>
-      <div class="button demon" @click="load" v-if="!session.isSpectator">
-        <font-awesome-icon icon="cog" class="fa fa-cog" /> {{ locale.modal.gameState.load }}
+      <div v-if="!session.isSpectator" class="button demon" @click="load">
+        <font-awesome-icon icon="cog" class="fa fa-cog" /> {{ t('modal.gameState.load') }}
       </div>
     </div>
   </Modal>
 </template>
 
-<script setup>
+<script setup lang="ts">
+import type { Role, Player } from '@/types';
 import { ref, computed } from 'vue';
 import { useStore } from 'vuex';
 import Modal from "./Modal.vue";
+import { useTranslation } from '@/composables/useTranslation';
+
+const { t } = useTranslation();
+// Types for game state data
+interface GameStateData {
+  bluffs?: string[];
+  edition?: unknown;
+  roles?: unknown;
+  fabled?: (string | Role)[];
+  players?: Partial<Player>[];
+}
 
 const store = useStore();
 const input = ref("");
@@ -26,21 +38,20 @@ const modals = computed(() => store.state.modals);
 const players = computed(() => store.state.players);
 const edition = computed(() => store.state.edition);
 const session = computed(() => store.state.session);
-const locale = computed(() => store.state.locale);
 
 const gamestate = computed(() => {
   return JSON.stringify({
-    bluffs: players.value.bluffs.map(({ id }) => id),
+    bluffs: players.value.bluffs.map(({ id }: Role) => id),
     edition: edition.value.isOfficial
       ? { id: edition.value.id }
       : edition.value,
     roles: edition.value.isOfficial
       ? ""
       : store.getters.customRolesStripped,
-    fabled: players.value.fabled.map((fabled) =>
+    fabled: players.value.fabled.map((fabled: Role) =>
       fabled.isCustom ? fabled : { id: fabled.id },
     ),
-    players: players.value.players.map((player) => ({
+    players: players.value.players.map((player: Player) => ({
       ...player,
       role: player.role.id || {},
     })),
@@ -54,13 +65,13 @@ const copy = () => {
 const load = () => {
   if (session.value.isSpectator) return;
   try {
-    const data = JSON.parse(input.value || gamestate.value);
+    const data: GameStateData = JSON.parse(input.value || gamestate.value);
     const { bluffs, edition, roles, fabled, players } = data;
 
     if (roles) store.commit("setCustomRoles", roles);
     if (edition) store.commit("setEdition", edition);
-    if (bluffs.length) {
-      bluffs.forEach((role, index) => {
+    if (bluffs && bluffs.length) {
+      bluffs.forEach((role: string, index: number) => {
         store.commit("players/setBluff", {
           index,
           role: store.state.roles.get(role) || {},
@@ -69,13 +80,19 @@ const load = () => {
     }
     if (fabled) {
       store.commit("players/setFabled", {
-        fabled: fabled.map(f => store.state.fabled.get(f) || store.state.fabled.get(f.id) || f),
+        fabled: fabled.map((f: string | Role) =>
+          typeof f === 'string'
+            ? store.state.fabled.get(f) || {}
+            : store.state.fabled.get(f.id) || f
+        ),
       });
     }
     if (players) {
-      store.commit("players/set", players.map(player => ({
+      store.commit("players/set", players.map((player: Partial<Player>) => ({
         ...player,
-        role: store.state.roles.get(player.role) || store.getters.rolesJSONbyId.get(player.role) || {},
+        role: typeof player.role === 'string'
+          ? store.state.roles.get(player.role) || store.getters.rolesJSONbyId.get(player.role) || {}
+          : player.role || {},
       })));
     }
     toggleModal("gameState");
@@ -84,7 +101,7 @@ const load = () => {
   }
 };
 
-const toggleModal = (modal) => {
+const toggleModal = (modal: string) => {
   store.commit("toggleModal", modal);
 };
 </script>

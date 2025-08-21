@@ -1,14 +1,14 @@
 <template>
   <div id="controls">
-    <span class="nomlog-summary" v-show="session.voteHistory.length && session.sessionId"
+    <span v-show="session.voteHistory.length && session.sessionId" class="nomlog-summary"
       :title="`${session.voteHistory.length} recent ${session.voteHistory.length == 1 ? 'nomination' : 'nominations'}`"
       @click="toggleModal('voteHistory')">
       <font-awesome-icon icon="book-dead" class="fa fa-book-dead" />
       {{ session.voteHistory.length }}
     </span>
-    <span class="session" v-if="session.sessionId" @click="leaveSession"
+    <span v-if="session.sessionId" class="session"
       :title="`${session.playerCount} other players in this session${session.ping ? ' (' + session.ping + 'ms latency)' : ''}`"
-      :class="{ spectator: session.isSpectator, reconnecting: session.isReconnecting }">
+      :class="{ spectator: session.isSpectator, reconnecting: session.isReconnecting }" @click="leaveSession">
       <font-awesome-icon :icon="['fas', 'tower-broadcast']" class="fa fa-tower-broadcast" />
       {{ session.playerCount }}
     </span>
@@ -19,30 +19,40 @@
           <font-awesome-icon icon="book-open" class="fa fa-book-open" @click="tab = 'grimoire'" />
           <font-awesome-icon :icon="['fas', 'tower-broadcast']" class="fa fa-tower-broadcast"
             @click="tab = 'session'" />
-          <font-awesome-icon icon="users" class="fa fa-users" v-if="!session.isSpectator" @click="tab = 'players'" />
+          <font-awesome-icon v-if="!session.isSpectator" icon="users" class="fa fa-users" @click="tab = 'players'" />
           <font-awesome-icon icon="theater-masks" class="fa fa-theater-masks" @click="tab = 'characters'" />
           <font-awesome-icon icon="question" class="fa fa-question" @click="tab = 'help'" />
         </li>
 
         <template v-if="tab === 'grimoire'">
           <!-- Grimoire -->
-          <li class="headline">{{ locale.menu.grimoire.title }}</li>
-          <li @click="toggleGrimoire" v-if="players.length">
-            <template v-if="!grimoire.isPublic">{{ locale.menu.grimoire.hide }}</template>
-            <template v-if="grimoire.isPublic">{{ locale.menu.grimoire.show }}</template>
+          <li class="headline">
+            {{ t('menu.grimoire.title') }}
+          </li>
+          <li v-if="players.length" @click="toggleGrimoire">
+            <template v-if="!grimoire.isPublic">
+              {{ t('menu.grimoire.hide') }}
+            </template>
+            <template v-if="grimoire.isPublic">
+              {{ t('menu.grimoire.show') }}
+            </template>
             <em>[G]</em>
           </li>
-          <li @click="toggleNight" v-if="!session.isSpectator">
-            <template v-if="!grimoire.isNight">{{ locale.menu.grimoire.nightSwitch }}</template>
-            <template v-if="grimoire.isNight">{{ locale.menu.grimoire.daySwitch }}</template>
+          <li v-if="!session.isSpectator" @click="toggleNight">
+            <template v-if="!grimoire.isNight">
+              {{ t('menu.grimoire.nightSwitch') }}
+            </template>
+            <template v-if="grimoire.isNight">
+              {{ t('menu.grimoire.daySwitch') }}
+            </template>
             <em>[S]</em>
           </li>
-          <li @click="toggleRinging" v-if="!session.isSpectator">
-            {{ locale.menu.grimoire.ringBell }}
+          <li v-if="!session.isSpectator" @click="toggleRinging">
+            {{ t('menu.grimoire.ringBell') }}
             <em>[B]</em>
           </li>
-          <li @click="toggleOrganVoteMode" v-if="!session.isSpectator">
-            {{ locale.menu.grimoire.organGrinder }}
+          <li v-if="!session.isSpectator" @click="toggleOrganVoteMode">
+            {{ t('menu.grimoire.organGrinder') }}
             <em>
               <font-awesome-icon :icon="[
                 'fas',
@@ -50,8 +60,8 @@
               ]" />
             </em>
           </li>
-          <li @click="toggleNightOrder" v-if="session.isSpectator">
-            {{ locale.menu.grimoire.order }}
+          <li v-if="session.isSpectator" @click="toggleNightOrder">
+            {{ t('menu.grimoire.order') }}
             <em>
               <font-awesome-icon :icon="[
                 'fas',
@@ -60,80 +70,80 @@
             </em>
           </li>
           <li v-if="players.length">
-            {{ locale.menu.grimoire.zoom }}
+            {{ t('menu.grimoire.zoom') }}
             <em>
-              <font-awesome-icon @click="setZoom(grimoire.zoom - 1)" icon="search-minus" class="fa fa-search-minus" />
+              <font-awesome-icon icon="search-minus" class="fa fa-search-minus" @click="setZoom(grimoire.zoom - 1)" />
               {{ Math.round(100 + grimoire.zoom * 10) }}%
-              <font-awesome-icon @click="setZoom(grimoire.zoom + 1)" icon="search-plus" class="fa fa-search-plus" />
+              <font-awesome-icon icon="search-plus" class="fa fa-search-plus" @click="setZoom(grimoire.zoom + 1)" />
             </em>
           </li>
           <li @click="setBackground">
-            {{ locale.menu.grimoire.background }}
+            {{ t('menu.grimoire.background') }}
             <em><font-awesome-icon icon="image" class="fa fa-image" /></em>
           </li>
           <li v-if="!edition.isOfficial" @click="imageOptIn">
-            <small>{{ locale.menu.grimoire.customImages }}</small>
+            <small>{{ t('menu.grimoire.customImages') }}</small>
             <em><font-awesome-icon :icon="[
               'fas',
               grimoire.isImageOptIn ? 'check-square' : 'square',
             ]" /></em>
           </li>
           <li @click="streamerMode">
-            <small>{{ locale.menu.grimoire.streamerMode }}</small>
+            <small>{{ t('menu.grimoire.streamerMode') }}</small>
             <em><font-awesome-icon :icon="[
               'fas',
               grimoire.isStreamerMode ? 'check-square' : 'square',
             ]" /></em>
           </li>
           <li @click="toggleStatic">
-            {{ locale.menu.grimoire.animations }}
+            {{ t('menu.grimoire.animations') }}
             <em><font-awesome-icon :icon="['fas', grimoire.isStatic ? 'check-square' : 'square']" /></em>
           </li>
           <li @click="toggleMuted">
-            {{ locale.menu.grimoire.mute }}
+            {{ t('menu.grimoire.mute') }}
             <em><font-awesome-icon :icon="['fas', grimoire.isMuted ? 'volume-mute' : 'volume-up']" /></em>
           </li>
         </template>
 
         <template v-if="tab === 'session'">
           <!-- Session -->
-          <li class="headline" v-if="session.sessionId">
+          <li v-if="session.sessionId" class="headline">
             {{
               session.isSpectator
-                ? locale.menu.session.title.player
-                : locale.menu.session.title.host
+                ? t('menu.session.title.player')
+                : t('menu.session.title.host')
             }}
           </li>
-          <li class="headline" v-else>
-            {{ locale.menu.session.title.create }}
+          <li v-else class="headline">
+            {{ t('menu.session.title.create') }}
           </li>
           <template v-if="!session.sessionId">
             <li @click="hostSession">
-              {{ locale.menu.session.storyteller }}<em>[H]</em>
+              {{ t('menu.session.storyteller') }}<em>[H]</em>
             </li>
             <li @click="joinSession">
-              {{ locale.menu.session.player }}<em>[J]</em>
+              {{ t('menu.session.player') }}<em>[J]</em>
             </li>
           </template>
           <template v-else>
             <li v-if="session.ping">
-              {{ locale.menu.session.delay }}
-              {{ session.isSpectator ? locale.menu.session.host : locale.menu.session.players }}
+              {{ t('menu.session.delay') }}
+              {{ session.isSpectator ? t('menu.session.host') : t('menu.session.players') }}
               <em>{{ session.ping }}ms</em>
             </li>
             <li @click="copySessionUrl">
-              {{ locale.menu.session.link }}
+              {{ t('menu.session.link') }}
               <em><font-awesome-icon icon="copy" class="fa fa-copy" /></em>
             </li>
             <li v-if="!session.isSpectator" @click="distributeRoles">
-              {{ locale.menu.session.sendRoles }}
+              {{ t('menu.session.sendRoles') }}
               <em><font-awesome-icon icon="theater-masks" class="fa fa-theater-masks" /></em>
             </li>
             <li v-if="session.voteHistory.length || !session.isSpectator" @click="toggleModal('voteHistory')">
-              {{ locale.menu.session.voteHistory }}<em>[V]</em>
+              {{ t('menu.session.voteHistory') }}<em>[V]</em>
             </li>
             <li @click="leaveSession">
-              {{ locale.menu.session.leave }}
+              {{ t('menu.session.leave') }}
               <em>{{ session.sessionId }}</em>
             </li>
           </template>
@@ -141,59 +151,65 @@
 
         <template v-if="tab === 'players' && !session.isSpectator">
           <!-- Users -->
-          <li class="headline">{{ locale.menu.players.title }}</li>
-          <li @click="addPlayer" v-if="players.length < 20">
-            {{ locale.menu.players.add }}<em>[A]</em>
+          <li class="headline">
+            {{ t('menu.players.title') }}
           </li>
-          <li @click="randomizeSeatings" v-if="players.length > 2">
-            {{ locale.menu.players.randomize }}
+          <li v-if="players.length < 20" @click="addPlayer">
+            {{ t('menu.players.add') }}<em>[A]</em>
+          </li>
+          <li v-if="players.length > 2" @click="randomizeSeatings">
+            {{ t('menu.players.randomize') }}
             <em><font-awesome-icon icon="dice" class="fa fa-dice" /></em>
           </li>
-          <li @click="clearPlayers" v-if="players.length">
-            {{ locale.menu.players.removeAll }}
+          <li v-if="players.length" @click="clearPlayers">
+            {{ t('menu.players.removeAll') }}
             <em><font-awesome-icon icon="trash-alt" class="fa fa-trash-alt" /></em>
           </li>
         </template>
 
         <template v-if="tab === 'characters'">
           <!-- Characters -->
-          <li class="headline">{{ locale.menu.characters.title }}</li>
+          <li class="headline">
+            {{ t('menu.characters.title') }}
+          </li>
           <li v-if="!session.isSpectator" @click="toggleModal('edition')">
-            {{ locale.menu.characters.selectEdition }}
+            {{ t('menu.characters.selectEdition') }}
             <em>[E]</em>
           </li>
-          <li @click="toggleModal('roles')" v-if="!session.isSpectator && players.length > 4">
-            {{ locale.menu.characters.assign }}
+          <li v-if="!session.isSpectator && players.length > 4" @click="toggleModal('roles')">
+            {{ t('menu.characters.assign') }}
             <em>[C]</em>
           </li>
           <li v-if="!session.isSpectator" @click="toggleModal('fabled')">
-            {{ locale.menu.characters.addFabled }}
+            {{ t('menu.characters.addFabled') }}
             <em><font-awesome-icon icon="dragon" class="fa fa-dragon" /></em>
           </li>
-          <li @click="clearRoles" v-if="players.length">
-            {{ locale.menu.characters.removeAll }}
+          <li v-if="players.length" @click="clearRoles">
+            {{ t('menu.characters.removeAll') }}
             <em><font-awesome-icon icon="trash-alt" class="fa fa-trash-alt" /></em>
           </li>
         </template>
 
         <template v-if="tab === 'help'">
           <!-- Help -->
-          <li class="headline">{{ locale.menu.help.title }}</li>
+          <li class="headline">
+            {{ t('menu.help.title') }}
+          </li>
           <li @click="toggleModal('reference')">
-            {{ locale.menu.help.reference }}
+            {{ t('menu.help.reference') }}
             <em>[R]</em>
           </li>
           <li @click="toggleModal('nightOrder')">
-            {{ locale.menu.help.nightOrder }}
+            {{ t('menu.help.nightOrder') }}
             <em>[N]</em>
           </li>
           <li @click="toggleModal('gameState')">
-            {{ locale.menu.help.gameState }}
+            {{ t('menu.help.gameState') }}
             <em><font-awesome-icon icon="file-code" class="fa fa-file-code" /></em>
           </li>
           <li>
             <a href="https://discord.gg/gD3AB8qCrw" target="_blank">
-              {{ locale.menu.help.discord }}
+              {{ t('menu.help.discord') }}
             </a>
             <em>
               <a href="https://discord.gg/gD3AB8qCrw" target="_blank">
@@ -203,7 +219,7 @@
           </li>
           <li>
             <a href="https://github.com/Pingumask/townsquare" target="_blank">
-              {{ locale.menu.help.source }}
+              {{ t('menu.help.source') }}
             </a>
             <em>
               <a href="https://github.com/Pingumask/townsquare" target="_blank">
@@ -217,22 +233,23 @@
   </div>
 </template>
 
-<script setup>
-import { computed, ref, defineExpose } from 'vue';
+<script setup lang="ts">
+import { computed, ref } from 'vue';
 import { useStore } from 'vuex';
+import { useTranslation } from '@/composables/useTranslation';
+const { t } = useTranslation();
 
 const store = useStore();
 
 const grimoire = computed(() => store.state.grimoire);
 const session = computed(() => store.state.session);
 const edition = computed(() => store.state.edition);
-const locale = computed(() => store.state.locale);
 const players = computed(() => store.state.players.players);
 
 const tab = ref('grimoire');
 
 const setBackground = () => {
-  const background = prompt(locale.value.prompt.background);
+  const background = prompt(t('prompt.background'));
   if (background || background === '') {
     store.commit('setBackground', background);
   }
@@ -241,8 +258,8 @@ const setBackground = () => {
 const hostSession = () => {
   if (session.value.sessionId) return;
   const sessionId = prompt(
-    locale.value.prompt.createSession,
-    Math.round(Math.random() * 10000),
+    t('prompt.createSession'),
+    String(Math.round(Math.random() * 10000)),
   );
   if (sessionId) {
     store.commit('session/clearVoteHistory');
@@ -261,21 +278,21 @@ const copySessionUrl = () => {
 
 const distributeRoles = () => {
   if (session.value.isSpectator) return;
-  const popup = locale.value.prompt.sendRoles;
+  const popup = t('prompt.sendRoles');
   if (confirm(popup)) {
     // Checking all players to see if one of them has a forbidden role
-    let forbiddenRole="";
-    for (let i=0 ; i<players.value.length && !forbiddenRole ; i++) {
-      if(players.value[i].role.forbidden) {
+    let forbiddenRole = "";
+    for (let i = 0; i < players.value.length && !forbiddenRole; i++) {
+      if (players.value[i].role.forbidden) {
         forbiddenRole = players.value[i].role.name;
       }
-    }		
-    let confirmedDistribution = (forbiddenRole == "") ;		
-    if(!confirmedDistribution) {
-      const forbiddenPopup = locale.value.prompt.sendRolesWithForbidden1 + forbiddenRole + locale.value.prompt.sendRolesWithForbidden2;
+    }
+    let confirmedDistribution = (forbiddenRole == "");
+    if (!confirmedDistribution) {
+      const forbiddenPopup = t('prompt.sendRolesWithForbidden1') + forbiddenRole + t('prompt.sendRolesWithForbidden2');
       confirmedDistribution = confirm(forbiddenPopup);
     }
-    if(confirmedDistribution) {
+    if (confirmedDistribution) {
       store.commit('session/distributeRoles', true);
       setTimeout(() => {
         store.commit('session/distributeRoles', false);
@@ -285,7 +302,7 @@ const distributeRoles = () => {
 };
 
 const imageOptIn = () => {
-  const popup = locale.value.prompt.imageOptIn;
+  const popup = t('prompt.imageOptIn');
   if (grimoire.value.isImageOptIn || confirm(popup)) {
     toggleImageOptIn();
   }
@@ -297,9 +314,9 @@ const streamerMode = () => {
 
 const joinSession = () => {
   if (session.value.sessionId) return leaveSession();
-  let sessionId = prompt(locale.value.prompt.joinSession);
-  if (sessionId.match(/^https?:\/\//i)) {
-    sessionId = sessionId.split('#').pop();
+  let sessionId = prompt(t('prompt.joinSession'));
+  if (sessionId && sessionId.match(/^https?:\/\//i)) {
+    sessionId = sessionId.split('#').pop() || null;
   }
   if (sessionId) {
     store.commit('session/clearVoteHistory');
@@ -310,7 +327,7 @@ const joinSession = () => {
 };
 
 const leaveSession = () => {
-  if (confirm(locale.value.prompt.leaveSession)) {
+  if (confirm(t('prompt.leaveSession'))) {
     store.commit('session/setSpectator', false);
     store.commit('session/setSessionId', '');
   }
@@ -319,7 +336,7 @@ const leaveSession = () => {
 const addPlayer = () => {
   if (session.value.isSpectator) return;
   if (players.value.length >= 20) return;
-  const name = prompt(locale.value.prompt.addPlayer);
+  const name = prompt(t('prompt.addPlayer'));
   if (name) {
     store.commit('players/add', name);
   }
@@ -327,14 +344,14 @@ const addPlayer = () => {
 
 const randomizeSeatings = () => {
   if (session.value.isSpectator) return;
-  if (confirm(locale.value.prompt.randomizeSeatings)) {
+  if (confirm(t('prompt.randomizeSeatings'))) {
     store.dispatch('players/randomize');
   }
 };
 
 const clearPlayers = () => {
   if (session.value.isSpectator) return;
-  if (confirm(locale.value.prompt.clearPlayers)) {
+  if (confirm(t('prompt.clearPlayers'))) {
     if (session.value.nomination) {
       store.commit('session/nomination');
     }
@@ -343,7 +360,7 @@ const clearPlayers = () => {
 };
 
 const clearRoles = () => {
-  if (confirm(locale.value.prompt.clearRoles)) {
+  if (confirm(t('prompt.clearRoles'))) {
     store.dispatch('players/clearRoles');
   }
 };
@@ -353,7 +370,7 @@ const toggleNight = () => {
   if (grimoire.value.isNight) {
     store.commit('session/setMarkedPlayer', -1);
   }
-  else {	    
+  else {
     store.commit('toggleRooster', true);
     setTimeout(() => store.commit('toggleRooster', false), 4000);
   }
@@ -375,8 +392,8 @@ const toggleStreamerMode = () => store.commit('toggleStreamerMode');
 const toggleMuted = () => store.commit('toggleMuted');
 const toggleNightOrder = () => store.commit('toggleNightOrder');
 const toggleStatic = () => store.commit('toggleStatic');
-const setZoom = (zoom) => store.commit('setZoom', zoom);
-const toggleModal = (modal) => store.commit('toggleModal', modal);
+const setZoom = (zoom: number) => store.commit('setZoom', zoom);
+const toggleModal = (modal: string) => store.commit('toggleModal', modal);
 
 defineExpose({
   addPlayer,

@@ -1,4 +1,6 @@
-import gameInfo from "../index.js";
+import type { SessionState, VoteHistoryEntry, Player, Nomination } from "../../types";
+import { isActiveNomination, isTravelerExile } from "../../types";
+import gameInfo from "../index";
 
 /**
  * Handle a vote request.
@@ -7,13 +9,13 @@ import gameInfo from "../index.js";
  * @param index seat of the player in the circle
  * @param vote true or false
  */
-const handleVote = (state, [index, vote]) => {
+const handleVote = (state: SessionState, [index, vote]: [number, boolean | undefined]) => {
   if (!state.nomination) return;
   state.votes = [...state.votes];
   state.votes[index] = vote === undefined ? !state.votes[index] : vote;
 };
 
-const state = () => ({
+const state = (): SessionState => ({
   sessionId: "",
   isSpectator: false,
   isReconnecting: false,
@@ -21,7 +23,7 @@ const state = () => ({
   ping: 0,
   playerId: "",
   claimedSeat: -1,
-  nomination: false,
+  nomination: null,
   votes: [],
   lockedVote: 0,
   votingSpeed: 1000,
@@ -38,7 +40,7 @@ const getters = {};
 const actions = {};
 
 // mutations helper functions
-const set = (key) => (state, val) => {
+const set = <K extends keyof SessionState>(key: K) => (state: SessionState, val: SessionState[K]) => {
   state[key] = val;
 };
 
@@ -56,17 +58,23 @@ const mutations = {
   setVoteHistoryAllowed: set("isVoteHistoryAllowed"),
   claimSeat: set("claimedSeat"),
   distributeRoles: set("isRolesDistributed"),
-  setSessionId(state, sessionId) {
+  setSessionId(state: SessionState, sessionId: string) {
     state.sessionId = sessionId
       .toLocaleLowerCase()
       .replace(/[^0-9a-z]/g, "")
-      .substr(0, 10);
+      .substring(0, 10);
   },
   nomination(
-    state,
-    { nomination, votes, votingSpeed, lockedVote, isVoteInProgress } = {},
+    state: SessionState,
+    { nomination, votes, votingSpeed, lockedVote, isVoteInProgress }: {
+      nomination?: Nomination | null;
+      votes?: boolean[];
+      votingSpeed?: number;
+      lockedVote?: number;
+      isVoteInProgress?: boolean;
+    } = {},
   ) {
-    state.nomination = nomination || false;
+    state.nomination = nomination ?? null;
     state.votes = votes || [];
     state.votingSpeed = votingSpeed || state.votingSpeed;
     state.lockedVote = lockedVote || 0;
@@ -79,32 +87,30 @@ const mutations = {
    * @param state
    * @param players
    */
-  addHistory(state, players) {
+  addHistory(state: SessionState, players: Player[]) {
     if (!state.isVoteHistoryAllowed && state.isSpectator) return;
-    if (!state.nomination || state.lockedVote <= players.length) return;
-    const isExile =
-      typeof state.nomination[1] == "number" &&
-      players[state.nomination[1]].role.team === "traveler";
-    const organGrinder = gameInfo.state.grimoire.isOrganVoteMode && !isExile;
-    state.voteHistory.push({
+    if (!isActiveNomination(state.nomination) || state.lockedVote <= players.length) return;
+
+    const nomination = state.nomination;
+    const isExile = isTravelerExile(nomination, players);
+    const organGrinder = (gameInfo as unknown as { state: { grimoire: { isOrganVoteMode: boolean } } }).state.grimoire.isOrganVoteMode && !isExile;
+
+    const entry: VoteHistoryEntry = {
       timestamp: new Date(),
       nominator:
-        typeof state.nomination[0] == "number"
-          ? players[state.nomination[0]].name
-          : state.nomination[0],
+        typeof nomination.nominator === "number"
+          ? players[nomination.nominator]?.name || ""
+          : nomination.nominator || "",
       nominee:
-        typeof state.nomination[1] == "number"
-          ? players[state.nomination[1]].name
-          : typeof state.nomination[1] == "string"
-            ? state.nomination[1]
-            : "",
+        typeof nomination.nominee === "number"
+          ? players[nomination.nominee]?.name || ""
+          : nomination.nominee || "",
       type:
-        typeof state.nomination[1] !== "object"
-          ? isExile
-            ? gameInfo.state.locale.modal.voteHistory.exile
-            : gameInfo.state.locale.modal.voteHistory.execution +
-              (organGrinder && !state.isSpectator ? "*" : "")
-          : state.nomination[1][2],
+        nomination.specialVote?.type ||
+        (isExile
+          ? (gameInfo as unknown as { state: { locale: { modal: { voteHistory: { exile: string; execution: string } } } } }).state.locale.modal.voteHistory.exile
+          : (gameInfo as unknown as { state: { locale: { modal: { voteHistory: { exile: string; execution: string } } } } }).state.locale.modal.voteHistory.execution +
+          (organGrinder && !state.isSpectator ? "*" : "")),
       majority: Math.ceil(
         players.filter((player) => !player.isDead || isExile).length / 2,
       ),
@@ -112,11 +118,13 @@ const mutations = {
         organGrinder && state.isSpectator
           ? null
           : players
-              .filter((player, index) => state.votes[index])
-              .map(({ name }) => name),
-    });
+            .filter((_player, index) => state.votes[index])
+            .map(({ name }) => name),
+    };
+
+    state.voteHistory.push(entry);
   },
-  clearVoteHistory(state) {
+  clearVoteHistory(state: SessionState) {
     state.voteHistory = [];
   },
   /**
@@ -127,7 +135,7 @@ const mutations = {
    */
   vote: handleVote,
   voteSync: handleVote,
-  lockVote(state, lock) {
+  lockVote(state: SessionState, lock?: number) {
     state.lockedVote = lock !== undefined ? lock : state.lockedVote + 1;
   },
 };

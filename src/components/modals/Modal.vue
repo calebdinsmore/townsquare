@@ -1,27 +1,30 @@
 <template>
   <transition name="modal-fade">
+    <!-- eslint-disable-next-line vue/require-toggle-inside-transition -->
     <div class="modal-backdrop" @click="close">
       <div class="modal" :class="{ maximized: isMaximized }" role="dialog" aria-labelledby="modalTitle"
         aria-describedby="modalDescription" @click.stop="">
         <div class="top-right-buttons">
-          <font-awesome-icon @click="isMaximized = !isMaximized" class="top-right-button"
-            :icon="['fas', isMaximized ? 'window-minimize' : 'window-maximize']" />
-          <font-awesome-icon @click="close" icon="times-circle" class="top-right-button fa-times-circle" />
+          <font-awesome-icon class="top-right-button"
+            :icon="['fas', isMaximized ? 'window-minimize' : 'window-maximize']" @click="isMaximized = !isMaximized" />
+          <font-awesome-icon icon="times-circle" class="top-right-button fa-times-circle" @click="close" />
         </div>
         <div class="slot">
-          <slot></slot>
+          <slot />
         </div>
       </div>
     </div>
   </transition>
 </template>
 
-<script setup>
-import { ref, defineEmits } from 'vue';
+<script setup lang="ts">
+import { ref } from 'vue';
 
 const isMaximized = ref(false);
 
-const emit = defineEmits(['close']);
+const emit = defineEmits<{
+  close: [];
+}>();
 
 const close = () => {
   emit('close');

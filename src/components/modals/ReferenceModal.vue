@@ -1,67 +1,72 @@
 <template>
-  <Modal class="characters" @close="toggleModal('reference')" v-if="modals.reference && roles.size">
-    <font-awesome-icon @click="toggleModal('nightOrder')" icon="cloud-moon" class="fa fa-cloud-moon toggle"
-      :title="locale.modal.reference.nightOrder" />
+  <Modal v-if="modals.reference && roles.size" class="characters" @close="toggleModal('reference')">
+    <font-awesome-icon icon="cloud-moon" class="fa fa-cloud-moon toggle" :title="t('modal.reference.nightOrder')"
+      @click="toggleModal('nightOrder')" />
     <h3>
-      {{ locale.modal.reference.title }}
+      {{ t('modal.reference.title') }}
       <font-awesome-icon icon="address-card" class="fa fa-address-card" />
       {{ edition.name || "Custom Script" }}
     </h3>
     <div v-for="(teamRoles, team) in rolesGrouped" :key="team" :class="['team', team]">
-      <aside :aria-label="locale.modal.reference.teamNames[team]">
-        <h4>{{ locale.modal.reference.teamNames[team] }}</h4>
+      <aside :aria-label="t('modal.reference.teamNames[team]')">
+        <h4>{{ t('modal.reference.teamNames[team]') }}</h4>
       </aside>
       <ul>
-        <li v-for="role in teamRoles" :class="[team]" :key="role.id">
-          <span class="icon" v-if="role.id" :style="{
+        <li v-for="role in teamRoles" :key="role.id" :class="[team]">
+          <span v-if="role.id" class="icon" :style="{
             backgroundImage: `url(${role.image && grimoire.isImageOptIn
               ? role.image
               : rolePath(role)
               })`,
-          }"></span>
+          }" />
           <div class="role">
-            <span class="player" v-if="Object.keys(playersByRole).length">
-              {{ playersByRole[role.id] ? playersByRole[role.id].join(", ") : "" }}
+            <span v-if="Object.keys(playersByRole).length" class="player">
+              {{ playersByRole[role.id] ? playersByRole[role.id]?.join(", ") : "" }}
             </span>
             <span class="name">{{ role.name }}</span>
             <span class="ability">{{ role.ability }}</span>
           </div>
         </li>
-        <li :class="[team]"></li>
-        <li :class="[team]"></li>
+        <li :class="[team]" />
+        <li :class="[team]" />
       </ul>
     </div>
 
-    <div class="team jinxed" v-if="jinxed.length">
-      <aside :aria-label="locale.modal.reference.jinxed">
-        <h4>{{ locale.modal.reference.jinxed }}</h4>
+    <div v-if="jinxed.length" class="team jinxed">
+      <aside :aria-label="t('modal.reference.jinxed')">
+        <h4>{{ t('modal.reference.jinxed') }}</h4>
       </aside>
       <ul>
         <li v-for="(jinx, index) in jinxed" :key="index">
           <span class="icon" :style="{
             backgroundImage: 'url(' + rolePath(jinx.first) + ')',
-          }"></span>
+          }" />
           <span class="icon" :style="{
             backgroundImage: 'url(' + rolePath(jinx.second) + ')',
-          }"></span>
+          }" />
           <div class="role">
             <span class="name">{{ jinx.first.name }} & {{ jinx.second.name }}</span>
             <span class="ability">{{ jinx.reason }}</span>
           </div>
         </li>
-        <li></li>
-        <li></li>
+        <li />
+        <li />
       </ul>
     </div>
-    <div class="asterisk">{{ locale.modal.reference.notfirstnight }}</div>
+    <div class="asterisk">
+      {{ t('modal.reference.notfirstnight') }}
+    </div>
   </Modal>
 </template>
 
-<script setup>
+<script setup lang="ts">
+import type { Role, Player, JinxInfo } from '@/types';
 import { computed } from "vue";
 import { useStore } from "vuex";
 import Modal from "./Modal.vue";
+import { useTranslation } from '@/composables/useTranslation';
 
+const { t } = useTranslation();
 const store = useStore();
 
 const roles = computed(() => store.state.roles);
@@ -69,22 +74,22 @@ const modals = computed(() => store.state.modals);
 const edition = computed(() => store.state.edition);
 const grimoire = computed(() => store.state.grimoire);
 const jinxes = computed(() => store.state.jinxes);
-const locale = computed(() => store.state.locale);
 const players = computed(() => store.state.players.players);
 
 /**
      * Return a list of jinxes in the form of role IDs and a reason
-     * @returns {*[]} [{first, second, reason}]
+     * @returns {JinxInfo[]} [{first, second, reason}]
      */
-const jinxed = computed(() => {
-  const jinxedList = [];
-  roles.value.forEach((role) => {
+const jinxed = computed((): JinxInfo[] => {
+  const jinxedList: JinxInfo[] = [];
+  roles.value.forEach((role: Role) => {
     if (jinxes.value.get(role.id)) {
-      jinxes.value.get(role.id).forEach((reason, second) => {
-        if (roles.value.get(second)) {
+      jinxes.value.get(role.id).forEach((reason: string, second: string) => {
+        const secondRole = roles.value.get(second);
+        if (secondRole) {
           jinxedList.push({
             first: role,
-            second: roles.value.get(second),
+            second: secondRole,
             reason,
           });
         }
@@ -95,38 +100,38 @@ const jinxed = computed(() => {
 });
 
 const rolesGrouped = computed(() => {
-  const grouped = {};
-  roles.value.forEach((role) => {
-    if (!grouped[role.team]) {
-      grouped[role.team] = [];
+  const grouped: Record<string, Role[]> = {};
+  roles.value.forEach((role: Role) => {
+    if (!grouped[role.team || 'default']) {
+      grouped[role.team || 'default'] = [];
     }
-    grouped[role.team].push(role);
+    grouped[role.team || 'default']?.push(role);
   });
   delete grouped["traveler"];
   return grouped;
 });
 
 const playersByRole = computed(() => {
-  const playersMap = {};
-  players.value.forEach(({ name, role }) => {
+  const playersMap: Record<string, string[]> = {};
+  players.value.forEach(({ name, role }: Player) => {
     if (role && role.id && role.team !== "traveler") {
       if (!playersMap[role.id]) {
         playersMap[role.id] = [];
       }
-      playersMap[role.id].push(name);
+      playersMap[role.id]?.push(name);
     }
   });
   return playersMap;
 });
 
-const rolePath = (role) => {
+const rolePath = (role: Role) => {
   return new URL(
     `../../assets/icons/${role.imageAlt || role.id}.png`,
     import.meta.url,
   ).href;
 };
 
-const toggleModal = (modalName) => {
+const toggleModal = (modalName: string) => {
   store.commit("toggleModal", modalName);
 };
 </script>

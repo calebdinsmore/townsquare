@@ -1,14 +1,15 @@
 {
   "name": "townsquare",
-  "version": "4.1.1",
+  "version": "5.0.0",
   "description": "Blood on the Clocktower Town Square",
   "author": "Pingumaskt",
   "scripts": {
     "dev": "vite --host 0.0.0.0",
-    "build": "vite build",
+    "build": "vue-tsc && vite build",
     "serve": "vite preview",
     "lint": "eslint src --fix",
-    "lint-check": "eslint src --no-fix --max-warnings=0"
+    "lint-check": "eslint src --no-fix --max-warnings=0",
+    "type-check": "vue-tsc --noEmit"
   },
   "type": "module",
   "main": "App.vue",
@@ -17,6 +18,8 @@
     "@fortawesome/free-brands-svg-icons": "^6.7.1",
     "@fortawesome/free-solid-svg-icons": "^6.7.1",
     "@fortawesome/vue-fontawesome": "^3.0.8",
+    "@typescript-eslint/eslint-plugin": "^8.38.0",
+    "@typescript-eslint/parser": "^8.38.0",
     "@vitejs/plugin-vue": "^5.2.1",
     "@vue/compiler-sfc": "^3.5.13",
     "vite": "^6.0.3",
@@ -25,12 +28,16 @@
     "ws": "^8.18.0"
   },
   "devDependencies": {
+    "@types/node": "^24.1.0",
+    "@types/ws": "^8.18.1",
     "@vue/eslint-config-prettier": "^10.1.0",
     "eslint": "^9.16.0",
     "eslint-plugin-prettier": "^5.2.1",
     "eslint-plugin-vue": "^9.32.0",
     "prettier": "^3.0.3",
-    "sass": "^1.82.0"
+    "sass": "^1.82.0",
+    "typescript": "^5.8.3",
+    "vue-tsc": "^3.0.4"
   },
   "keywords": [
     "botc",
@@ -41,9 +48,9 @@
   "license": "GPL-3.0",
   "repository": {
     "type": "git",
-    "url": "https://github.com//bra1n/townsquare.git"
+    "url": "https://github.com/pngumask/townsquare.git"
   },
   "engines": {
-    "node": "^22"
+    "node": "^24"
   }
 }

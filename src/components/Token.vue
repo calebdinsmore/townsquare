@@ -1,44 +1,44 @@
 <template>
-  <div class="token" @click="setRole" :class="[role.id, { unchecked: unchecked }]">
-    <span class="icon" v-if="role.id" :style="{
+  <div class="token" :class="[role.id, { unchecked: unchecked }]" @click="setRole">
+    <span v-if="role.id" class="icon" :style="{
       backgroundImage: `url(${role.image && grimoire.isImageOptIn ? role.image : rolePath
         })`,
-    }"></span>
-    <span class="leaf-left" v-if="role.firstNight || role.firstNightReminder"></span>
-    <span class="leaf-right" v-if="role.otherNight || role.otherNightReminder"></span>
-    <span v-if="reminderLeaves" :class="['leaf-top' + reminderLeaves]"></span>
-    <span class="leaf-orange" v-if="role.setup"></span>
+    }" />
+    <span v-if="role.firstNight || role.firstNightReminder" class="leaf-left" />
+    <span v-if="role.otherNight || role.otherNightReminder" class="leaf-right" />
+    <span v-if="reminderLeaves" :class="['leaf-top' + reminderLeaves]" />
+    <span v-if="role.setup" class="leaf-orange" />
     <svg viewBox="0 0 150 150" class="name">
-      <path d="M 13 75 C 13 160, 138 160, 138 75" id="curve" fill="transparent" />
+      <path id="curve" d="M 13 75 C 13 160, 138 160, 138 75" fill="transparent" />
       <text width="150" x="66.6%" text-anchor="middle" class="label mozilla" :font-size="nameToFontSize">
         <textPath xlink:href="#curve">
           {{ role?.name || "" }}
         </textPath>
       </text>
     </svg>
-    <div class="edition" :class="[`edition-${role.edition}`, role.team]"></div>
-    <div class="ability" v-if="role.ability">
+    <div class="edition" :class="[`edition-${role.edition}`, role.team]" />
+    <div v-if="role.ability" class="ability">
       {{ role.ability }}
     </div>
   </div>
 </template>
 
-<script setup>
-import { useStore } from 'vuex';
+<script setup lang="ts">
+import type { Role } from '@/types';
 import { computed } from 'vue';
+import { useStore } from 'vuex';
 
-const props = defineProps({
-  role: {
-    type: Object,
-    default: () => ({}),
-  },
-  unchecked: {
-    type: Boolean,
-    default: false,
-  }
+const props = withDefaults(defineProps<{
+  role?: Role;
+  unchecked?: boolean;
+}>(), {
+  role: () => ({} as Role),
+  unchecked: false,
 });
 
-const emit = defineEmits(['set-role']);
+const emit = defineEmits<{
+  'set-role': [role: Role];
+}>();
 
 const store = useStore();
 
@@ -57,13 +57,13 @@ const rolePath = computed(() => {
 });
 
 const nameToFontSize = computed(() => {
-  return (props.role?.name?.length > 10 ? "90%" : "110%");
+  return (props.role?.name?.length && props.role.name.length > 10 ? "90%" : "110%");
 });
 
 const grimoire = computed(() => store.state.grimoire);
 
 function setRole() {
-  emit('set-role');
+  emit('set-role', props.role!);
 }
 </script>
 

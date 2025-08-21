@@ -1,10 +1,10 @@
 <template>
-  <Modal class="vote-history" v-if="modals.voteHistory && (session.voteHistory || !session.isSpectator)"
+  <Modal v-if="modals.voteHistory && (session.voteHistory || !session.isSpectator)" class="vote-history"
     @close="toggleModal('voteHistory')">
-    <font-awesome-icon @click="clearVoteHistory" icon="trash-alt" class="fa fa-trash-alt clear"
-      title="Clear vote history" v-if="session.isSpectator" />
+    <font-awesome-icon v-if="session.isSpectator" icon="trash-alt" class="fa fa-trash-alt clear"
+      title="Clear vote history" @click="clearVoteHistory" />
 
-    <h3>{{ locale.modal.voteHistory.title }}</h3>
+    <h3>{{ t('modal.voteHistory.title') }}</h3>
 
     <template v-if="!session.isSpectator">
       <div class="options">
@@ -13,26 +13,38 @@
             'fas',
             session.isVoteHistoryAllowed ? 'check-square' : 'square',
           ]" />
-          {{ locale.modal.voteHistory.accessibility }}
+          {{ t('modal.voteHistory.accessibility') }}
         </div>
         <div class="option" @click="clearVoteHistory">
           <font-awesome-icon icon="trash-alt" class="fa fa-trash-alt" />
-          {{ locale.modal.voteHistory.clear }}
+          {{ t('modal.voteHistory.clear') }}
         </div>
       </div>
     </template>
     <table>
       <thead>
         <tr>
-          <th scope="col">{{ locale.modal.voteHistory.time }}</th>
-          <th scope="col">{{ locale.modal.voteHistory.nominator }}</th>
-          <th scope="col">{{ locale.modal.voteHistory.nominee }}</th>
-          <th scope="col">{{ locale.modal.voteHistory.type }}</th>
-          <th scope="col">{{ locale.modal.voteHistory.votes }}</th>
-          <th scope="col">{{ locale.modal.voteHistory.majority }}</th>
+          <th scope="col">
+            {{ t('modal.voteHistory.time') }}
+          </th>
+          <th scope="col">
+            {{ t('modal.voteHistory.nominator') }}
+          </th>
+          <th scope="col">
+            {{ t('modal.voteHistory.nominee') }}
+          </th>
+          <th scope="col">
+            {{ t('modal.voteHistory.type') }}
+          </th>
+          <th scope="col">
+            {{ t('modal.voteHistory.votes') }}
+          </th>
+          <th scope="col">
+            {{ t('modal.voteHistory.majority') }}
+          </th>
           <th scope="col">
             <font-awesome-icon icon="user-friends" class="fa fa-user-friends" />
-            {{ locale.modal.voteHistory.voters }}
+            {{ t('modal.voteHistory.voters') }}
           </th>
         </tr>
       </thead>
@@ -61,11 +73,11 @@
                   : 'square',
             ]" />
           </td>
-          <td v-else></td>
+          <td v-else />
           <td>
             {{
               vote.votes == null
-                ? locale.modal.voteHistory.hiddenVote
+                ? t('modal.voteHistory.hiddenVote')
                 : vote.votes.join(", ")
             }}
           </td>
@@ -75,16 +87,17 @@
   </Modal>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { computed } from "vue";
 import { useStore } from "vuex";
 import Modal from "./Modal.vue";
+import { useTranslation } from '@/composables/useTranslation';
 
+const { t } = useTranslation();
 const store = useStore();
 
 const session = computed(() => store.state.session);
 const modals = computed(() => store.state.modals);
-const locale = computed(() => store.state.locale);
 
 const clearVoteHistory = () => {
   store.commit("session/clearVoteHistory");
@@ -94,7 +107,7 @@ const setRecordVoteHistory = () => {
   store.commit("session/setVoteHistoryAllowed", !session.value.isVoteHistoryAllowed);
 };
 
-const toggleModal = (modalName) => {
+const toggleModal = (modalName: string) => {
   store.commit("toggleModal", modalName);
 };
 </script>

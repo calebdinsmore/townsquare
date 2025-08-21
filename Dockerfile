@@ -1,7 +1,5 @@
-FROM node:22
-RUN apt update && apt install -y\
-    git\
-    && apt clean
+FROM node:24-alpine
+RUN apk update
 WORKDIR /app/townsquare
 COPY . .
 RUN npm rebuild && npm clean-install

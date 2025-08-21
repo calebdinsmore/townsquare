@@ -274,10 +274,18 @@
       "atheist": "Nomination of the Story Teller",
       "st": "the Story Teller",
       "cultleader": "Cult creation",
-      "cultleaderMessages": ["wants to create a cult","Do you want to join $player's cult?","Cult"],
+      "cultleaderMessages": {
+        "timerText": "wants to create a cult",
+        "debateText": "Do you want to join $player's cult?",
+        "buttonLabel": "Cult"
+      },
       "custom": "Custom vote",
       "complete": "Complete: ",
-      "customMessages": ["","The debate is open","(Custom)"]
+      "customMessages": {
+        "timerText": "",
+        "debateText": "The debate is open",
+        "buttonLabel": "(Custom)"
+      }
     }
   }
 }

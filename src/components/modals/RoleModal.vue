@@ -1,67 +1,89 @@
 <template>
   <Modal v-if="modals.role && availableRoles.length" @close="close">
     <h3>
-      {{ locale.modal.role.title }}
+      {{ t('modal.role.title') }}
       {{
         playerIndex >= 0 && players.length
           ? players[playerIndex].name
-          : locale.modal.role.bluff
+          : t('modal.role.bluff')
       }}
     </h3>
-    <ul class="tokens" v-if="tab === 'editionRoles' || !otherTravelers.size">
-      <li v-for="role in availableRoles" :class="[role.team]" :key="role.id" @click="setRole(role)">
+    <ul v-if="tab === 'editionRoles' || !otherTravelers.size" class="tokens">
+      <li v-for="role in availableRoles" :key="role.id" :class="[role.team]" @click="setRole(role)">
         <Token :role="role" />
       </li>
     </ul>
-    <ul class="tokens" v-if="tab === 'otherTravelers' && otherTravelers.size">
-      <li v-for="role in otherTravelers.values()" :class="[role.team]" :key="role.id" @click="setRole(role)">
+    <ul v-if="tab === 'otherTravelers' && otherTravelers.size" class="tokens">
+      <li v-for="role in otherTravelers.values()" :key="role.id" :class="[role.team]" @click="setRole(role)">
         <Token :role="role" />
       </li>
     </ul>
-    <div class="button-group" v-if="playerIndex >= 0 && otherTravelers.size && !session.isSpectator">
+    <div v-if="playerIndex >= 0 && otherTravelers.size && !session.isSpectator" class="button-group">
       <span class="button" :class="{ townsfolk: tab === 'editionRoles' }" @click="tab = 'editionRoles'">{{
-        locale.modal.role.editionRoles }}</span>
+        t('modal.role.editionRoles') }}</span>
       <span class="button" :class="{ townsfolk: tab === 'otherTravelers' }" @click="tab = 'otherTravelers'">{{
-        locale.modal.role.otherTravelers }}</span>
+        t('modal.role.otherTravelers') }}</span>
     </div>
   </Modal>
 </template>
 
-<script setup>
+<script setup lang="ts">
+import type { Role, Player } from '@/types';
 import { computed, ref } from 'vue';
 import { useStore } from 'vuex';
-import Modal from './Modal.vue';
 import Token from '../Token.vue';
+import Modal from './Modal.vue';
+import { useTranslation } from '@/composables/useTranslation';
 
-const props = defineProps(['playerIndex']);
+const { t } = useTranslation();
+const props = defineProps<{
+  playerIndex: number;
+}>();
 const store = useStore();
 
 const tab = ref('editionRoles');
 
-const availableRoles = computed(() => {
-  const availableRoles = [];
+const availableRoles = computed((): Role[] => {
+  const availableRoles: Role[] = [];
   const players = store.state.players.players;
-  store.state.roles.forEach((role) => {
+  store.state.roles.forEach((role: Role) => {
     // don't show bluff roles that are already assigned to players
     if (
       props.playerIndex >= 0 ||
       (props.playerIndex < 0 &&
-        !players.some((player) => player.role.id === role.id))
+        !players.some((player: Player) => player.role.id === role.id))
     ) {
       availableRoles.push(role);
     }
   });
-  availableRoles.push({});
+  // Add empty role option with all required properties
+  availableRoles.push({
+    id: 'empty',
+    name: '',
+    team: 'townsfolk',
+    ability: '',
+    isCustom: false,
+    edition: '',
+    firstNight: 0,
+    otherNight: 0,
+    firstNightReminder: '',
+    otherNightReminder: '',
+    reminders: [],
+    remindersGlobal: [],
+    setup: false,
+    image: '',
+    imageAlt: '',
+    forbidden: false
+  } as Role);
   return availableRoles;
 });
 
 const modals = computed(() => store.state.modals);
 const session = computed(() => store.state.session);
-const locale = computed(() => store.state.locale);
 const players = computed(() => store.state.players.players);
 const otherTravelers = computed(() => store.state.otherTravelers);
 
-const setRole = (role) => {
+const setRole = (role: Role) => {
   if (props.playerIndex < 0) {
     // assign to bluff slot (index < 0)
     store.commit('players/setBluff', {

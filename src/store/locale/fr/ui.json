@@ -275,10 +275,18 @@
       "atheist": "Accusation du Narrateur",
       "st": "le Narrateur",
       "cultleader": "Création de secte",
-      "cultleaderMessages": ["veut créer une secte","Voulez-vous rejoindre la secte créée par $player ?","Secte"],
+      "cultleaderMessages": {
+        "timerText": "veut créer une secte",
+        "debateText": "Voulez-vous rejoindre la secte créée par $player ?",
+        "buttonLabel": "Secte"
+      },
       "custom": "Vote personnalisé",
       "complete": "Complétez : ",
-      "customMessages": ["","Le débat est ouvert","(Personnalisé)"]
+      "customMessages": {
+        "timerText": "",
+        "debateText": "Le débat est ouvert",
+        "buttonLabel": "(Personnalisé)"
+      }
     }
   }
 }

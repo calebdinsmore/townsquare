@@ -1,21 +1,20 @@
 <template>
-  <div id="app" @keyup="keyup" tabindex="-1" :class="{
+  <div id="app" tabindex="-1" :class="{
     night: grimoire.isNight,
     static: grimoire.isStatic,
   }" :style="{
     backgroundImage: `url('${background}')`,
     backgroundColor: `${backgroundColor}`,
-  }">
-    <video id="background" v-if="background && background.match(/\.(mp4|webm)$/i)" :src="background" autoplay
-      loop></video>
-    <div class="backdrop"></div>
+  }" @keyup="keyup">
+    <video v-if="background && background.match(/\.(mp4|webm)$/i)" id="background" :src="background" autoplay loop />
+    <div class="backdrop" />
 
-    <Intro v-if="!players.length"></Intro>
-    <TownInfo v-if="players.length && !session.nomination"></TownInfo>
-    <Vote v-if="session.nomination"></Vote>
+    <Intro v-if="!players.length" />
+    <TownInfo v-if="players.length && !session.nomination" />
+    <Vote v-if="session.nomination" />
 
-    <TownSquare></TownSquare>
-    <Menu ref="menuRef"></Menu>
+    <TownSquare />
+    <Menu ref="menuRef" />
     <EditionModal />
     <FabledModal />
     <RolesModal />
@@ -29,29 +28,38 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { computed, ref } from "vue";
 import { useStore } from "vuex";
 import app from "../package.json";
-import TownSquare from "./components/TownSquare.vue";
-import TownInfo from "./components/TownInfo.vue";
-import Menu from "./components/Menu.vue";
-import RolesModal from "./components/modals/RolesModal.vue";
-import EditionModal from "./components/modals/EditionModal.vue";
-import Intro from "./components/Intro.vue";
-import ReferenceModal from "./components/modals/ReferenceModal.vue";
-import Vote from "./components/Vote.vue";
 import Gradients from "./components/Gradients.vue";
-import NightOrderModal from "./components/modals/NightOrderModal.vue";
+import Intro from "./components/Intro.vue";
+import Menu from "./components/Menu.vue";
+import EditionModal from "./components/modals/EditionModal.vue";
 import FabledModal from "./components/modals/FabledModal.vue";
-import VoteHistoryModal from "./components/modals/VoteHistoryModal.vue";
 import GameStateModal from "./components/modals/GameStateModal.vue";
+import NightOrderModal from "./components/modals/NightOrderModal.vue";
+import ReferenceModal from "./components/modals/ReferenceModal.vue";
+import RolesModal from "./components/modals/RolesModal.vue";
 import SpecialVoteModal from "./components/modals/SpecialVoteModal.vue";
+import VoteHistoryModal from "./components/modals/VoteHistoryModal.vue";
+import TownInfo from "./components/TownInfo.vue";
+import TownSquare from "./components/TownSquare.vue";
+import Vote from "./components/Vote.vue";
 
 const store = useStore();
 const version = app.version;
 
-const menuRef = ref(null);
+// Type for Menu component exposed methods
+interface MenuRef {
+  addPlayer: () => void;
+  hostSession: () => void;
+  joinSession: () => void;
+  toggleNight: () => void;
+  toggleRinging: () => void;
+}
+
+const menuRef = ref<MenuRef | null>(null);
 
 const grimoire = computed(() => store.state.grimoire);
 const session = computed(() => store.state.session);
@@ -66,23 +74,23 @@ const background = computed(() => {
 });
 
 const backgroundColor = computed(() => {
-  return grimoire.value.isStreamerMode ? "#00FF00" : "transparent";
+  return grimoire.value.isStreamerMode ? "#000000" : "transparent";
 });
 
-function keyup({ key, ctrlKey, metaKey }) {
+function keyup({ key, ctrlKey, metaKey }: KeyboardEvent) {
   if (ctrlKey || metaKey) return;
   switch (key.toLocaleLowerCase()) {
     case "g":
       store.commit("toggleGrimoire");
       break;
     case "a":
-      menuRef.value.addPlayer();
+      menuRef.value?.addPlayer();
       break;
     case "h":
-      menuRef.value.hostSession();
+      menuRef.value?.hostSession();
       break;
     case "j":
-      menuRef.value.joinSession();
+      menuRef.value?.joinSession();
       break;
     case "r":
       store.commit("toggleModal", "reference");
@@ -105,11 +113,11 @@ function keyup({ key, ctrlKey, metaKey }) {
       break;
     case "s":
       if (session.value.isSpectator) return;
-      menuRef.value.toggleNight();
+      menuRef.value?.toggleNight();
       break;
     case "b":
       if (session.value.isSpectator) return;
-      menuRef.value.toggleRinging();
+      menuRef.value?.toggleRinging();
       break;
     case "escape":
       store.commit("toggleModal");

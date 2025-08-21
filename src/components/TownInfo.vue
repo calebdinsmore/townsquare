@@ -6,12 +6,12 @@
     </audio>
     <li class="edition" :class="['edition-' + edition.id]" :style="{
       backgroundImage: 'url(' + logoUrl + ')',
-    }"></li>
+    }" />
     <li v-if="players.length - teams.traveler < 5">
-      {{ locale.towninfo.addPlayers }}
+      {{ t('towninfo.addPlayers') }}
     </li>
     <li>
-      <span class="meta" v-if="!edition.isOfficial">
+      <span v-if="!edition.isOfficial" class="meta">
         {{ edition.name }}
         {{ edition.author ? " ©" + edition.author : "" }}
       </span>
@@ -37,15 +37,15 @@
       </span>
       <span>
         {{ teams.outsider }}
-        <font-awesome-icon class="outsider" :icon="teams.outsider > 1 ? 'user-friends' : 'user'" />
+        <font-awesome-icon class="outsider" :icon="(teams.outsider || 0) > 1 ? 'user-friends' : 'user'" />
       </span>
       <span>
         {{ teams.minion }}
-        <font-awesome-icon class="minion" :icon="teams.minion > 1 ? 'user-friends' : 'user'" />
+        <font-awesome-icon class="minion" :icon="(teams.minion || 0) > 1 ? 'user-friends' : 'user'" />
       </span>
       <span>
         {{ teams.demon }}
-        <font-awesome-icon class="demon" :icon="teams.demon > 1 ? 'user-friends' : 'user'" />
+        <font-awesome-icon class="demon" :icon="(teams.demon || 0) > 1 ? 'user-friends' : 'user'" />
       </span>
       <span v-if="teams.traveler">
         {{ teams.traveler }}
@@ -54,7 +54,7 @@
     </li>
     <li v-if="grimoire.isNight">
       <font-awesome-icon :icon="['fas', 'cloud-moon']" />
-      {{ locale.towninfo.nightPhase }}
+      {{ t('towninfo.nightPhase') }}
     </li>
     <li v-if="grimoire.isRinging">
       <audio :autoplay="!grimoire.isMuted" :muted="grimoire.isMuted">
@@ -68,33 +68,37 @@
       <audio :autoplay="!grimoire.isMuted" :muted="grimoire.isMuted">
         <source src="../assets/sounds/rooster.mp3">
       </audio>
+      <img src="../assets/icons/dawn.png" style="height: 2em">
     </li>
-    <li class="marked" v-if="
-      typeof session.markedPlayer == 'string' &&
-      !(session.isSpectator && grimoire.isOrganVoteMode)
-    ">
+    <li v-if="markedStoryteller" class="marked">
       <font-awesome-icon icon="skull" class="fa fa-skull" />
     </li>
     <li>
-      <Countdown v-if="grimoire.timer.duration" :timerName="grimoire.timer.name"
-        :timerDuration="grimoire.timer.duration" class="timer" />
+      <Countdown v-if="grimoire.timer.duration" :timer-name="grimoire.timer.name"
+        :timer-duration="grimoire.timer.duration" class="timer" />
     </li>
   </ul>
 </template>
 
-<script setup>
+<script setup lang="ts">
+import type { Player } from '@/types';
 import { computed } from 'vue';
 import { useStore } from 'vuex';
-import Countdown from './Countdown.vue';
 import gameJSON from '../game.json';
+import Countdown from './Countdown.vue';
+import { useTranslation } from '@/composables/useTranslation';
 
+const { t } = useTranslation();
 const store = useStore();
 
 const edition = computed(() => store.state.edition);
 const grimoire = computed(() => store.state.grimoire);
-const locale = computed(() => store.state.locale);
 const session = computed(() => store.state.session);
 const players = computed(() => store.state.players.players);
+
+const markedStoryteller = computed(() => {
+  return typeof session.value.markedPlayer == 'string' && !(session.value.isSpectator && grimoire.value.isOrganVoteMode)
+});
 
 const logoUrl = computed(() => {
   if (edition.value.logo && !edition.value.logo.includes('.')) {
@@ -110,9 +114,9 @@ const logoUrl = computed(() => {
 
 const teams = computed(() => {
   const nonTravelers = store.getters['players/nonTravelers'];
-  const alive = players.value.filter(player => player.isDead !== true).length;
+  const alive = players.value.filter((player: Player) => player.isDead !== true).length;
   const aliveNT = players.value.filter(
-    player => player.isDead !== true && player.role.team !== 'traveler'
+    (player: Player) => player.isDead !== true && player.role.team !== 'traveler'
   ).length;
   return {
     ...gameJSON[nonTravelers - 5],
@@ -120,7 +124,7 @@ const teams = computed(() => {
     alive,
     aliveNT,
     votes: players.value.filter(
-      player => (!player.isDead && player.role.id !== "beggar") || player.voteToken
+      (player: Player) => (!player.isDead && player.role.id !== "beggar") || player.voteToken
     ).length,
   };
 });

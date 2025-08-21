@@ -1,14 +1,16 @@
 <template>
-  <div :data-text="timerName" :style="style" class="countdown"></div>
+  <div :data-text="timerName" :style="style" class="countdown" />
 </template>
 
-<script setup>
-import { computed, defineProps } from 'vue';
+<script setup lang="ts">
+import { computed } from 'vue';
 
-const props = defineProps({
-  timerName: String,
-  timerDuration: Number,
-});
+interface Props {
+  timerName?: string;
+  timerDuration?: number;
+}
+
+const props = defineProps<Props>();
 
 const style = computed(() => `--timer: ${props.timerDuration}`);
 </script>

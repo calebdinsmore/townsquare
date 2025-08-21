@@ -1,23 +1,23 @@
 <template>
-  <Modal class="editions" v-if="modals.edition" @close="toggleModal('edition')">
-    <h3>{{ locale.modal.edition.title }}</h3>
+  <Modal v-if="modals.edition" class="editions" @close="toggleModal('edition')">
+    <h3>{{ t('modal.edition.title') }}</h3>
     <ul>
       <li class="tabs" :class="tab">
-        <span class="tab" icon="book-open" @click="tab = 'official'" :class="{ active: tab == 'official' }">{{
-          locale.modal.edition.tab.official }}</span>
-        <span class="tab" icon="tower-broadcast" @click="tab = 'popular'" :class="{ active: tab == 'popular' }">{{
-          locale.modal.edition.tab.popular }}</span>
-        <span class="tab" icon="question" @click="tab = 'custom'" :class="{ active: tab == 'custom' }">{{
-          locale.modal.edition.tab.custom }}</span>
-        <span class="tab" icon="question" @click="
+        <span class="tab" icon="book-open" :class="{ active: tab == 'official' }" @click="tab = 'official'">{{
+          t('modal.edition.tab.official') }}</span>
+        <span class="tab" icon="tower-broadcast" :class="{ active: tab == 'popular' }" @click="tab = 'popular'">{{
+          t('modal.edition.tab.popular') }}</span>
+        <span class="tab" icon="question" :class="{ active: tab == 'custom' }" @click="tab = 'custom'">{{
+          t('modal.edition.tab.custom') }}</span>
+        <span class="tab" icon="question" :class="{ active: tab == 'build' }" @click="
           initPool();
         tab = 'build';
-        " :class="{ active: tab == 'build' }">{{ locale.modal.edition.tab.build }}</span>
+        ">{{ t('modal.edition.tab.build') }}</span>
       </li>
       <template v-if="tab == 'official'">
         <ul class="editions">
-          <li v-for="edition in editions.official" class="edition" :class="['edition-' + edition.id]"
-            :style="{ backgroundImage: `url(${logoPath(edition)})` }" :key="edition.id" @click="runEdition(edition)">
+          <li v-for="edition in editions.official" :key="edition.id" class="edition" :class="['edition-' + edition.id]"
+            :style="{ backgroundImage: `url(${logoPath(edition)})` }" @click="runEdition(edition)">
             {{ edition.name }}
           </li>
         </ul>
@@ -28,7 +28,7 @@
             {{ script[0] }}
           </li>
         </ul>
-        <h3>{{ locale.modal.edition.tab.teensyville }}</h3>
+        <h3>{{ t('modal.edition.tab.teensyville') }}</h3>
         <ul class="scripts">
           <li v-for="(script, index) in editions.teensyville" :key="index" @click="launchScript(script[1])">
             {{ script[0] }}
@@ -37,31 +37,31 @@
       </template>
       <template v-if="tab == 'custom'">
         <div class="custom">
-          {{ locale.modal.edition.custom.introStart }}
+          {{ t('modal.edition.custom.introStart') }}
           <a href="https://script.bloodontheclocktower.com/" target="_blank">
-            {{ locale.modal.edition.custom.scriptTool }}
+            {{ t('modal.edition.custom.scriptTool') }}
           </a>
-          {{ locale.modal.edition.custom.introEnd }}.<br />
-          <br />
-          {{ locale.modal.edition.custom.instructionsStart }}
+          {{ t('modal.edition.custom.introEnd') }}.<br>
+          <br>
+          {{ t('modal.edition.custom.instructionsStart') }}
           <a href="https://github.com/bra1n/townsquare#custom-characters" target="_blank">{{
-            locale.modal.edition.custom.documentation }}n</a>
-          {{ locale.modal.edition.custom.instructionsEnd }}<br />
-          <b>{{ locale.modal.edition.custom.warning }}</b>
-          <input type="file" ref="upload" accept="application/json" @change="handleUpload" />
+            t('modal.edition.custom.documentation') }}n</a>
+          {{ t('modal.edition.custom.instructionsEnd') }}<br>
+          <b>{{ t('modal.edition.custom.warning') }}</b>
+          <input ref="upload" type="file" accept="application/json" @change="handleUpload">
         </div>
         <div class="button-group">
           <div class="button" @click="openUpload">
             <font-awesome-icon icon="file-upload" />
-            {{ locale.modal.edition.custom.upload }}
+            {{ t('modal.edition.custom.upload') }}
           </div>
           <div class="button" @click="promptURL">
             <font-awesome-icon icon="link" />
-            {{ locale.modal.edition.custom.url }}
+            {{ t('modal.edition.custom.url') }}
           </div>
           <div class="button" @click="readFromClipboard">
             <font-awesome-icon icon="clipboard" />
-            {{ locale.modal.edition.custom.clipboard }}
+            {{ t('modal.edition.custom.clipboard') }}
           </div>
         </div>
       </template>
@@ -69,12 +69,12 @@
         <section v-for="team in teams" :key="team" class="build team" :class="team">
           <aside class="aside">
             <div>
-              <h4>{{ locale.modal.reference.teamNames[team] }}</h4>
+              <h4>{{ t('modal.reference.teamNames[team]') }}</h4>
               <strong>{{ selectedInTeam(team) }}</strong>
             </div>
           </aside>
           <ul class="roles" :class="team">
-            <li v-for="role in rolesForTeam(team)" class="role" :key="role.id" @click="toggleRole(role.id)">
+            <li v-for="role in rolesForTeam(team)" :key="role.id" class="role" @click="toggleRole(role.id)">
               <Token :role="role" :unchecked="!role.selected" />
             </li>
           </ul>
@@ -98,18 +98,23 @@
   </Modal>
 </template>
 
-<script setup>
+<script setup lang="ts">
+import type { Role, Edition, ToggleableRole, ParsedRole, ScriptMeta } from "@/types";
 import { computed, ref } from "vue";
 import { useStore } from "vuex";
-import Modal from "./Modal.vue";
-import { rolesJSON } from "../../store/modules/locale";
 import Token from "../Token.vue";
+import Modal from "./Modal.vue";
+import { useTranslation } from '@/composables/useTranslation';
 
+const { t } = useTranslation();
 const store = useStore();
 const tab = ref("official");
-const draftPool = ref(rolesJSON);
-const teams = ["townsfolk", "outsider", "minion", "demon"];
-const recommendedTeamSize = {
+
+// Get rolesJSON from the store's getters
+const rolesJSON = computed(() => store.getters.rolesJSONbyId || new Map());
+const draftPool = ref<ToggleableRole[]>([]);
+const teams = ["townsfolk", "outsider", "minion", "demon"] as const;
+const recommendedTeamSize: Record<string, number> = {
   townsfolk: 13,
   outsider: 4,
   minion: 4,
@@ -117,33 +122,32 @@ const recommendedTeamSize = {
 };
 
 const modals = computed(() => store.state.modals);
-const locale = computed(() => store.state.locale);
 const editions = computed(() => store.state.editions);
 const roles = computed(() => store.state.roles);
 const jinxes = computed(() => store.state.jinxes);
 
 function initPool() {
-  draftPool.value = rolesJSON.default;
+  draftPool.value = Array.from(rolesJSON.value.values()) as ToggleableRole[];
   resetBuilt();
   for (let [role] of roles.value) {
     toggleRole(role);
   }
 }
 
-function toggleRole(id) {
-  const role = draftPool.value.find((r) => r.id === id);
+function toggleRole(id: string) {
+  const role = draftPool.value.find((r: ToggleableRole) => r.id === id);
   if (role) {
     role.selected = !role.selected;
   }
 }
 
-function rolesForTeam(team) {
-  return draftPool.value?.filter((role) => role.team === team && !role.outOfDate) ?? [];
+function rolesForTeam(team: string) {
+  return draftPool.value?.filter((role: ToggleableRole) => role.team === team && !role.outOfDate) ?? [];
 }
 
-function selectedInTeam(team) {
+function selectedInTeam(team: string) {
   return draftPool.value?.filter(
-    (role) => role.team === team && role.selected,
+    (role: ToggleableRole) => role.team === team && role.selected,
   ).length;
 }
 
@@ -157,66 +161,75 @@ function randomizeBuilt() {
   resetBuilt();
   for (let team of teams) {
     let currentPool = rolesForTeam(team);
-    for (let i = 0; i < recommendedTeamSize[team]; i++) {
-      let picked = currentPool.splice(
-        Math.floor(Math.random() * currentPool.length),
-        1,
-      )[0];
-      picked.selected = true;
+    for (let i = 0; i < (recommendedTeamSize[team] || 0); i++) {
+      if (currentPool.length > 0) {
+        let picked = currentPool.splice(
+          Math.floor(Math.random() * currentPool.length),
+          1,
+        )[0];
+        if (picked) {
+          picked.selected = true;
+        }
+      }
     }
   }
 }
 
 function startBuilt() {
-  const selected = draftPool.value.filter((role) => role.selected);
+  const selected = draftPool.value.filter((role: ToggleableRole) => role.selected);
   parseRoles(selected);
 }
 
 function openUpload() {
-  document.querySelector("input[type='file']").click();
+  const fileInput = document.querySelector("input[type='file']") as HTMLInputElement;
+  fileInput?.click();
 }
 
-function handleUpload(event) {
-  const file = event.target.files[0];
+function handleUpload(event: Event) {
+  const target = event.target as HTMLInputElement;
+  const file = target.files?.[0];
   if (!file?.size) {
     return;
   }
   const reader = new FileReader();
   reader.addEventListener("load", () => {
     try {
-      const uploadedRoles = JSON.parse(reader.result);
+      const result = reader.result as string;
+      const uploadedRoles = JSON.parse(result);
       parseRoles(uploadedRoles);
     } catch (e) {
-      alert(`Error reading custom script: ${e.message}`);
+      const error = e as Error;
+      alert(`Error reading custom script: ${error.message}`);
     }
-    event.target.value = "";
+    target.value = "";
   });
   reader.readAsText(file);
 }
 
 function promptURL() {
-  const url = prompt(locale.value.prompt.customUrl);
+  const url = prompt(t('prompt.customUrl'));
   if (url) {
     handleURL(url);
   }
 }
 
-function logoPath(edition) {
+function logoPath(edition: Edition) {
   return new URL(`../../assets/logos/${edition.logo}.png`, import.meta.url).href;
 }
 
-async function launchScript(fileName) {
+async function launchScript(fileName: string) {
   await handleURL(`/scripts/${fileName}`);
 }
 
-async function handleURL(url) {
+async function handleURL(url: string) {
   const res = await fetch(url);
   if (res?.json) {
     try {
       const script = await res.json();
       parseRoles(script);
     } catch (e) {
-      alert(`${locale.value.prompt.customError}: ${e.message}`);
+      const error = e as Error;
+      alert(`${t('prompt.customError')}: ${error.message}`);
     }
   }
 }
@@ -227,25 +240,26 @@ async function readFromClipboard() {
     const uploadedRoles = JSON.parse(text);
     parseRoles(uploadedRoles);
   } catch (e) {
-    alert(`Error reading custom script: ${e.message}`);
+    const error = e as Error;
+    alert(`Error reading custom script: ${error.message}`);
   }
 }
 
-function parseRoles(pickedRoles) {
+function parseRoles(pickedRoles: (string | ParsedRole)[]) {
   if (!pickedRoles || !pickedRoles.length) return;
-  pickedRoles = pickedRoles.map((role) =>
+  const processedRoles = pickedRoles.map((role: string | ParsedRole) =>
     typeof role === "string" ? { id: role } : role,
   );
-  const metaIndex = pickedRoles.findIndex(({ id }) => id === "_meta");
-  const meta = metaIndex > -1 ? pickedRoles.splice(metaIndex, 1).pop() : {};
-  store.commit("setCustomRoles", pickedRoles);
+  const metaIndex = processedRoles.findIndex(({ id }: ParsedRole) => id === "_meta");
+  const meta: ScriptMeta = metaIndex > -1 ? processedRoles.splice(metaIndex, 1).pop() || {} : {};
+  store.commit("setCustomRoles", processedRoles);
   store.commit("setEdition", { ...meta, id: "custom" });
-  const fabled = [];
+  const fabled: Role[] = [];
   let djinnAdded = false;
   let djinnNeeded = false;
   let bootleggerAdded = false;
   let bootleggerNedded = false;
-  pickedRoles.forEach((role) => {
+  processedRoles.forEach((role: ParsedRole) => {
     if (store.state.fabled.has(role.id || role)) {
       fabled.push(store.state.fabled.get(role.id || role));
       if ((role.id || role) == "djinn") {
@@ -261,7 +275,7 @@ function parseRoles(pickedRoles) {
       bootleggerNedded = true;
     } else if (!djinnAdded && !djinnNeeded && jinxes.value.get(role.id)) {
       // If the role isn't fabled, neither custom, and if we neither added a Djinn neither planned to add a Djinn, we look if this role is jinxed
-      jinxes.value.get(role.id).forEach((reason, second) => {
+      jinxes.value.get(role.id).forEach((_reason: string, second: string) => {
         if (roles.value.get(second)) {
           djinnNeeded = true;
         }
@@ -277,12 +291,12 @@ function parseRoles(pickedRoles) {
   store.commit("players/setFabled", { fabled });
 }
 
-function runEdition(edition) {
+function runEdition(edition: Edition) {
   store.commit("setEdition", edition);
   store.commit("players/setFabled", { fabled: [] });
 }
 
-function toggleModal(modal) {
+function toggleModal(modal: string) {
   store.commit('toggleModal', modal);
 }
 </script>

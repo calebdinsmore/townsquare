@@ -1,4 +1,4 @@
-name: Lint Code Base
+name: Lint and Type Check
 
 on:
   push:
@@ -8,13 +8,16 @@ on:
 
 jobs:
   build:
-    name: Lint Code Base
+    name: Lint and Type Check
     runs-on: ubuntu-latest
     steps:
       - name: Setup node version
         uses: actions/setup-node@v4
         with:
-          node-version: "22"
+          node-version: "24"
       - uses: actions/checkout@v4
       - run: npm install
-      - run: npm run lint-check
+      - name: ESLint
+        run: npm run lint-check
+      - name: Type Check
+        run: npm run type-check
