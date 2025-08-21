@@ -32,6 +32,7 @@
   - Deus ex Fiasco
   - Hermit
   - Princess
+  - Wraith
   - Cacklejack
 
 ### Version 4.1.1
