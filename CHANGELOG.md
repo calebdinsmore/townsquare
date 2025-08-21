@@ -14,6 +14,7 @@
 - Added "Wrong" reminder for the juggler
 - Added "Changed" reminder for the engineer
 - Correcting Banshee's night reminders
+- Updating the jinxes
 - Updating the Hatter's icon
 - French Translation updates :
   - Dawn
