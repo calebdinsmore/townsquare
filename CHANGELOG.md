@@ -4,6 +4,11 @@
 
 
 
+
+## 5.0.1
+- Fixed vote not being closeable due to a bug in the vote history recording
+- Fixed the team names not being displayed correctly
+
 ## 5.0.0
 - Migrated whole project from Javascript to Typescript
 - Automatic rooster sound when we switch to day

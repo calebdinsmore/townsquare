@@ -1,6 +1,5 @@
 import type { SessionState, VoteHistoryEntry, Player, Nomination } from "../../types";
 import { isActiveNomination, isTravelerExile } from "../../types";
-import gameInfo from "../index";
 
 /**
  * Handle a vote request.
@@ -84,16 +83,24 @@ const mutations = {
    * Create an entry in the vote history log. Requires current player array because it might change later in the game.
    * Only stores votes that were completed.
    * If the Organ Grinder is active, save the votes only for the Story Teller
-   * @param state
-   * @param players
    */
-  addHistory(state: SessionState, players: Player[]) {
+  addHistory(state: SessionState, payload: {
+    players: Player[];
+    isOrganVoteMode?: boolean;
+    localeTexts?: { exile: string; execution: string }
+  }) {
+    const { players, isOrganVoteMode = false, localeTexts } = payload;
+
     if (!state.isVoteHistoryAllowed && state.isSpectator) return;
     if (!isActiveNomination(state.nomination) || state.lockedVote <= players.length) return;
 
     const nomination = state.nomination;
     const isExile = isTravelerExile(nomination, players);
-    const organGrinder = (gameInfo as unknown as { state: { grimoire: { isOrganVoteMode: boolean } } }).state.grimoire.isOrganVoteMode && !isExile;
+    const organGrinder = isOrganVoteMode && !isExile;
+
+    // Default locale texts if not provided
+    const defaultTexts = { exile: 'Exile', execution: 'Execution' };
+    const texts = localeTexts || defaultTexts;
 
     const entry: VoteHistoryEntry = {
       timestamp: new Date(),
@@ -108,9 +115,8 @@ const mutations = {
       type:
         nomination.specialVote?.type ||
         (isExile
-          ? (gameInfo as unknown as { state: { locale: { modal: { voteHistory: { exile: string; execution: string } } } } }).state.locale.modal.voteHistory.exile
-          : (gameInfo as unknown as { state: { locale: { modal: { voteHistory: { exile: string; execution: string } } } } }).state.locale.modal.voteHistory.execution +
-          (organGrinder && !state.isSpectator ? "*" : "")),
+          ? texts.exile
+          : texts.execution + (organGrinder && !state.isSpectator ? "*" : "")),
       majority: Math.ceil(
         players.filter((player) => !player.isDead || isExile).length / 2,
       ),
@@ -122,7 +128,7 @@ const mutations = {
             .map(({ name }) => name),
     };
 
-    state.voteHistory.push(entry);
+    state.voteHistory = [...state.voteHistory, entry];
   },
   clearVoteHistory(state: SessionState) {
     state.voteHistory = [];

@@ -8,6 +8,7 @@ import type {
   Role,
   RolesJSON,
   RootState,
+  StoreLike,
 } from "@/types";
 import * as Vuex from "vuex";
 import editionJSONRaw from "../editions.json";
@@ -318,14 +319,13 @@ const initializeStore = async () => {
 };
 
 // Create the store and export it
-let store: any = null;
+let store: StoreLike<RootState> | null = null;
 
 const getStore = async () => {
   if (!store) {
-    store = await initializeStore();
+    store = (await initializeStore()) as StoreLike<RootState>;
   }
   return store;
 };
 
 export default getStore;
-

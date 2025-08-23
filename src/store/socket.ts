@@ -173,10 +173,14 @@ class LiveSession {
         if (!this._isSpectator) return;
         if (!params) {
           // create vote history record
-          this._store.commit(
-            "session/addHistory",
-            this._store.state.players.players,
-          );
+          this._store.commit("session/addHistory", {
+            players: this._store.state.players.players,
+            isOrganVoteMode: this._store.state.grimoire.isOrganVoteMode,
+            localeTexts: {
+              exile: (this._store.getters['t'] as (key: string) => string)('modal.voteHistory.exile'),
+              execution: (this._store.getters['t'] as (key: string) => string)('modal.voteHistory.execution')
+            }
+          });
         }
         this._store.commit("session/nomination", { nomination: params as Nomination | null });
         break;

@@ -69,7 +69,7 @@
         <section v-for="team in teams" :key="team" class="build team" :class="team">
           <aside class="aside">
             <div>
-              <h4>{{ t('modal.reference.teamNames[team]') }}</h4>
+              <h4>{{ t(`modal.reference.teamNames.${team}`) }}</h4>
               <strong>{{ selectedInTeam(team) }}</strong>
             </div>
           </aside>

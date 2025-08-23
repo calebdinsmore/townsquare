@@ -400,7 +400,14 @@ const finish = () => {
   if (voteTimer.value) {
     clearInterval(voteTimer.value);
   }
-  store.commit("session/addHistory", players.value);
+  store.commit("session/addHistory", {
+    players: players.value,
+    isOrganVoteMode: grimoire.value.isOrganVoteMode,
+    localeTexts: {
+      exile: t('modal.voteHistory.exile'),
+      execution: t('modal.voteHistory.execution')
+    }
+  });
   store.commit("session/nomination");
 };
 

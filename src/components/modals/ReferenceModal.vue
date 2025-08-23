@@ -8,8 +8,8 @@
       {{ edition.name || "Custom Script" }}
     </h3>
     <div v-for="(teamRoles, team) in rolesGrouped" :key="team" :class="['team', team]">
-      <aside :aria-label="t('modal.reference.teamNames[team]')">
-        <h4>{{ t('modal.reference.teamNames[team]') }}</h4>
+      <aside :aria-label="t(`modal.reference.teamNames.${team}`)">
+        <h4>{{ t(`modal.reference.teamNames.${team}`) }}</h4>
       </aside>
       <ul>
         <li v-for="role in teamRoles" :key="role.id" :class="[team]">
