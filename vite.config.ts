@@ -11,7 +11,7 @@ export default defineConfig({
       },
     }),
   ],
-  base: "/townsquare",
+  base: "/townsquare/",
   resolve: {
     alias: {
       "@": resolve(__dirname, "src"),
@@ -25,6 +25,7 @@ export default defineConfig({
     },
   },
   build: {
+    outDir: "dist/townsquare",
     rollupOptions: {
       output: {
         entryFileNames: "[name].[hash].js",
