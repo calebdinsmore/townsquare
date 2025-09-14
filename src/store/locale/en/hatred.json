@@ -308,6 +308,14 @@
   {
     "id": "Summoner",
     "hatred": [
+	  {
+        "id": "King",
+        "reason": "If the Summoner is in play, the Summoner starts knowing the King, and the Demon does not."
+      },
+	  {
+        "id": "Lunatic",
+        "reason": "If the Summoner is in play, the Summoner starts knowing the Lunatic, and the Demon does not. The Demon still learns who they choose each night."
+      },
       {
         "id": "Clockmaker",
         "reason": "If the Summoner is in play, the Clockmaker does not receive their information until a Demon is created."
@@ -660,6 +668,15 @@
       {
         "id": "Mayor",
         "reason": "The Mayor may choose to stop nominations. If they do so when only 1 Riot is alive, good wins. Otherwise, evil wins."
+      }
+    ]
+  },
+  {
+    "id": "Fishmonger",
+    "hatred": [
+      {
+        "id": "Drunk",
+        "reason": "There is a maximum of 3 Fisherman tokens, only 1 of which may start in the bag during setup, but abilities may add more, and the Demon may be shown any extra as a bluff."
       }
     ]
   }
