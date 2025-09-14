@@ -3,13 +3,15 @@ import { resolve } from "path";
 import { defineConfig } from "vite";
 
 export default defineConfig({
-  plugins: [vue({
-    script: {
-      defineModel: true,
-      propsDestructure: true
-    }
-  })],
-  base: "/",
+  plugins: [
+    vue({
+      script: {
+        defineModel: true,
+        propsDestructure: true,
+      },
+    }),
+  ],
+  base: "/townsquare",
   resolve: {
     alias: {
       "@": resolve(__dirname, "src"),
@@ -30,7 +32,12 @@ export default defineConfig({
         assetFileNames: "[name].[hash][extname]",
         manualChunks: {
           vendor: ["vue", "vuex"],
-          fontawesome: ["@fortawesome/fontawesome-svg-core", "@fortawesome/free-solid-svg-icons", "@fortawesome/free-brands-svg-icons", "@fortawesome/vue-fontawesome"],
+          fontawesome: [
+            "@fortawesome/fontawesome-svg-core",
+            "@fortawesome/free-solid-svg-icons",
+            "@fortawesome/free-brands-svg-icons",
+            "@fortawesome/vue-fontawesome",
+          ],
         },
       },
     },
