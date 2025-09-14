@@ -32,6 +32,7 @@ the box and you only need to upload it to get the selected set of characters int
 your script further, there is an additional `"_meta"` object that you can add to the script like you would add a normal
 character:
 
+Trying to force a build.
 ```json
 [
   {
